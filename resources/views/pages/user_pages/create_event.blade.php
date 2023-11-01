@@ -1,0 +1,94 @@
+@extends('components.template')
+
+@section('title', 'Create Event')
+
+@section('myevent-active')active @endsection
+
+@section('link-home'){{ URL::to('/') }}@endsection
+@section('link-event'){{ URL::to('/events') }}@endsection
+@section('link-login'){{ URL::to('/signin') }}@endsection
+@section('link-account'){{ URL::to('/account') }}@endsection
+@section('link-myevent'){{ URL::to('/myevent') }}@endsection
+@section('link-manageuser'){{ URL::to('/admin/manage-user') }}@endsection
+@section('link-notification'){{ URL::to('/notification') }}@endsection
+@section('link-contact'){{ URL::to('/contact') }}@endsection
+
+@section('content')
+
+    <div class="card mx-4 mx-md-5 mt-5 mb-4">
+        <!-- Section: Design Block -->
+        <section class="text-center">
+            <div class="card-body py-5 px-md-5">
+
+                <div class="row d-flex justify-content-center">
+                    <div class="col-lg-8">
+                        <h2 class="fw-bold mb-5">Create Your Own Event</h2>
+                        <form action="" method="">
+                            @csrf
+                            <div class="form-floating mb-3 has-danger">
+                                <input value="" type="text" name="event-name" class="form-control is-invalid"
+                                    placeholder="Birthday Party">
+                                <label>Event Name</label>
+                                <div class="invalid-feedback text-start"> Event Name too long</div>
+                            </div>
+                            <div class="form-floating mb-3 has-danger">
+                                <input value="" type="date" name="start-date" class="form-control is-invalid"
+                                    placeholder="Start Date">
+                                <label>Start Date</label>
+                                <div class="invalid-feedback text-start">Required</div>
+                            </div>
+                            <div class="form-floating mb-3 has-danger">
+                                <input value="" type="date" name="end-date" class="form-control is-invalid"
+                                    placeholder="End Date">
+                                <label>End Date</label>
+                                <div class="invalid-feedback text-start">Required</div>
+                            </div>
+                            <div class="form-floating mb-3 has-danger">
+                                <input value="" type="number" name="max-attendee" class="form-control is-invalid"
+                                    placeholder="Max Attendee" min="1" max="100">
+                                <label>Max Attendee</label>
+                                <div class="invalid-feedback text-start">Required</div>
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text py-3">Mode of Event</span>
+                                <select class="form-select" id="exampleSelect1">
+                                    <option>In Person</option>
+                                    <option>Online</option>
+                                    <option>Hybrid</option>
+                                </select>
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text py-3">Visible on</span>
+                                <select class="form-select" id="exampleSelect1">
+                                    <option>Public</option>
+                                    <option>Private</option>
+                                </select>
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text py-3">State</span>
+                                <select class="form-select" id="exampleSelect1">
+                                    <option>Kuala Lumpur</option>
+                                    <option>Selangor</option>
+                                    <option>Kedah</option>
+                                    <option>Johor</option>
+                                </select>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <textarea value="" name="event-name" class="form-control"
+                                    placeholder="Event Description"></textarea>
+                                <label>Event Description</label>
+                            </div>
+
+                            <!-- Submit button -->
+                            <button type="submit" class="btn btn-primary btn-block mb-4">
+                                Confirm
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+@endsection
