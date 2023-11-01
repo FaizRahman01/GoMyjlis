@@ -21,28 +21,28 @@ class UserController extends Controller
     //
     public function registerNewAccount(Request $request)
     {
-        $user_detail = $request->validate([
+        $userInput = $request->validate([
             'username' => 'required|min:4|max:20|unique:users,username|alpha_dash',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:8|confirmed'
         ]);
-        $user_array = ['username' => $user_detail['username'], 'password' => $user_detail['password'], 'email' => $user_detail['email']];
-        $create_user = User::create($user_array);
-        auth()->login($create_user);
+        $userDataArray = ['username' => $userInput['username'], 'password' => $userInput['password'], 'email' => $userInput['email']];
+        $newUserData = User::create($userDataArray);
+        auth()->login($newUserData);
         return redirect('/');
     }
 
     public function loginUserAccount(Request $request)
     {
-        $login_credential = $request->validate([
+        $loginInput = $request->validate([
             'login_user' => 'required',
             'login_password' => 'required'
         ]);
 
-        $login_email = ['email' => $login_credential['login_user'], 'password' => $login_credential['login_password']];
-        $login_username = ['username' => $login_credential['login_user'], 'password' => $login_credential['login_password']];
+        $loginByEmail = ['email' => $loginInput['login_user'], 'password' => $loginInput['login_password']];
+        $loginByUsername = ['username' => $loginInput['login_user'], 'password' => $loginInput['login_password']];
 
-        if (auth()->attempt($login_email) || auth()->attempt($login_username)) {
+        if (auth()->attempt($loginByEmail) || auth()->attempt($loginByUsername)) {
             $request->session()->regenerate();
             return redirect('/events');
         } else {
