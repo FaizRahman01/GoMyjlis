@@ -1,6 +1,6 @@
     <nav class="navbar navbar-expand-lg bg-primary rounded-4 mx-2 mt-2" data-bs-theme="dark">
         <div class="container-fluid">
-            <a class="navbar-brand px-2" href="@yield('link-home')">KeMajlis</a>
+            <a class="navbar-brand px-2" href="@yield('link-home')">GoMyjlis</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02"
                 aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>

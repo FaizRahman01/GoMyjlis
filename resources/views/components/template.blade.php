@@ -19,7 +19,7 @@
         <!-- Copyright -->
         <div class="text-center p-3">
             © 2023 Copyright
-            KeMajlis
+            GoMyjlis
         </div>
         <!-- Copyright -->
     </footer>
