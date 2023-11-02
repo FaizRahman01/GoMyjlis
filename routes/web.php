@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -27,14 +28,6 @@ Route::get('/notification', function () {
 
 Route::get('/contact', function () {
     return view('pages.contact');
-});
-
-Route::get('/myevent/{id}/poll', function () {
-    return view('pages.my_event_pages.poll');
-});
-
-Route::get('/myevent/{id}/rating', function () {
-    return view('pages.my_event_pages.rating');
 });
 
 Route::get('/myevent/{id}/support', function () {
@@ -78,3 +71,7 @@ Route::get('/events/{id}', [EventController::class, 'showSelectedEvent']);
 
 Route::get('/myevent/{id}/ticket', [TicketController::class, 'showEventTicket'])->middleware('authUser');
 Route::get('/myevent/{id}/attendee', [TicketController::class, 'showEventAttendee'])->middleware('authUser');
+
+
+Route::get('/myevent/{id}/poll', [FeedbackController::class, 'showEventPoll'])->middleware('authUser');
+Route::get('/myevent/{id}/rating', [FeedbackController::class, 'showEventRating'])->middleware('authUser');
