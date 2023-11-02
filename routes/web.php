@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AnalyticControllerr;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\OrganizerController;
@@ -30,11 +31,6 @@ Route::get('/notification', function () {
 Route::get('/contact', function () {
     return view('pages.contact');
 });
-
-Route::get('/myevent/{id}/analytic', function () {
-    return view('pages.my_event_pages.analytic');
-});
-
 
 
 Route::get('/account', [UserController::class, 'showUserDetail'])->middleware('auth');
@@ -69,3 +65,6 @@ Route::get('/myevent/{id}/rating', [FeedbackController::class, 'showEventRating'
 Route::get('/myevent/{id}/support', [OrganizerController::class, 'showEventSupport'])->middleware('authUser');
 Route::get('/myevent/{id}/task', [OrganizerController::class, 'showEventTask'])->middleware('authUser');
 Route::get('/myevent/{id}/vendor', [OrganizerController::class, 'showEventVendor'])->middleware('authUser');
+
+
+Route::get('/myevent/{id}/analytic', [AnalyticControllerr::class, 'showEventAnalytic'])->middleware('authUser');
