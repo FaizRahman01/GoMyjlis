@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -59,18 +60,6 @@ Route::get('/myevent/{id}/analytic', function () {
     return view('pages.my_event_pages.analytic');
 });
 
-Route::get('/admin/manage-user', function () {
-    return view('pages.admin_pages.manage_user');
-});
-
-Route::get('/admin/manage-user/{id}', function () {
-    return view('pages.admin_pages.manage_user_event');
-});
-
-Route::get('/admin/manage-event/{id}', function () {
-    return view('pages.admin_pages.manage_event');
-});
-
 
 
 Route::get('/account', [UserController::class, 'showUserDetail'])->middleware('auth');
@@ -79,6 +68,11 @@ Route::get('/signup', [UserController::class, 'showRegisterForm'])->middleware('
 Route::post('/signup', [UserController::class, 'registerNewAccount'])->middleware('guest');
 Route::post('/signin', [UserController::class, 'loginUserAccount'])->name('users.sign_in')->middleware('guest');
 Route::post('/logout', [UserController::class, 'logoutUserAccount'])->middleware('auth');
+
+
+Route::get('/admin/manage-user', [AdminController::class, 'showAllUsers'])->middleware('authAdmin');
+Route::get('/admin/manage-user/{id}', [AdminController::class, 'showAllUserEvents'])->middleware('authAdmin');
+Route::get('/admin/manage-event/{id}', [AdminController::class, 'showEventOverview'])->middleware('authAdmin');
 
 
 Route::get('/create-event', [EventController::class, 'createNewEvent'])->middleware('authUser');
