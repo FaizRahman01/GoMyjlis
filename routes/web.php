@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,22 +19,6 @@ Route::get('/', function () {
     return view('pages.home');
 });
 
-Route::get('/events', function () {
-    return view('pages.events');
-});
-
-Route::get('/events/{id}', function () {
-    return view('pages.eventinfo');
-});
-
-Route::get('/create-event', function () {
-    return view('pages.user_pages.create_event');
-});
-
-Route::get('/myevent', function () {
-    return view('pages.user_pages.my_event');
-});
-
 Route::get('/notification', function () {
     return view('pages.user_pages.notification');
 });
@@ -42,16 +27,8 @@ Route::get('/contact', function () {
     return view('pages.contact');
 });
 
-Route::get('/myevent/{id}/info', function () {
-    return view('pages.my_event_pages.info');
-});
-
 Route::get('/myevent/{id}/ticket', function () {
     return view('pages.my_event_pages.ticket');
-});
-
-Route::get('/myevent/{id}/schedule', function () {
-    return view('pages.my_event_pages.schedule');
 });
 
 Route::get('/myevent/{id}/poll', function () {
@@ -103,3 +80,10 @@ Route::post('/signup', [UserController::class, 'registerNewAccount'])->middlewar
 Route::post('/signin', [UserController::class, 'loginUserAccount'])->name('users.sign_in')->middleware('guest');
 Route::post('/logout', [UserController::class, 'logoutUserAccount'])->middleware('auth');
 
+
+Route::get('/create-event', [EventController::class, 'createNewEvent'])->middleware('authUser');
+Route::get('/myevent', [EventController::class, 'showUserEvent'])->middleware('authUser');
+Route::get('/myevent/{id}/info', [EventController::class, 'showEventInfo'])->middleware('authUser');
+Route::get('/myevent/{id}/schedule', [EventController::class, 'showEventSchedule'])->middleware('authUser');
+Route::get('/events', [EventController::class, 'showAllEvent']);
+Route::get('/events/{id}', [EventController::class, 'showSelectedEvent']);
