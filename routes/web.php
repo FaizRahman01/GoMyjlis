@@ -96,9 +96,10 @@ Route::get('/admin/manage-event/{id}', function () {
 
 
 
-Route::get('/account', [UserController::class, 'showUserDetail']);
-Route::get('/signin', [UserController::class, 'showLoginForm']);
-Route::get('/signup', [UserController::class, 'showRegisterForm']);
-Route::post('/signup', [UserController::class, 'registerNewAccount']);
-Route::post('/signin', [UserController::class, 'loginUserAccount']);
-Route::post('/logout', [UserController::class, 'logoutUserAccount']);
+Route::get('/account', [UserController::class, 'showUserDetail'])->middleware('auth');
+Route::get('/signin', [UserController::class, 'showLoginForm'])->middleware('guest');
+Route::get('/signup', [UserController::class, 'showRegisterForm'])->middleware('guest');
+Route::post('/signup', [UserController::class, 'registerNewAccount'])->middleware('guest');
+Route::post('/signin', [UserController::class, 'loginUserAccount'])->name('users.sign_in')->middleware('guest');
+Route::post('/logout', [UserController::class, 'logoutUserAccount'])->middleware('auth');
+
