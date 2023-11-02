@@ -26,10 +26,10 @@
                         <form action="" method="">
                             @csrf
                             <div class="form-floating mb-3 has-danger">
-                                <input value="" type="text" name="event-name" class="form-control is-invalid"
+                                <input value="" type="text" name="event-title" class="form-control is-invalid"
                                     placeholder="Birthday Party">
-                                <label>Event Name</label>
-                                <div class="invalid-feedback text-start"> Event Name too long</div>
+                                <label>Event Title</label>
+                                <div class="invalid-feedback text-start"> Event Title too long</div>
                             </div>
                             <div class="form-floating mb-3 has-danger">
                                 <input value="" type="date" name="start-date" class="form-control is-invalid"
@@ -44,9 +44,9 @@
                                 <div class="invalid-feedback text-start">Required</div>
                             </div>
                             <div class="form-floating mb-3 has-danger">
-                                <input value="" type="number" name="max-attendee" class="form-control is-invalid"
-                                    placeholder="Max Attendee" min="1" max="100">
-                                <label>Max Attendee</label>
+                                <input value="" type="text" name="address" class="form-control is-invalid"
+                                    placeholder="Address">
+                                <label>Location Address</label>
                                 <div class="invalid-feedback text-start">Required</div>
                             </div>
                             <div class="input-group mb-3">
