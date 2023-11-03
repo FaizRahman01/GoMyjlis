@@ -15,7 +15,7 @@ class AuthenticateOnlyUser
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->check() && auth()->user()->isAdmin == 0) {
+        if (auth()->check() && auth()->user()->is_admin == 0) {
             return $next($request);
         }
         return redirect('/');

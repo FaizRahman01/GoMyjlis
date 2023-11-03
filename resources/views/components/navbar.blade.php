@@ -24,7 +24,7 @@
                             @auth
                                 <a class="dropdown-item @yield('account-active')"
                                     href="@yield('link-account')">{{ Str::ucfirst(auth()->user()->username) }}</a>
-                                @if (auth()->user()->isAdmin == 1)
+                                @if (auth()->user()->is_admin == 1)
                                     <a class="dropdown-item @yield('manageuser-active')" href="@yield('link-manageuser')">Manage User</a>
                                 @else
                                     <a class="dropdown-item @yield('myevent-active')" href="@yield('link-myevent')">My Event</a>

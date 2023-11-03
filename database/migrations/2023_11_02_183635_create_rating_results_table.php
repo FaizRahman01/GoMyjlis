@@ -11,15 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('rating_results', function (Blueprint $table) {
             $table->id();
-            $table->string('username');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
+            $table->string('category');
+            $table->string('rate_value');
+            $table->foreignId('rating_id')->constrained()->onDelete('cascade');
             $table->timestamps();
-            $table->boolean('is_admin')->default(0);
         });
     }
 
@@ -28,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('rating_results');
     }
 };
