@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('plans', function (Blueprint $table) {
+        Schema::create('schedule_plans', function (Blueprint $table) {
             $table->id();
             $table->string('activity');
             $table->dateTime('timeline');
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('plans');
+        Schema::dropIfExists('schedule_plans');
     }
 };
