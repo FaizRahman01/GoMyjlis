@@ -12,6 +12,8 @@
 @section('link-myevent'){{URL::to('/myevent')}}@endsection
 @section('link-notification'){{URL::to('/notification')}}@endsection
 @section('link-contact'){{URL::to('/contact')}}@endsection
+@section('link-manageuser'){{ URL::to('/admin/manage-user') }}@endsection
+
 
 <h1 class="text-center mt-4">Account</h1>
 @endsection
