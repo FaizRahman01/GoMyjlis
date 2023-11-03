@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->boolean('is_organizer')->default(0);
             $table->boolean('is_assistant')->default(0);
-            $table->string('status');
+            $table->boolean('is_approve')->default(0);
+            $table->boolean('is_attend')->default(0);
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('event_id')->constrained()->onDelete('cascade');
             $table->timestamps();
