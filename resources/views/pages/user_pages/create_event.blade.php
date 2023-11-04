@@ -26,28 +26,27 @@
                         <form action="/create-event" method="POST">
                             @csrf
                             <div class="form-floating mb-3 has-danger">
-                                <input value="" type="text" name="event_title" class="form-control is-invalid"
+                                <input value="{{ old('event_title') }}" type="text" name="event_title" class="form-control @error('event_title') is-invalid @enderror" 
                                     placeholder="Birthday Party">
                                 <label>Event Title</label>
-                                <div class="invalid-feedback text-start"> Event Title too long</div>
+                                @error('event_title') <div class="invalid-feedback text-start">{{$message}}</div> @enderror
                             </div>
                             <div class="form-floating mb-3 has-danger">
-                                <input value="" type="date" name="start_date" class="form-control is-invalid"
+                                <input value="{{ old('start_date') }}" type="date" name="start_date" class="form-control @error('start_date') is-invalid @enderror"
                                     placeholder="Start Date">
                                 <label>Start Date</label>
-                                <div class="invalid-feedback text-start">Required</div>
+                                @error('start_date"') <div class="invalid-feedback text-start">{{$message}}</div> @enderror
                             </div>
                             <div class="form-floating mb-3 has-danger">
-                                <input value="" type="date" name="end_date" class="form-control is-invalid"
+                                <input value="{{ old('end_date') }}" type="date" name="end_date" class="form-control @error('end_date') is-invalid @enderror"
                                     placeholder="End Date">
                                 <label>End Date</label>
-                                <div class="invalid-feedback text-start">Required</div>
+                                @error('end_date') <div class="invalid-feedback text-start">{{$message}}</div> @enderror
                             </div>
-                            <div class="form-floating mb-3 has-danger">
-                                <input value="" type="text" name="address" class="form-control is-invalid"
+                            <div class="form-floating mb-3">
+                                <input value="" type="text" name="address" class="form-control"
                                     placeholder="Address">
                                 <label>Location Address</label>
-                                <div class="invalid-feedback text-start">Required</div>
                             </div>
                             <div class="input-group mb-3">
                                 <span class="input-group-text py-3">Mode of Event</span>
