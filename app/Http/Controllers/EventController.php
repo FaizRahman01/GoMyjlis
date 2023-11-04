@@ -122,7 +122,7 @@ class EventController extends Controller
             ->select('tickets.*')
             ->get()->count();
 
-        if ($event == null || $ticket_count == null) {
+        if ($event->isEmpty()) {
             return redirect('/myevent');
         } else {
             return view('pages.my_event_pages.info', ['event' => $event, 'ticket_count' => $ticket_count]);
