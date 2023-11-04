@@ -35,7 +35,7 @@
                     <h4 class="font-weight-bold col-md-6 col-8 d-flex align-items-center">{{$info->title}}</h4>
                     <div class="col-md-6 col-4 d-flex justify-content-end">
                         <a href="" class="btn btn-outline-dark link-underline link-underline-opacity-0">
-                            Count Me In</a>
+                            Edit</a>
                     </div>
                 </div>
 

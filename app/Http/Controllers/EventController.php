@@ -27,7 +27,7 @@ class EventController extends Controller
             'event_title' => 'required|min:5|max:100',
             'event_description' => 'nullable',
             'start_date' => 'required',
-            'end_date' => 'required',
+            'end_date' => 'required|after:start_date',
             'address' => 'nullable',
             'state' => 'required',
             'event_mode' => 'required',
