@@ -29,33 +29,43 @@
         <h4 class="fw-light col-auto d-flex align-items-center">Ticket Pass</h4>
     </div>
 
-    
 
-    <div class="mx-0 mx-sm-auto">
-        <div class="card">
-            <div class="card-body">
-                
-            </div>
-            <div class="card-footer">
-                <div class="row mx-2 py-3">
-                    <div class="col-lg-4 col-12  text-center">
-                        <img src="https://www.pngitem.com/pimgs/m/22-220721_circled-user-male-type-user-colorful-icon-png.png"
-                            alt="" width="200" height="200">
-                    </div>
-                    <div class="col-lg-8 col-12  profile-info">
-                        <div class="header-fullname">Kim Ryder</div>
-                        <div class="header-information">
-                            <p><strong>Event Name</strong></p>
-                            <p>Ticket ID: <span class="text-muted">3112</span></p>
-                            <p>Date Approved: <span class="text-muted">10 Aug 2023</span></p>
-                            <p>Role: <span class="text-muted">Attendee</span></p>
+    @foreach ($user_ticket as $ticket)
+        <div class="mx-0 mx-sm-auto">
+            <div class="card">
+                <div class="card-body">
+
+                </div>
+                <div class="card-footer">
+                    <div class="row mx-2 py-3">
+                        <div class="col-lg-4 col-12  text-center">
+                            <img src="https://www.pngitem.com/pimgs/m/22-220721_circled-user-male-type-user-colorful-icon-png.png"
+                                alt="" width="200" height="200">
                         </div>
+                        <div class="col-lg-8 col-12  profile-info">
+                            <div class="header-fullname">{{ $ticket->username }}</div>
+                            <div class="header-information">
+                                <p><strong>{{ $ticket->title }}</strong></p>
+                                <p>Role:
+                                    <span class="text-muted">
+                                        @if ($ticket->is_organizer == 1 && $ticket->is_assistant == 0)
+                                            Organizer
+                                        @elseif ($ticket->is_organizer == 0 && $ticket->is_assistant == 1)
+                                            Assistant
+                                        @else
+                                            Attendee
+                                        @endif
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+
                     </div>
-            
                 </div>
             </div>
         </div>
-    </div>
+    @endforeach
+
 
 
 
