@@ -44,7 +44,8 @@
                                 <a class="btn btn-primary w-100" href="#">Filter</a>
                             </div>
                             <div class="col-lg-3 d-flex align-items-end pt-3">
-                                <a class="btn btn-secondary w-100" href="{{ URL::to('/create-event') }}">Create New Event +</a>
+                                <a class="btn btn-secondary w-100" href="{{ URL::to('/create-event') }}">Create New Event
+                                    +</a>
                             </div>
                         </div>
                     </form>
@@ -58,71 +59,32 @@
                 <div class="col-lg-12">
                     <div>
 
-                        <div class="card mt-4">
-                            <div class="p-4 card-body">
-                                <div class="align-items-center row">
-                                    <div class="col-md-5 col-12">
-                                        <div class="mt-3 mt-lg-0">
-                                            <h5 class="fs-19 mb-0">
-                                                <a class="primary-link" href="{{ URL::to('/myevent/2/info') }}">Rokolo DJ Dancing 2019</a>
-                                            </h5>
-                                            <p class="text-muted my-1">Attendee</p>
-                                            <ul class="list-inline mb-0 text-muted mb-2">
-                                                <li class="list-inline-item"> Waterfront Hotel, London</li>
-                                                <li class="list-inline-item"> 6 Aug 2023</li>
-                                            </ul>
+                        @foreach ($user_event as $mylist)
+                            <div class="card mt-4">
+                                <div class="p-4 card-body">
+                                    <div class="align-items-center row">
+                                        <div class="col-md-5 col-12">
+                                            <div class="mt-3 mt-lg-0">
+                                                <h5 class="fs-19 mb-0">
+                                                    <a class="primary-link" href="/myevent/{{$mylist->event_id}}/info">{{$mylist->title}}</a>
+                                                </h5>
+                                                <p class="text-muted my-1">Attendee</p>
+                                                <ul class="list-inline mb-0 text-muted mb-2">
+                                                    <li class="list-inline-item"> {{$mylist->state}}</li>
+                                                    <li class="list-inline-item"> {{$mylist->start_date}}</li>
+                                                </ul>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-7 col-12 d-flex justify-content-md-end">
-                                        <a class="btn btn-danger" href="#">Leave</a>
+                                        <div class="col-md-7 col-12 d-flex justify-content-md-end">
+                                            <a class="btn btn-danger" href="#">Leave</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        @endforeach
 
-                        <div class="card mt-4">
-                            <div class="p-4 card-body">
-                                <div class="align-items-center row">
-                                    <div class="col-md-5 col-12">
-                                        <div class="mt-3 mt-lg-0">
-                                            <h5 class="fs-19 mb-0">
-                                                <a class="primary-link" href="{{ URL::to('/myevent/2/info') }}">Rokolo DJ Dancing 2019</a>
-                                            </h5>
-                                            <p class="text-muted my-1">Attendee</p>
-                                            <ul class="list-inline mb-0 text-muted mb-2">
-                                                <li class="list-inline-item"> Waterfront Hotel, London</li>
-                                                <li class="list-inline-item"> 6 Aug 2023</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-7 col-12 d-flex justify-content-md-end">
-                                        <a class="btn btn-danger" href="#">Leave</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="card mt-4">
-                            <div class="p-4 card-body">
-                                <div class="align-items-center row">
-                                    <div class="col-md-5 col-12">
-                                        <div class="mt-3 mt-lg-0">
-                                            <h5 class="fs-19 mb-0">
-                                                <a class="primary-link" href="{{ URL::to('/myevent/2/info') }}">Rokolo DJ Dancing 2019</a>
-                                            </h5>
-                                            <p class="text-muted my-1">Attendee</p>
-                                            <ul class="list-inline mb-0 text-muted mb-2">
-                                                <li class="list-inline-item"> Waterfront Hotel, London</li>
-                                                <li class="list-inline-item"> 6 Aug 2023</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-7 col-12 d-flex justify-content-md-end">
-                                        <a class="btn btn-danger" href="#">Leave</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
 
                     </div>
                 </div>

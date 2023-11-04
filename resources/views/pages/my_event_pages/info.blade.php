@@ -25,23 +25,22 @@
 
 @section('content')
 
-    <!-- Header -->
+@foreach ($event as $info)
+
     <div class="mb-4">
-        <div class="col-md-10 col-lg-8 col-xl-7 pb-5 mx-auto">
+        <div class="col-md-10 col-lg-8 col-xl-7 py-5 mx-auto">
             {{-- carousel here --}}
             <div class="container">
                 <div class="row mb-4">
-                    <h4 class="fw-light col-md-6 col-8 d-flex align-items-center">Rokolo DJ Dancing 2019</h4>
+                    <h4 class="font-weight-bold col-md-6 col-8 d-flex align-items-center">{{$info->title}}</h4>
                     <div class="col-md-6 col-4 d-flex justify-content-end">
-                        <a href="" class="btn btn-outline-dark">
-                            Edit
-                        </a>
+                        <a href="" class="btn btn-outline-dark link-underline link-underline-opacity-0">
+                            Count Me In</a>
                     </div>
                 </div>
 
                 <div class="text-muted mb-4">
-                    Lorem ipsum dolor sit amet, nibh suavitate qualisque ut nam. Ad harum primis electram duo, porro
-                    principes ei has.
+                    {!! nl2br($info->description)!!}
                 </div>
             </div>
         </div>
@@ -56,35 +55,35 @@
             <div class="row mb-2">
                 <div class="col-md-3 text-muted">Organiser:</div>
                 <div class="col-md-9">
-                    John
+                    {{$info->username}}
                 </div>
             </div>
 
             <div class="row mb-2">
                 <div class="col-md-3 text-muted">Date Start:</div>
                 <div class="col-md-9">
-                    <p>3 Jul 2023</p>
+                    <p>{{$info->start_date}}</p>
                 </div>
             </div>
 
             <div class="row mb-2">
                 <div class="col-md-3 text-muted">Date End:</div>
                 <div class="col-md-9">
-                    <p>5 Jul 2023</p>
+                    <p>{{$info->end_date}}</p>
                 </div>
             </div>
 
             <div class="row mb-2">
                 <div class="col-md-3 text-muted">State:</div>
                 <div class="col-md-9">
-                    <p>Kedah</p>
+                    <p>{{$info->state}}</p>
                 </div>
             </div>
 
             <div class="row mb-2">
                 <div class="col-md-3 text-muted">Address:</div>
                 <div class="col-md-9">
-                    12, Jln Ros 12
+                    {{$info->address}}
                 </div>
             </div>
 
@@ -93,18 +92,20 @@
             <div class="row">
                 <div class="d-flex col flex-column py-3">
                     <div class="font-weight-bold">Attendee</div>
-                    <div class="text-muted small">16</div>
+                    <div class="text-muted small">{{$ticket_count}}</div>
                 </div>
                 <div class="d-flex col flex-column py-3">
                     <div class="font-weight-bold">Visibility</div>
-                    <div class="text-muted small">Public</div>
+                    <div class="text-muted small">{{$info->is_private == 0 ? 'Public':'Private'}}</div>
                 </div>
                 <div class="d-flex col flex-column py-3">
                     <div class="font-weight-bold">Event Mode</div>
-                    <div class="text-muted small">In Person</div>
+                    <div class="text-muted small"> {{$info->event_mode}}</div>
                 </div>
             </div>
         </div>
     </div>
+
+@endforeach
 
 @endsection

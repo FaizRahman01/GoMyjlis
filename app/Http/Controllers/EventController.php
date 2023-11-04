@@ -6,6 +6,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use function Laravel\Prompts\table;
+
 class EventController extends Controller
 {
     //
@@ -64,22 +66,67 @@ class EventController extends Controller
 
     public function showUserEvent()
     {
-        return view('pages.user_pages.my_event');
+        $user_event = DB::table('events')
+            ->join('tickets', 'tickets.event_id', '=', 'events.id')
+            ->join('users', 'users.id', '=', 'tickets.user_id')
+            ->where('users.id', '=', auth()->id())
+            ->select('events.*', 'tickets.*')
+            ->get();
+        return view('pages.user_pages.my_event', ['user_event' => $user_event]);
     }
 
     public function showAllEvent()
     {
-        return view('pages.events');
+        $events = DB::table('events')->where('is_private', '=', 0)->get();
+        return view('pages.events', ['events' => $events]);
     }
 
-    public function showSelectedEvent()
+    public function showSelectedEvent($id)
     {
-        return view('pages.eventinfo');
+        $event = DB::table('events')
+            ->join('tickets', 'tickets.event_id', '=', 'events.id')
+            ->join('users', 'users.id', '=', 'tickets.user_id')
+            ->where('events.id', '=', $id)
+            ->select('events.*', 'tickets.*', 'users.username')
+            ->get();
+
+        $ticket_count = DB::table('events')
+            ->join('tickets', 'tickets.event_id', '=', 'events.id')
+            ->where('tickets.event_id', '=', $id)
+            ->where('tickets.is_organizer', '=', 0)
+            ->where('tickets.is_assistant', '=', 0)
+            ->select('tickets.*')
+            ->get()->count();
+
+        return view('pages.eventinfo', ['event' => $event, 'ticket_count' => $ticket_count]);
     }
 
-    public function showEventInfo()
+    public function showEventInfo($id)
     {
-        return view('pages.my_event_pages.info');
+        $event = DB::table('events')
+            ->join('tickets', 'tickets.event_id', '=', 'events.id')
+            ->join('users', 'users.id', '=', 'tickets.user_id')
+            ->where('events.id', '=', $id)
+            ->where('tickets.is_approve', '=', 1)
+            ->where('users.id', '=', auth()->id())
+            ->select('events.*', 'tickets.*', 'users.username')
+            ->get();
+
+        $ticket_count = DB::table('events')
+            ->join('tickets', 'tickets.event_id', '=', 'events.id')
+            ->where('tickets.event_id', '=', $id)
+            ->where('tickets.is_organizer', '=', 0)
+            ->where('tickets.is_assistant', '=', 0)
+            ->where('tickets.is_approve', '=', 1)
+            ->where('tickets.user_id', '=', auth()->id())
+            ->select('tickets.*')
+            ->get()->count();
+
+        if ($event == null || $ticket_count == null) {
+            return redirect('/myevent');
+        } else {
+            return view('pages.my_event_pages.info', ['event' => $event, 'ticket_count' => $ticket_count]);
+        }
     }
 
     public function showEventSchedule()
