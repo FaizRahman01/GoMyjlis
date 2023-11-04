@@ -23,22 +23,22 @@
                 <div class="row d-flex justify-content-center">
                     <div class="col-lg-8">
                         <h2 class="fw-bold mb-5">Create Your Own Event</h2>
-                        <form action="" method="">
+                        <form action="/create-event" method="POST">
                             @csrf
                             <div class="form-floating mb-3 has-danger">
-                                <input value="" type="text" name="event-title" class="form-control is-invalid"
+                                <input value="" type="text" name="event_title" class="form-control is-invalid"
                                     placeholder="Birthday Party">
                                 <label>Event Title</label>
                                 <div class="invalid-feedback text-start"> Event Title too long</div>
                             </div>
                             <div class="form-floating mb-3 has-danger">
-                                <input value="" type="date" name="start-date" class="form-control is-invalid"
+                                <input value="" type="date" name="start_date" class="form-control is-invalid"
                                     placeholder="Start Date">
                                 <label>Start Date</label>
                                 <div class="invalid-feedback text-start">Required</div>
                             </div>
                             <div class="form-floating mb-3 has-danger">
-                                <input value="" type="date" name="end-date" class="form-control is-invalid"
+                                <input value="" type="date" name="end_date" class="form-control is-invalid"
                                     placeholder="End Date">
                                 <label>End Date</label>
                                 <div class="invalid-feedback text-start">Required</div>
@@ -51,7 +51,7 @@
                             </div>
                             <div class="input-group mb-3">
                                 <span class="input-group-text py-3">Mode of Event</span>
-                                <select class="form-select" id="exampleSelect1">
+                                <select name="event_mode" class="form-select" id="exampleSelect1">
                                     <option>In Person</option>
                                     <option>Online</option>
                                     <option>Hybrid</option>
@@ -59,23 +59,21 @@
                             </div>
                             <div class="input-group mb-3">
                                 <span class="input-group-text py-3">Visible on</span>
-                                <select class="form-select" id="exampleSelect1">
+                                <select name="visibility" class="form-select" id="exampleSelect1">
                                     <option>Public</option>
                                     <option>Private</option>
                                 </select>
                             </div>
                             <div class="input-group mb-3">
                                 <span class="input-group-text py-3">State</span>
-                                <select class="form-select" id="exampleSelect1">
-                                    <option>Kuala Lumpur</option>
-                                    <option>Selangor</option>
-                                    <option>Kedah</option>
-                                    <option>Johor</option>
+                                <select name="state" class="form-select" id="exampleSelect1">
+                                    @foreach ($state as $state_list)
+                                        <option>{{$state_list}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="form-floating mb-3">
-                                <textarea value="" name="event-name" class="form-control"
-                                    placeholder="Event Description"></textarea>
+                                <textarea value="" name="event_description" class="form-control" placeholder="Event Description"></textarea>
                                 <label>Event Description</label>
                             </div>
 

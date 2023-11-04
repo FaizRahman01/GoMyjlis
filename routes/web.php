@@ -46,12 +46,13 @@ Route::get('/admin/manage-user/{id}', [AdminController::class, 'showAllUserEvent
 Route::get('/admin/manage-event/{id}', [AdminController::class, 'showEventOverview'])->middleware('authAdmin');
 
 
-Route::get('/create-event', [EventController::class, 'createNewEvent'])->middleware('authUser');
+Route::get('/create-event', [EventController::class, 'showEventForm'])->middleware('authUser');
 Route::get('/myevent', [EventController::class, 'showUserEvent'])->middleware('authUser');
 Route::get('/myevent/{id}/info', [EventController::class, 'showEventInfo'])->middleware('authUser');
 Route::get('/myevent/{id}/schedule', [EventController::class, 'showEventSchedule'])->middleware('authUser');
 Route::get('/events', [EventController::class, 'showAllEvent']);
 Route::get('/events/{id}', [EventController::class, 'showSelectedEvent']);
+Route::post('/create-event', [EventController::class, 'createNewEvent'])->middleware('authUser');
 
 
 Route::get('/myevent/{id}/ticket', [TicketController::class, 'showEventTicket'])->middleware('authUser');
