@@ -10,10 +10,11 @@ class TicketController extends Controller
     //
     public function showEventTicket($id)
     {
+        $event_id = $id;
         $user_ticket = DB::table('events')
             ->join('tickets', 'tickets.event_id', '=', 'events.id')
             ->join('users', 'users.id', '=', 'tickets.user_id')
-            ->where('events.id', '=', $id)
+            ->where('events.id', '=', $event_id)
             ->where('tickets.is_approve', '=', 1)
             ->where('users.id', '=', auth()->id())
             ->select('events.*', 'tickets.*', 'users.username', 'users.email')
@@ -22,12 +23,13 @@ class TicketController extends Controller
         if ($user_ticket->isEmpty()) {
             return redirect('/myevent');
         } else {
-            return view('pages.my_event_pages.ticket', ['user_ticket' => $user_ticket]);
+            return view('pages.my_event_pages.ticket', ['user_ticket' => $user_ticket, 'event_id' => $event_id]);
         }
     }
 
-    public function showEventAttendee()
+    public function showEventAttendee($id)
     {
-        return view('pages.my_event_pages.attendee');
+        $event_id = $id;
+        return view('pages.my_event_pages.attendee', ['event_id' => $event_id]);
     }
 }

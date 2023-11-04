@@ -11,17 +11,17 @@
 @section('link-notification'){{ URL::to('/notification') }}@endsection
 @section('link-contact'){{ URL::to('/contact') }}@endsection
 
-@section('link-info'){{ URL::to('/myevent/2/info') }}@endsection
-@section('link-ticket'){{ URL::to('/myevent/2/ticket') }}@endsection
+@section('link-info'){{ URL::to('/myevent/'.$event_id.'/info') }}@endsection
+@section('link-ticket'){{ URL::to('/myevent/'.$event_id.'/ticket') }}@endsection
 
-@section('link-schedule'){{ URL::to('/myevent/2/schedule') }}@endsection
-@section('link-poll'){{ URL::to('/myevent/2/poll') }}@endsection
+@section('link-schedule'){{ URL::to('/myevent/'.$event_id.'/schedule') }}@endsection
+@section('link-poll'){{ URL::to('/myevent/'.$event_id.'/poll') }}@endsection
 @section('link-rating'){{ URL::current() }}@endsection
-@section('link-support'){{ URL::to('/myevent/2/support') }}@endsection
-@section('link-task'){{ URL::to('/myevent/2/task') }}@endsection
-@section('link-attendee'){{ URL::to('/myevent/2/attendee') }}@endsection
-@section('link-vendor'){{ URL::to('/myevent/2/vendor') }}@endsection
-@section('link-analytic'){{ URL::to('/myevent/2/analytic') }}@endsection
+@section('link-support'){{ URL::to('/myevent/'.$event_id.'/support') }}@endsection
+@section('link-task'){{ URL::to('/myevent/'.$event_id.'/task') }}@endsection
+@section('link-attendee'){{ URL::to('/myevent/'.$event_id.'/attendee') }}@endsection
+@section('link-vendor'){{ URL::to('/myevent/'.$event_id.'/vendor') }}@endsection
+@section('link-analytic'){{ URL::to('/myevent/'.$event_id.'/analytic') }}@endsection
 
 @section('content')
 

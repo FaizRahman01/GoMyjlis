@@ -74,7 +74,7 @@
                             </div>
                         </div>
                         <h2>
-                            <a href="/events/{{$list->id}}"
+                            <a href="{{ URL::to('/events/.'$list->id'.') }}"
                                 class="link-underline link-underline link-underline-opacity-0 d-flex align-items-center">
                                 {{$list->title}}
                             </a>

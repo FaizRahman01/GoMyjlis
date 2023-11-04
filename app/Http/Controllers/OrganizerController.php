@@ -7,18 +7,21 @@ use Illuminate\Http\Request;
 class OrganizerController extends Controller
 {
     //
-    public function showEventSupport()
+    public function showEventSupport($id)
     {
-        return view('pages.my_event_pages.support');
+        $event_id = $id;
+        return view('pages.my_event_pages.support', ['event_id' => $event_id]);
     }
 
-    public function showEventTask()
+    public function showEventTask($id)
     {
-        return view('pages.my_event_pages.task');
+        $event_id = $id;
+        return view('pages.my_event_pages.task', ['event_id' => $event_id]);
     }
 
-    public function showEventVendor()
+    public function showEventVendor($id)
     {
-        return view('pages.my_event_pages.vendor');
+        $event_id = $id;
+        return view('pages.my_event_pages.vendor', ['event_id' => $event_id]);
     }
 }

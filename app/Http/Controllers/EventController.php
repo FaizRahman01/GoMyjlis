@@ -83,16 +83,17 @@ class EventController extends Controller
 
     public function showSelectedEvent($id)
     {
+        $event_id = $id;
         $event = DB::table('events')
             ->join('tickets', 'tickets.event_id', '=', 'events.id')
             ->join('users', 'users.id', '=', 'tickets.user_id')
-            ->where('events.id', '=', $id)
+            ->where('events.id', '=', $event_id)
             ->select('events.*', 'tickets.*', 'users.username')
             ->get();
 
         $ticket_count = DB::table('events')
             ->join('tickets', 'tickets.event_id', '=', 'events.id')
-            ->where('tickets.event_id', '=', $id)
+            ->where('tickets.event_id', '=', $event_id)
             ->where('tickets.is_organizer', '=', 0)
             ->where('tickets.is_assistant', '=', 0)
             ->select('tickets.*')
@@ -103,10 +104,11 @@ class EventController extends Controller
 
     public function showEventInfo($id)
     {
+        $event_id = $id;
         $event = DB::table('events')
             ->join('tickets', 'tickets.event_id', '=', 'events.id')
             ->join('users', 'users.id', '=', 'tickets.user_id')
-            ->where('events.id', '=', $id)
+            ->where('events.id', '=', $event_id)
             ->where('tickets.is_approve', '=', 1)
             ->where('users.id', '=', auth()->id())
             ->select('events.*', 'tickets.*', 'users.username')
@@ -114,7 +116,7 @@ class EventController extends Controller
 
         $ticket_count = DB::table('events')
             ->join('tickets', 'tickets.event_id', '=', 'events.id')
-            ->where('tickets.event_id', '=', $id)
+            ->where('tickets.event_id', '=', $event_id)
             ->where('tickets.is_organizer', '=', 0)
             ->where('tickets.is_assistant', '=', 0)
             ->where('tickets.is_approve', '=', 1)
@@ -125,12 +127,13 @@ class EventController extends Controller
         if ($event->isEmpty()) {
             return redirect('/myevent');
         } else {
-            return view('pages.my_event_pages.info', ['event' => $event, 'ticket_count' => $ticket_count]);
+            return view('pages.my_event_pages.info', ['event' => $event, 'ticket_count' => $ticket_count, 'event_id' => $event_id]);
         }
     }
 
-    public function showEventSchedule()
+    public function showEventSchedule($id)
     {
-        return view('pages.my_event_pages.schedule');
+        $event_id = $id;
+        return view('pages.my_event_pages.schedule', ['event_id' => $event_id]);
     }
 }

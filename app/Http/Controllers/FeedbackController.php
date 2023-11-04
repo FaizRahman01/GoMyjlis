@@ -7,13 +7,15 @@ use Illuminate\Http\Request;
 class FeedbackController extends Controller
 {
     //
-    public function showEventPoll()
+    public function showEventPoll($id)
     {
-        return view('pages.my_event_pages.poll');
+        $event_id = $id;
+        return view('pages.my_event_pages.poll', ['event_id' => $event_id]);
     }
 
-    public function showEventRating()
+    public function showEventRating($id)
     {
-        return view('pages.my_event_pages.rating');
+        $event_id = $id;
+        return view('pages.my_event_pages.rating', ['event_id' => $event_id]);
     }
 }
