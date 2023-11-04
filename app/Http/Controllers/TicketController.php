@@ -16,7 +16,7 @@ class TicketController extends Controller
             ->where('events.id', '=', $id)
             ->where('tickets.is_approve', '=', 1)
             ->where('users.id', '=', auth()->id())
-            ->select('events.*', 'tickets.*', 'users.username')
+            ->select('events.*', 'tickets.*', 'users.username', 'users.email')
             ->get();
 
         if ($user_ticket->isEmpty()) {

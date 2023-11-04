@@ -66,12 +66,21 @@
                                         <div class="col-md-5 col-12">
                                             <div class="mt-3 mt-lg-0">
                                                 <h5 class="fs-19 mb-0">
-                                                    <a class="primary-link" href="/myevent/{{$mylist->event_id}}/info">{{$mylist->title}}</a>
+                                                    <a class="primary-link"
+                                                        href="/myevent/{{ $mylist->event_id }}/info">{{ $mylist->title }}</a>
                                                 </h5>
-                                                <p class="text-muted my-1">Attendee</p>
+                                                <p class="text-muted my-1">
+                                                    @if ($mylist->is_organizer == 1 && $mylist->is_assistant == 0)
+                                                        Organizer
+                                                    @elseif ($mylist->is_organizer == 0 && $mylist->is_assistant == 1)
+                                                        Assistant
+                                                    @else
+                                                        Attendee
+                                                    @endif
+                                                </p>
                                                 <ul class="list-inline mb-0 text-muted mb-2">
-                                                    <li class="list-inline-item"> {{$mylist->state}}</li>
-                                                    <li class="list-inline-item"> {{$mylist->start_date}}</li>
+                                                    <li class="list-inline-item"> {{ $mylist->state }}</li>
+                                                    <li class="list-inline-item"> {{ $mylist->start_date }}</li>
                                                 </ul>
                                             </div>
                                         </div>

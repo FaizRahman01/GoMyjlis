@@ -43,9 +43,10 @@
                                 alt="" width="200" height="200">
                         </div>
                         <div class="col-lg-8 col-12  profile-info">
-                            <div class="header-fullname">{{ $ticket->username }}</div>
+                            <div class="header-fullname">{{'@'}}{{ $ticket->username }}</div>
                             <div class="header-information">
                                 <p><strong>{{ $ticket->title }}</strong></p>
+                                <p>Email: <span class="text-muted">{{ $ticket->email }}</span></p>
                                 <p>Role:
                                     <span class="text-muted">
                                         @if ($ticket->is_organizer == 1 && $ticket->is_assistant == 0)
