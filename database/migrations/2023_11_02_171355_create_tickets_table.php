@@ -19,6 +19,7 @@ return new class extends Migration
             $table->boolean('is_attend')->default(0);
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('event_id')->constrained()->onDelete('cascade');
+            $table->unique(['user_id','event_id']);
             $table->timestamps();
         });
     }

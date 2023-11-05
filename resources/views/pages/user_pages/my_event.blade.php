@@ -67,7 +67,7 @@
                                             <div class="mt-3 mt-lg-0">
                                                 <h5 class="fs-19 mb-0">
                                                     <a class="primary-link"
-                                                        href="{{ URL::to('/myevent/'.$mylist->id.'/info') }}">{{ $mylist->title }}</a>
+                                                        href="/myevent/{{$mylist->id}}/info">{{ $mylist->title }}</a>
                                                 </h5>
                                                 <p class="text-muted my-1">
                                                     @if ($mylist->is_organizer == 1 && $mylist->is_assistant == 0)

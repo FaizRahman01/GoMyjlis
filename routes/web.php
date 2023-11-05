@@ -53,6 +53,7 @@ Route::get('/myevent/{id}/schedule', [EventController::class, 'showEventSchedule
 Route::get('/events', [EventController::class, 'showAllEvent']);
 Route::get('/events/{id}', [EventController::class, 'showSelectedEvent']);
 Route::post('/create-event', [EventController::class, 'createNewEvent'])->middleware('authUser');
+Route::post('/events/join', [EventController::class, 'joinSelectedEvent']);
 
 
 Route::get('/myevent/{id}/ticket', [TicketController::class, 'showEventTicket'])->middleware('authUser');

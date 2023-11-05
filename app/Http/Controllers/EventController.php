@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -24,7 +25,7 @@ class EventController extends Controller
     public function createNewEvent(Request $request)
     {
         $user_input = $request->validate([
-            'event_title' => 'required|min:5|max:100',
+            'event_title' => 'required|unique:events,title|min:5|max:100',
             'event_description' => 'nullable',
             'start_date' => 'required',
             'end_date' => 'required|after:start_date',
@@ -70,36 +71,10 @@ class EventController extends Controller
             ->join('tickets', 'tickets.event_id', '=', 'events.id')
             ->join('users', 'users.id', '=', 'tickets.user_id')
             ->where('users.id', '=', auth()->id())
+            ->where('tickets.is_approve', 1)
             ->select('events.*', 'tickets.*')
             ->get();
         return view('pages.user_pages.my_event', ['user_event' => $user_event]);
-    }
-
-    public function showAllEvent()
-    {
-        $events = DB::table('events')->where('is_private', '=', 0)->get();
-        return view('pages.events', ['events' => $events]);
-    }
-
-    public function showSelectedEvent($id)
-    {
-        $event_id = $id;
-        $event = DB::table('events')
-            ->join('tickets', 'tickets.event_id', '=', 'events.id')
-            ->join('users', 'users.id', '=', 'tickets.user_id')
-            ->where('events.id', '=', $event_id)
-            ->select('events.*', 'tickets.*', 'users.username')
-            ->get();
-
-        $ticket_count = DB::table('events')
-            ->join('tickets', 'tickets.event_id', '=', 'events.id')
-            ->where('tickets.event_id', '=', $event_id)
-            ->where('tickets.is_organizer', '=', 0)
-            ->where('tickets.is_assistant', '=', 0)
-            ->select('tickets.*')
-            ->get()->count();
-
-        return view('pages.eventinfo', ['event' => $event, 'ticket_count' => $ticket_count]);
     }
 
     public function showEventInfo($id)
@@ -128,6 +103,63 @@ class EventController extends Controller
             return redirect('/myevent');
         } else {
             return view('pages.my_event_pages.info', ['event' => $event, 'ticket_count' => $ticket_count, 'event_id' => $event_id]);
+        }
+    }
+
+
+    public function showAllEvent()
+    {
+        $all_events = DB::table('events')
+            ->where('is_private', 0)
+            ->whereIn('id', function ($query) {
+                $query->select('event_id')
+                    ->where('user_id', '!=', auth()->id())
+                    ->from('tickets')
+                    ->groupBy('event_id');
+            })
+            ->get();
+
+        return view('pages.events', ['all_events' => $all_events]);
+    }
+
+    public function showSelectedEvent($id)
+    {
+        $event_id = $id;
+        $event = DB::table('events')
+            ->join('tickets', 'tickets.event_id', '=', 'events.id')
+            ->join('users', 'users.id', '=', 'tickets.user_id')
+            ->where('events.id', '=', $event_id)
+            ->select('events.*', 'tickets.*', 'users.username')
+            ->get();
+
+        $ticket_count = DB::table('events')
+            ->join('tickets', 'tickets.event_id', '=', 'events.id')
+            ->where('tickets.event_id', '=', $event_id)
+            ->where('tickets.is_organizer', '=', 0)
+            ->where('tickets.is_assistant', '=', 0)
+            ->select('tickets.*')
+            ->get()->count();
+
+        return view('pages.eventinfo', ['event' => $event, 'ticket_count' => $ticket_count]);
+    }
+
+    public function joinSelectedEvent(Request $request)
+    {
+
+        try {
+            $ticket_input = [
+                'user_id' => auth()->id(),
+                'event_id' => $request['event_id'],
+                'updated_at' => Carbon::now(),
+                'created_at' => Carbon::now()
+            ];
+
+            DB::table('tickets')->insert($ticket_input);
+
+            return redirect('/myevent');
+
+        } catch (Exception $e) {
+            return redirect('/events');
         }
     }
 
