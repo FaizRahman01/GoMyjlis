@@ -166,6 +166,40 @@ class EventController extends Controller
     public function showEventSchedule($id)
     {
         $event_id = $id;
-        return view('pages.my_event_pages.schedule', ['event_id' => $event_id]);
+        $activity_list = DB::table('schedules')
+        ->where('event_id', $event_id)
+        ->get();
+
+        return view('pages.my_event_pages.schedule', ['event_id' => $event_id, 'activity_list' => $activity_list]);
+    }
+
+    public function addEventActivity(Request $request, $id){
+
+        $event_id = $id;
+        $user_input = $request->validate([
+            'event_activity' => 'required|min:5|max:100',
+            'time_date_start' => 'required'
+        ]);
+
+        $schedule_activity = [
+            'activity' => $user_input['event_activity'],
+            'timeline' => $user_input['time_date_start'],
+            'event_id' => $event_id,
+            'updated_at' => Carbon::now(),
+            'created_at' => Carbon::now()
+        ];
+
+        DB::table('schedules')->insert($schedule_activity);
+        
+        return redirect('/myevent/'.$event_id.'/schedule');
+    }
+
+    public function removeEventActivity(Request $request, $id){
+
+        DB::table('schedules')
+        ->where('id', $request['activity_id'])
+        ->delete();
+
+        return redirect('/myevent/'.$id.'/schedule');
     }
 }

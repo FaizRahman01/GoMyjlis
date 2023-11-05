@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('schedules', function (Blueprint $table) {
             $table->id();
+            $table->string('activity');
+            $table->dateTime('timeline');
             $table->foreignId('event_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
