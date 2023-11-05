@@ -84,8 +84,6 @@ class EventController extends Controller
             ->join('tickets', 'tickets.event_id', '=', 'events.id')
             ->join('users', 'users.id', '=', 'tickets.user_id')
             ->where('events.id', '=', $event_id)
-            ->where('tickets.is_approve', '=', 1)
-            ->where('users.id', '=', auth()->id())
             ->select('events.*', 'tickets.*', 'users.username')
             ->get();
 
@@ -114,6 +112,7 @@ class EventController extends Controller
             ->whereIn('id', function ($query) {
                 $query->select('event_id')
                     ->where('user_id', '!=', auth()->id())
+                    ->where('is_organizer', 1)
                     ->from('tickets')
                     ->groupBy('event_id');
             })
