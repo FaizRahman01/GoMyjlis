@@ -11,17 +11,17 @@
 @section('link-notification'){{ URL::to('/notification') }}@endsection
 @section('link-contact'){{ URL::to('/contact') }}@endsection
 
-@section('link-info'){{ URL::to('/myevent/'.$event_id.'/info') }}@endsection
-@section('link-ticket'){{ URL::to('/myevent/'.$event_id.'/ticket') }}@endsection
+@section('link-info'){{ URL::to('/myevent/' . $event_id . '/info') }}@endsection
+@section('link-ticket'){{ URL::to('/myevent/' . $event_id . '/ticket') }}@endsection
 
-@section('link-schedule'){{ URL::to('/myevent/'.$event_id.'/schedule') }}@endsection
-@section('link-poll'){{ URL::to('/myevent/'.$event_id.'/poll') }}@endsection
-@section('link-rating'){{ URL::to('/myevent/'.$event_id.'/rating') }}@endsection
-@section('link-support'){{ URL::to('/myevent/'.$event_id.'/support') }}@endsection
-@section('link-task'){{ URL::to('/myevent/'.$event_id.'/task') }}@endsection
+@section('link-schedule'){{ URL::to('/myevent/' . $event_id . '/schedule') }}@endsection
+@section('link-poll'){{ URL::to('/myevent/' . $event_id . '/poll') }}@endsection
+@section('link-rating'){{ URL::to('/myevent/' . $event_id . '/rating') }}@endsection
+@section('link-support'){{ URL::to('/myevent/' . $event_id . '/support') }}@endsection
+@section('link-task'){{ URL::to('/myevent/' . $event_id . '/task') }}@endsection
 @section('link-attendee'){{ URL::current() }}@endsection
-@section('link-vendor'){{ URL::to('/myevent/'.$event_id.'/vendor') }}@endsection
-@section('link-analytic'){{ URL::to('/myevent/'.$event_id.'/analytic') }}@endsection
+@section('link-vendor'){{ URL::to('/myevent/' . $event_id . '/vendor') }}@endsection
+@section('link-analytic'){{ URL::to('/myevent/' . $event_id . '/analytic') }}@endsection
 
 @section('content')
 
@@ -43,70 +43,44 @@
                         <a href="#!.html">View All</a>
                     </div>
                     <div class="card-body">
-                        <ul class="list-group list-group-flush">
-                            <!--List-item-->
-                            <li class="list-group-item pt-0">
-                                <div class="d-flex align-items-center">
 
-                                    <div class="flex-grow-1">
-                                        <h6 class="mb-0">Inara Britt</h6>
-                                        <p class="mb-0 text-muted">4 Aug 2023</p>
-                                    </div>
-                                    <div class="flex-shrink-0 text-end">
-                                        <span>
-                                            <a href="" class="mx-1 btn btn-outline-danger link-underline link-underline-opacity-0">
-                                                Decline
-                                            </a>
-                                            <a href="" class="mx-1 btn btn-outline-success link-underline link-underline-opacity-0">
-                                                Accept
-                                            </a>
-                                        </span>
-                                    </div>
+                        @foreach ($user_list as $list)
+                            @if ($list->is_approve != 0 || $list->is_assistant != 0)
+                                @continue
+                            @endif
+                            <div class="row mb-2">
+                                <div class="col-6">
+                                    <h6 class="mb-0">{{ $list->username }}</h6>
+                                    <p class="mb-0 text-muted">{{ date('d-m-Y', strtotime($list->created_at)) }}</p>
                                 </div>
-                            </li>
-                            <!--List-item-->
-                            <li class="list-group-item">
-                                <div class="d-flex align-items-center">
-
-                                    <div class="flex-grow-1">
-                                        <h6 class="mb-0">Eduard Franz</h6>
-                                        <p class="mb-0 text-muted">15 Aug 2023</p>
-                                    </div>
-                                    <div class="flex-shrink-0 text-end">
-                                        <span>
-                                            <a href="" class="mx-1 btn btn-outline-danger link-underline link-underline-opacity-0">
-                                                Decline
-                                            </a>
-                                            <a href="" class="mx-1 btn btn-outline-success link-underline link-underline-opacity-0">
-                                                Accept
-                                            </a>
-                                        </span>
-                                    </div>
+                                <div class="col-6 d-flex justify-content-end">
+                                    <form action="/myevent/{{ $list->event_id }}/decline" method="post">
+                                        {{ method_field('DELETE') }}
+                                        @csrf
+                                        <input type="hidden" name="user_id" value="{{ $list->user_id }}"
+                                            autocomplete="off">
+                                        <button type="submit"
+                                            class="mx-1 btn btn-outline-danger link-underline link-underline-opacity-0">
+                                            Decline
+                                        </button>
+                                    </form>
+                                    <form action="/myevent/{{ $list->event_id }}/accept" method="post">
+                                        {{ method_field('PUT') }}
+                                        @csrf
+                                        <input type="hidden" name="user_id" value="{{ $list->user_id }}"
+                                            autocomplete="off">
+                                        <button type="submit"
+                                            class="mx-1 btn btn-outline-success link-underline link-underline-opacity-0">
+                                            Accept
+                                        </button>
+                                    </form>
                                 </div>
-                            </li>
-                            <!--List-item-->
-                            <li class="list-group-item">
-                                <div class="d-flex align-items-center">
+                            </div>
+                            <hr />
+                        @endforeach
 
-                                    <div class="flex-grow-1">
-                                        <h6 class="mb-0">Gianluca Darby</h6>
-                                        <p class="mb-0 text-muted">2 Aug 2023</p>
-                                    </div>
-                                    <div class="flex-shrink-0 text-end">
-                                        <span>
-                                            <a href="" class="mx-1 btn btn-outline-danger link-underline link-underline-opacity-0">
-                                                Decline
-                                            </a>
-                                            <a href="" class="mx-1 btn btn-outline-success link-underline link-underline-opacity-0">
-                                                Accept
-                                            </a>
-                                        </span>
-                                    </div>
-                                </div>
-                            </li>
-                            <!--List-item-->
 
-                        </ul>
+
                     </div>
                 </div>
             </div>
@@ -123,61 +97,68 @@
                         <a href="#!.html">View All</a>
                     </div>
                     <div class="card-body">
-                        <ul class="list-group list-group-flush">
-                            <!--List-item-->
-                            <li class="list-group-item pt-0">
-                                <div class="d-flex align-items-center">
 
-                                    <div class="flex-grow-1">
-                                        <h6 class="mb-0">Inara Britt</h6>
-                                        <p class="mb-0 text-muted">Attendee</p>
-                                    </div>
-                                    <div class="flex-shrink-0 text-end">
-                                        <span>
-                                            <a href="" class="btn btn-outline-dark link-underline link-underline-opacity-0">
-                                                Manage
-                                            </a>
-                                        </span>
-                                    </div>
+                        @foreach ($user_list as $list)
+                            @if ($list->is_approve != 1)
+                                @continue
+                            @endif
+                            <div class="row mb-2 mx-2">
+                                <div class="col-6">
+                                    <h6 class="mb-0">{{ Str::ucfirst($list->username) }}</h6>
+                                    <p class="mb-0 text-muted">
+                                        @if ($list->is_organizer == 0 && $list->is_assistant == 1)
+                                            Assistant
+                                        @else
+                                            Attendee
+                                        @endif
+                                    </p>
                                 </div>
-                            </li>
-                            <!--List-item-->
-                            <li class="list-group-item">
-                                <div class="d-flex align-items-center">
+                                <div class="col-6 d-flex justify-content-end">
+                                    <span>
+                                        <div class="btn-group" role="group"
+                                            aria-label="Button group with nested dropdown">
+                                            <button type="button" class="btn btn-primary">Manage</button>
+                                            <div class="btn-group" role="group">
+                                                <button id="btnGroupDrop1" type="button"
+                                                    class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false"></button>
+                                                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                    @if ($list->is_organizer == 0 && $list->is_assistant == 1)
+                                                        <form action="/myevent/{{ $list->event_id }}/demote"
+                                                            method="post">
+                                                            {{ method_field('PUT') }}
+                                                            @csrf
+                                                            <input type="hidden" name="user_id"
+                                                                value="{{ $list->user_id }}" autocomplete="off">
+                                                            <button type="submit" class="dropdown-item">Demote to
+                                                                attendee</button>
+                                                        </form>
+                                                    @else
+                                                        <form action="/myevent/{{ $list->event_id }}/hire" method="post">
+                                                            {{ method_field('PUT') }}
+                                                            @csrf
+                                                            <input type="hidden" name="user_id"
+                                                                value="{{ $list->user_id }}" autocomplete="off">
+                                                            <button type="submit" class="dropdown-item">Hire as
+                                                                assistant</button>
+                                                        </form>
+                                                    @endif
+                                                    <form action="/myevent/{{ $list->event_id }}/kick" method="POST">
+                                                        {{ method_field('DELETE') }}
+                                                        @csrf
+                                                        <input type="hidden" name="user_id" value="{{ $list->user_id }}"
+                                                            autocomplete="off">
+                                                        <button type="submit" class="dropdown-item">Kick</button>
+                                                    </form>
 
-                                    <div class="flex-grow-1">
-                                        <h6 class="mb-0">Eduard Franz</h6>
-                                        <p class="mb-0 text-muted">Event Assistant</p>
-                                    </div>
-                                    <div class="flex-shrink-0 text-end">
-                                        <span>
-                                            <a href="" class="btn btn-outline-dark link-underline link-underline-opacity-0">
-                                                Manage
-                                            </a>
-                                        </span>
-                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </span>
                                 </div>
-                            </li>
-                            <!--List-item-->
-                            <li class="list-group-item">
-                                <div class="d-flex align-items-center">
-
-                                    <div class="flex-grow-1">
-                                        <h6 class="mb-0">Gianluca Darby</h6>
-                                        <p class="mb-0 text-muted">Attendee</p>
-                                    </div>
-                                    <div class="flex-shrink-0 text-end">
-                                        <span>
-                                            <a href="" class="btn btn-outline-dark link-underline link-underline-opacity-0">
-                                                Manage
-                                            </a>
-                                        </span>
-                                    </div>
-                                </div>
-                            </li>
-                            <!--List-item-->
-
-                        </ul>
+                            </div>
+                            <hr />
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -185,6 +166,6 @@
     </div>
 
 
-    
+
 
 @endsection

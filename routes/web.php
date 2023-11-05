@@ -58,6 +58,11 @@ Route::post('/events/join', [EventController::class, 'joinSelectedEvent']);
 
 Route::get('/myevent/{id}/ticket', [TicketController::class, 'showEventTicket'])->middleware('authUser');
 Route::get('/myevent/{id}/attendee', [TicketController::class, 'showEventAttendee'])->middleware('authUser');
+Route::put('/myevent/{id}/accept', [TicketController::class, 'acceptEventAttendee'])->middleware('authUser');
+Route::delete('/myevent/{id}/decline', [TicketController::class, 'declineEventAttendee'])->middleware('authUser');
+Route::delete('/myevent/{id}/kick', [TicketController::class, 'kickEventAttendee'])->middleware('authUser');
+Route::put('/myevent/{id}/hire', [TicketController::class, 'hireEventAssitant'])->middleware('authUser');
+Route::put('/myevent/{id}/demote', [TicketController::class, 'demoteEventAttendee'])->middleware('authUser');
 
 
 Route::get('/myevent/{id}/poll', [FeedbackController::class, 'showEventPoll'])->middleware('authUser');
