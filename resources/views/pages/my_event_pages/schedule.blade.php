@@ -74,16 +74,20 @@
                     <form action="/myevent/{{ $event_id }}/activity" method="post">
                         @csrf
                         <div class="form-floating mb-3 has-danger">
-                            <input type="text" name="event_activity" class="form-control is-invalid"
+                            <input type="text" name="event_activity" class="form-control @error('event_activity')is-invalid @enderror"
                                 placeholder="Announcement">
                             <label>Activity</label>
-                            <div class="invalid-feedback text-start">required</div>
+                            @error('event_activity')
+                            <div class="invalid-feedback text-start">{{$message}}</div>
+                            @enderror
                         </div>
                         <div class="form-floating mb-3 has-danger">
-                            <input type="datetime-local" name="time_date_start" class="form-control is-invalid"
+                            <input type="datetime-local" name="time_date_start" class="form-control @error('time_date_start')is-invalid @enderror"
                                 placeholder="Start Date">
                             <label>Time and Date</label>
-                            <div class="invalid-feedback text-start">required</div>
+                            @error('time_date_start')
+                            <div class="invalid-feedback text-start">{{$message}}</div>
+                            @enderror
                         </div>
                         <button type="submit" class="btn btn-primary btn-block mb-4 w-100">
                             Add
