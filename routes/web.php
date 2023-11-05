@@ -48,6 +48,8 @@ Route::get('/admin/manage-event/{id}', [AdminController::class, 'showEventOvervi
 
 Route::get('/create-event', [EventController::class, 'showEventForm'])->middleware('authUser');
 Route::get('/myevent', [EventController::class, 'showUserEvent'])->middleware('authUser');
+Route::delete('/myevent/delete', [EventController::class, 'deleteUserEvent'])->middleware('authUser');
+Route::put('/myevent/edit', [EventController::class, 'editUserEvent'])->middleware('authUser');
 Route::get('/myevent/{id}/info', [EventController::class, 'showEventInfo'])->middleware('authUser');
 Route::get('/myevent/{id}/schedule', [EventController::class, 'showEventSchedule'])->middleware('authUser');
 Route::get('/events', [EventController::class, 'showAllEvent']);

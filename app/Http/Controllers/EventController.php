@@ -77,15 +77,61 @@ class EventController extends Controller
         return view('pages.user_pages.my_event', ['user_event' => $user_event]);
     }
 
+    public function editUserEvent(Request $request)
+    {
+        $user_input = $request->validate([
+            'event_title' => 'required|unique:events,title|min:5|max:100',
+            'event_description' => 'nullable',
+            'start_date' => 'required',
+            'end_date' => 'required|after:start_date',
+            'address' => 'nullable',
+            'state' => 'required',
+            'event_mode' => 'required',
+            'visibility' => 'required',
+        ]);
+
+        $visibility_value = $user_input['visibility'] == 'Public' ? 0 : 1;
+        $event_input = [
+            'title' => strip_tags($user_input['event_title']),
+            'description' => strip_tags($user_input['event_description']),
+            'start_date' => $user_input['start_date'],
+            'end_date' => $user_input['end_date'],
+            'address' => strip_tags($user_input['address']),
+            'state' => $user_input['state'],
+            'event_mode' => $user_input['event_mode'],
+            'is_private' => $visibility_value,
+            'updated_at' => Carbon::now()
+        ];
+
+        DB::table('events')
+        ->where('id', $request['event_id'])
+        ->update($event_input);
+
+        return redirect('/myevent/'.$request['event_id'].'/info');
+    }
+
+    public function deleteUserEvent(Request $request)
+    {
+        DB::table('events')->where('id', $request['event_id'])->delete();
+        return redirect('/myevent');
+    }
+
     public function showEventInfo($id)
     {
+        $state = [
+            'Johor', 'Kedah', 'Kelantan', 'Kuala Lumpur', 'Melaka',
+            'Negeri Sembilan', 'Pahang', 'Penang', 'Perak',
+            'Perlis', 'Putrajaya', 'Sabah', 'Sarawak', 'Selangor', 'Terengganu'
+        ];
         $event_id = $id;
         $event = DB::table('events')
             ->join('tickets', 'tickets.event_id', '=', 'events.id')
             ->join('users', 'users.id', '=', 'tickets.user_id')
             ->where('events.id', '=', $event_id)
+            ->where('user_id', auth()->id())
+            ->where('is_approve', 1)
             ->select('events.*', 'tickets.*', 'users.username')
-            ->get();
+            ->get()->first();
 
         $ticket_count = DB::table('events')
             ->join('tickets', 'tickets.event_id', '=', 'events.id')
@@ -97,10 +143,10 @@ class EventController extends Controller
             ->select('tickets.*')
             ->get()->count();
 
-        if ($event->isEmpty()) {
+        if ($event == null) {
             return redirect('/myevent');
         } else {
-            return view('pages.my_event_pages.info', ['event' => $event, 'ticket_count' => $ticket_count, 'event_id' => $event_id]);
+            return view('pages.my_event_pages.info', ['event' => $event, 'ticket_count' => $ticket_count, 'event_id' => $event_id, 'state' => $state]);
         }
     }
 

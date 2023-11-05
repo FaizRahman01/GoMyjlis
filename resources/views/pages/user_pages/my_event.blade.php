@@ -84,9 +84,16 @@
                                                 </ul>
                                             </div>
                                         </div>
+                                        @if ($mylist->is_organizer == 1)
                                         <div class="col-md-7 col-12 d-flex justify-content-md-end">
-                                            <a class="btn btn-danger" href="#">Leave</a>
+                                            <form action="/myevent/delete" method="post">
+                                                {{ method_field('DELETE') }}
+                                                @csrf
+                                                <input type="hidden" name="event_id" value="{{ $mylist->event_id }}" autocomplete="off">
+                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                            </form>
                                         </div>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
