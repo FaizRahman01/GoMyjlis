@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('contact_number');
             $table->text('address')->nullable();
-            $table->string('category');
+            $table->string('category')->nullable();
             $table->foreignId('event_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });

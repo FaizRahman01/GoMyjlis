@@ -84,6 +84,9 @@ Route::put('/myevent/{id}/inprogress-task', [OrganizerController::class, 'setInP
 Route::put('/myevent/{id}/completed-task', [OrganizerController::class, 'setCompletedTask'])->middleware('authUser');
 Route::delete('/myevent/{id}/remove-task', [OrganizerController::class, 'removeTask'])->middleware('authUser');
 Route::get('/myevent/{id}/vendor', [OrganizerController::class, 'showEventVendor'])->middleware('authUser');
+Route::post('/myevent/{id}/vendor', [OrganizerController::class, 'createEventVendor'])->middleware('authUser');
+Route::get('/myevent/{event_id}/vendor/{vendor_id}', [OrganizerController::class, 'showVendorMessage'])->middleware('authUser');
+Route::post('/myevent/{event_id}/vendor/{vendor_id}', [OrganizerController::class, 'createVendorMessage'])->middleware('authUser');
 
 
 Route::get('/myevent/{id}/analytic', [AnalyticControllerr::class, 'showEventAnalytic'])->middleware('authUser');
