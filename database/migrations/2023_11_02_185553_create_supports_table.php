@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('supports', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->boolean('is_close');
+            $table->boolean('is_close')->default(0);;
             $table->foreignId('ticket_id')->constrained()->onDelete('cascade');
             $table->foreignId('event_id')->constrained()->onDelete('cascade');
             $table->timestamps();

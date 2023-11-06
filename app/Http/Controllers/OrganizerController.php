@@ -12,8 +12,106 @@ class OrganizerController extends Controller
     public function showEventSupport($id)
     {
         $event_id = $id;
-        return view('pages.my_event_pages.support', ['event_id' => $event_id]);
+
+        $issue_list = DB::table('supports')
+            ->crossJoin('tickets', 'tickets.id', '=', 'supports.ticket_id')
+            ->join('users', 'users.id', '=', 'tickets.user_id')
+            ->select('supports.*', 'users.username')
+            ->where('supports.event_id', $event_id)
+            ->get();
+
+        return view('pages.my_event_pages.support', ['event_id' => $event_id, 'issue_list' =>  $issue_list]);
     }
+
+    public function createSupportTicket(Request $request, $id)
+    {
+        $event_id = $id;
+        $user_input = $request->validate([
+            'issue_title' => 'required|min:5|max:100',
+        ]);
+
+        $ticket_id = DB::table('tickets')
+            ->select('id')
+            ->where('event_id', $event_id)
+            ->where('user_id', auth()->id())
+            ->get()->first();
+
+        $ticket_num = json_decode($ticket_id->id, true);
+
+        $issue_input = [
+            'title' => $user_input['issue_title'],
+            'ticket_id' => $ticket_num,
+            'event_id' => $event_id,
+            'updated_at' => Carbon::now(),
+            'created_at' => Carbon::now()
+        ];
+
+        DB::table('supports')->insert($issue_input);
+
+        return redirect('/myevent/' . $event_id . '/support');
+    }
+
+    public function showSupportChat($event_id, $support_id)
+    {
+        $support_status = DB::table('supports')
+        ->select('title', 'is_close')
+        ->where('id', $support_id)
+        ->get()->first();
+
+        $message_list = DB::table('support_messages')
+            ->join('tickets', 'tickets.id', '=', 'support_messages.ticket_id')
+            ->join('users', 'users.id', '=', 'tickets.user_id')
+            ->select('support_messages.*', 'users.username')
+            ->where('support_messages.support_id', $support_id)
+            ->get();
+
+        return view('pages.my_event_pages.support_message', ['event_id' => $event_id, 'support_id' => $support_id, 'message_list' => $message_list, 'support_status' => $support_status]);
+    }
+
+    public function createSupportMessage(Request $request, $event_id, $support_id)
+    {
+        $user_input = $request->validate([
+            'user-message' => 'required',
+        ]);
+
+        $ticket_id = DB::table('tickets')
+            ->select('id')
+            ->where('event_id', $event_id)
+            ->where('user_id', auth()->id())
+            ->get()->first();
+
+        $ticket_num = json_decode($ticket_id->id, true);
+
+        $message_input = [
+            'message' => $user_input['user-message'],
+            'ticket_id' => $ticket_num,
+            'support_id' => $support_id,
+            'updated_at' => Carbon::now(),
+            'created_at' => Carbon::now()
+        ];
+
+        DB::table('support_messages')->insert($message_input);
+
+        return redirect('/myevent/' . $event_id . '/support/' . $support_id . '');
+    }
+
+
+    public function closeSupportMessage($event_id, $support_id)
+    {
+
+        $close_message = [
+            'is_close' => 1,
+            'updated_at' => Carbon::now()
+        ];
+
+        DB::table('supports')
+            ->where('id', $support_id)
+            ->where('event_id', $event_id)
+            ->update($close_message);
+
+        return redirect('/myevent/' . $event_id . '/support/' . $support_id . '');
+    }
+
 
     public function showEventTask($id)
     {
@@ -40,8 +138,8 @@ class OrganizerController extends Controller
         ];
 
         DB::table('tasks')->insert($task_input);
-        
-        return redirect('/myevent/'.$event_id.'/task');
+
+        return redirect('/myevent/' . $event_id . '/task');
     }
 
     public function setInProgressTask(Request $request, $id)
@@ -53,11 +151,11 @@ class OrganizerController extends Controller
         ];
 
         DB::table('tasks')
-        ->where('id', $request['task_id'])
-        ->where('event_id', $event_id)
-        ->update($inprogress_status);
+            ->where('id', $request['task_id'])
+            ->where('event_id', $event_id)
+            ->update($inprogress_status);
 
-        return redirect('/myevent/'.$event_id.'/task');
+        return redirect('/myevent/' . $event_id . '/task');
     }
 
     public function setCompletedTask(Request $request, $id)
@@ -70,11 +168,11 @@ class OrganizerController extends Controller
         ];
 
         DB::table('tasks')
-        ->where('id', $request['task_id'])
-        ->where('event_id', $event_id)
-        ->update($inprogress_status);
+            ->where('id', $request['task_id'])
+            ->where('event_id', $event_id)
+            ->update($inprogress_status);
 
-        return redirect('/myevent/'.$event_id.'/task');
+        return redirect('/myevent/' . $event_id . '/task');
     }
 
     public function removeTask(Request $request, $id)
@@ -82,11 +180,11 @@ class OrganizerController extends Controller
         $event_id = $id;
 
         DB::table('tasks')
-        ->where('id', $request['task_id'])
-        ->where('event_id', $event_id)
-        ->delete();
+            ->where('id', $request['task_id'])
+            ->where('event_id', $event_id)
+            ->delete();
 
-        return redirect('/myevent/'.$event_id.'/task');
+        return redirect('/myevent/' . $event_id . '/task');
     }
 
     public function showEventVendor($id)
