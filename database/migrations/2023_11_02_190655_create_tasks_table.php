@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->mediumText('description');
-            $table->boolean('is_complete');
-            $table->foreignId('ticket_id')->constrained()->onDelete('cascade');
+            $table->mediumText('description')->nullable();
+            $table->boolean('is_start')->default(0);
+            $table->boolean('is_complete')->default(0);
             $table->foreignId('event_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });

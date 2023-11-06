@@ -75,6 +75,10 @@ Route::get('/myevent/{id}/rating', [FeedbackController::class, 'showEventRating'
 
 Route::get('/myevent/{id}/support', [OrganizerController::class, 'showEventSupport'])->middleware('authUser');
 Route::get('/myevent/{id}/task', [OrganizerController::class, 'showEventTask'])->middleware('authUser');
+Route::post('/myevent/{id}/create-task', [OrganizerController::class, 'createEventTask'])->middleware('authUser');
+Route::put('/myevent/{id}/inprogress-task', [OrganizerController::class, 'setInProgressTask'])->middleware('authUser');
+Route::put('/myevent/{id}/completed-task', [OrganizerController::class, 'setCompletedTask'])->middleware('authUser');
+Route::delete('/myevent/{id}/remove-task', [OrganizerController::class, 'removeTask'])->middleware('authUser');
 Route::get('/myevent/{id}/vendor', [OrganizerController::class, 'showEventVendor'])->middleware('authUser');
 
 
