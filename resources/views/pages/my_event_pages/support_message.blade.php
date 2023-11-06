@@ -1,4 +1,5 @@
 @extends('components.my_event_template')
+@inject('carbon', 'Carbon\Carbon')
 
 @section('title', 'Support')
 
@@ -53,7 +54,7 @@
                 <div class="mb-2">
                     <div class="d-flex justify-content-between">
                         <p class="small mb-1 text-muted">{{ $list->username }}</p>
-                        <p class="small mb-1 text-muted">{{ $list->created_at }}</p>
+                        <p class="small mb-1 text-muted">{{ $carbon::parse($list->created_at)->diffForHumans() }}</p>
                     </div>
                     <div class="d-flex flex-row justify-content-start">
                         <div>
