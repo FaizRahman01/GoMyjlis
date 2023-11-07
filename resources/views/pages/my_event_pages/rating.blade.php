@@ -35,6 +35,7 @@
 
 
                 <form class="px-2" action="/myevent/{{ $event_id }}/rating" method="post">
+                    @if (empty($rating_result))
                     @csrf
                     <h5>Content and Presentation</h5>
                     <input type="hidden" name="content_category" value="content" autocomplete="off">
@@ -101,7 +102,7 @@
                         <label class="btn btn-outline-dark" for="btn-overall3">Satisfied</label>
                     </div>
 
-                    @if (empty($rating_result))
+                    
                         <div>
                             <button type="submit" class="btn btn-dark w-100">Submit</button>
                         </div>
@@ -109,9 +110,30 @@
 
                 </form>
             </div>
-            <div class="card-footer text-end">
-
+            @if (!empty($rating_result))
+            
+            <div class="card-footer">
+                <div>
+                    @foreach ($rating_result as $result)
+                    @if ($result->category == 'content')
+                    <h5 class="fw-light">Content and Presentation : <span class="text-muted small">{{$result->rate_value}}</span></h5>
+                    @endif
+                    @if ($result->category == 'entertain')
+                    <h5 class="fw-light">Entertainment : <span class="text-muted small">{{$result->rate_value}}</span></h5>
+                    @endif
+                    @if ($result->category == 'engagement')
+                    <h5 class="fw-light">Engagement and Interaction : <span class="text-muted small">{{$result->rate_value}}</span></h5>
+                    @endif
+                    @if ($result->category == 'food')
+                    <h5 class="fw-light">Food and Beverages : <span class="text-muted small">{{$result->rate_value}}</span></h5>
+                    @endif
+                    @if ($result->category == 'overall')
+                    <h5 class="fw-light">Overall Experiences : <span class="text-muted small">{{$result->rate_value}}</span></h5>
+                    @endif
+                    @endforeach
+                </div>
             </div>
+            @endif
         </div>
     </div>
 
