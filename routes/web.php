@@ -74,6 +74,7 @@ Route::put('/myevent/{id}/demote', [TicketController::class, 'demoteEventAttende
 
 Route::get('/myevent/{id}/poll', [FeedbackController::class, 'showEventPoll'])->middleware('authUser');
 Route::get('/myevent/{id}/rating', [FeedbackController::class, 'showEventRating'])->middleware('authUser');
+Route::post('/myevent/{id}/rating', [FeedbackController::class, 'createEventRating'])->middleware('authUser');
 
 
 Route::get('/myevent/{id}/support', [OrganizerController::class, 'showEventSupport'])->middleware('authUser');
