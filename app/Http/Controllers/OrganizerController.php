@@ -207,6 +207,8 @@ class OrganizerController extends Controller
             'phone_number' => 'required|regex:/(01)[0-9]{8}/',
             'address' => 'nullable',
             'service_category' => 'nullable|max:25'
+        ],[
+            'phone_number.regex' => 'Phone number need to begin with 01 and a total of 10 digit'
         ]);
 
         $vendor_input = [
