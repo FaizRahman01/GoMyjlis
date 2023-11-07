@@ -33,9 +33,9 @@
         <div class="card">
             <div class="card-body d-flex justify-content-center">
 
-
+                @if ($rating_result->isEmpty() )
                 <form class="px-2" action="/myevent/{{ $event_id }}/rating" method="post">
-                    @if (empty($rating_result))
+                    
                     @csrf
                     <h5>Content and Presentation</h5>
                     <input type="hidden" name="content_category" value="content" autocomplete="off">
@@ -106,11 +106,12 @@
                         <div>
                             <button type="submit" class="btn btn-dark w-100">Submit</button>
                         </div>
-                    @endif
+                    
 
                 </form>
+                @endif
             </div>
-            @if (!empty($rating_result))
+            @if ($rating_result->isNotEmpty())
             
             <div class="card-footer">
                 <div>
