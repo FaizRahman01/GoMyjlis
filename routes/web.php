@@ -43,7 +43,10 @@ Route::post('/logout', [UserController::class, 'logoutUserAccount'])->middleware
 
 Route::get('/admin/manage-user', [AdminController::class, 'showAllUsers'])->middleware('authAdmin');
 Route::get('/admin/manage-user/{id}', [AdminController::class, 'showAllUserEvents'])->middleware('authAdmin');
+Route::delete('/admin/manage-user/{id}', [AdminController::class, 'deleteUserAccount'])->middleware('authAdmin');
 Route::get('/admin/manage-event/{id}', [AdminController::class, 'showEventOverview'])->middleware('authAdmin');
+Route::delete('/admin/manage-event/{id}', [AdminController::class, 'deleteUserEvent'])->middleware('authAdmin');
+Route::delete('/admin/manage-event/{event_id}/{ticket_id}', [AdminController::class, 'kickEventAttendee'])->middleware('authAdmin');
 
 
 Route::get('/create-event', [EventController::class, 'showEventForm'])->middleware('authUser');

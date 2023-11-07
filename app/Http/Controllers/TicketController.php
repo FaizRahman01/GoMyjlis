@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -42,7 +43,8 @@ class TicketController extends Controller
 
     public function acceptEventAttendee(Request $request, $id){
         $accept_request = [
-            'is_approve' => 1
+            'is_approve' => 1,
+            'updated_at' => Carbon::now()
         ];
 
         DB::table('tickets')
