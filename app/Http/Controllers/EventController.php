@@ -175,7 +175,7 @@ class EventController extends Controller
             ->join('users', 'users.id', '=', 'tickets.user_id')
             ->where('events.id', '=', $event_id)
             ->select('events.*', 'tickets.*', 'users.username')
-            ->get();
+            ->get()->first();
 
         $ticket_count = DB::table('events')
             ->join('tickets', 'tickets.event_id', '=', 'events.id')

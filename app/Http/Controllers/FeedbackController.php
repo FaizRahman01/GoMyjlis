@@ -35,7 +35,28 @@ class FeedbackController extends Controller
             ->where('ticket_id', $ticket_num)
             ->get();
 
-        return view('pages.my_event_pages.poll', ['event_id' => $event_id, 'poll_list' => $poll_list, 'poll_question' => $poll_question, 'poll_answer' => $poll_answer]);
+        $poll_manage = DB::table('polls')
+            ->join('poll_answers', 'poll_answers.poll_id', '=', 'polls.id')
+            ->join('poll_results', 'poll_results.poll_id', '=', 'polls.id')
+            ->select(
+                'polls.id',
+                'question',
+                'answer',
+                DB::raw('count(case when answer = result then 1 else null end) as answer_total'),
+            )
+            ->where('polls.event_id', $event_id)
+            ->groupBy('polls.id', 'question', 'answer')
+            ->get();
+
+        $view_data = [
+            'event_id' => $event_id,
+            'poll_list' => $poll_list,
+            'poll_question' => $poll_question,
+            'poll_answer' => $poll_answer,
+            'poll_manage' => $poll_manage
+        ];
+
+        return view('pages.my_event_pages.poll', $view_data);
     }
 
     public function createEventPoll(Request $request, $id)
@@ -99,6 +120,33 @@ class FeedbackController extends Controller
         } catch (Exception $e) {
             return redirect('/myevent/' . $event_id . '/poll');
         }
+    }
+
+    public function closeEventPoll($event_id, $poll_id)
+    {
+
+        $poll_status = [
+            'is_close' => 1,
+            'updated_at' => Carbon::now()
+        ];
+
+        DB::table('polls')
+            ->where('polls.event_id', $event_id)
+            ->where('polls.id', $poll_id)
+            ->update($poll_status);
+
+        return redirect('/myevent/' . $event_id . '/poll');
+    }
+
+    public function deleteEventPoll($event_id, $poll_id)
+    {
+
+        DB::table('polls')
+            ->where('polls.event_id', $event_id)
+            ->where('polls.id', $poll_id)
+            ->delete();
+
+        return redirect('/myevent/' . $event_id . '/poll');
     }
 
     public function showEventRating($id)

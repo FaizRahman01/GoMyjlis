@@ -15,8 +15,7 @@
 
 @section('content')
 
-    <!-- Content -->
-    @foreach ($event as $info)
+
         <div class="container">
 
             <!-- Header -->
@@ -25,11 +24,11 @@
                     {{-- carousel here --}}
                     <div class="container">
                         <div class="row mb-4">
-                            <h4 class="font-weight-bold col-md-6 col-8 d-flex align-items-center">{{ $info->title }}</h4>
+                            <h4 class="font-weight-bold col-md-6 col-8 d-flex align-items-center">{{ $event->title }}</h4>
                             <div class="col-md-6 col-4 d-flex justify-content-end">
                                 <form action="{{ URL::to('/events/join') }}" method="POST">
                                     @csrf
-                                    <input type="hidden" name="event_id" value="{{ $info->id }}" autocomplete="off">
+                                    <input type="hidden" name="event_id" value="{{ $event->id }}" autocomplete="off">
                                     <button type="submit"
                                         class="btn btn-outline-dark link-underline link-underline-opacity-0 d-flex align-items-center">
                                         Count Me In</button>
@@ -38,7 +37,7 @@
                         </div>
 
                         <div class="text-muted mb-4">
-                            {!! nl2br($info->description) !!}
+                            {!! nl2br($event->description) !!}
                         </div>
                     </div>
                 </div>
@@ -53,35 +52,35 @@
                     <div class="row mb-2">
                         <div class="col-md-3 text-muted">Organiser:</div>
                         <div class="col-md-9">
-                            {{ $info->username }}
+                            {{ $event->username }}
                         </div>
                     </div>
 
                     <div class="row mb-2">
                         <div class="col-md-3 text-muted">Date Start:</div>
                         <div class="col-md-9">
-                            <p>{{ $info->start_date }}</p>
+                            <p>{{ $event->start_date }}</p>
                         </div>
                     </div>
 
                     <div class="row mb-2">
                         <div class="col-md-3 text-muted">Date End:</div>
                         <div class="col-md-9">
-                            <p>{{ $info->end_date }}</p>
+                            <p>{{ $event->end_date }}</p>
                         </div>
                     </div>
 
                     <div class="row mb-2">
                         <div class="col-md-3 text-muted">State:</div>
                         <div class="col-md-9">
-                            <p>{{ $info->state }}</p>
+                            <p>{{ $event->state }}</p>
                         </div>
                     </div>
 
                     <div class="row mb-2">
                         <div class="col-md-3 text-muted">Address:</div>
                         <div class="col-md-9">
-                            {{ $info->address }}
+                            {{ $event->address }}
                         </div>
                     </div>
 
@@ -94,16 +93,15 @@
                         </div>
                         <div class="d-flex col flex-column py-3">
                             <div class="font-weight-bold">Visibility</div>
-                            <div class="text-muted small">{{ $info->is_private == 0 ? 'Public' : 'Private' }}</div>
+                            <div class="text-muted small">{{ $event->is_private == 0 ? 'Public' : 'Private' }}</div>
                         </div>
                         <div class="d-flex col flex-column py-3">
                             <div class="font-weight-bold">Event Mode</div>
-                            <div class="text-muted small"> {{ $info->event_mode }}</div>
+                            <div class="text-muted small"> {{ $event->event_mode }}</div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    @endforeach
 
 @endsection

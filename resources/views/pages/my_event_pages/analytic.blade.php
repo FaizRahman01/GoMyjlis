@@ -27,7 +27,7 @@
 @section('content')
 
     <div class="row mb-4">
-        <h4 class="fw-light col-12 d-flex align-items-center">Data Analytics</h4>
+        <h4 class="fw-light col-12 d-flex align-items-center">Event Analytics</h4>
     </div>
 
     <div class="mb-5 mx-5 d-flex justify-content-center">

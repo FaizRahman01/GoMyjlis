@@ -40,27 +40,30 @@
                 {{ $question->question }}
             </li>
 
-            <li class="list-group-item">
-                <form action="/myevent/{{ $event_id }}/poll/{{ $question->id }}" method="post">
-                    @csrf
-                    <div class="row">
-                        <div class="col-8 ps-2">
-                            <select name="answer" class="form-select w-100" id="exampleSelect1">
-                                @foreach ($poll_list as $list)
-                                    @if ($list->question == $question->question)
-                                        <option>{{ $list->answer }}</option>
-                                    @endif
-                                @endforeach
-                            </select>
+            @if ($question->is_close == 0)
+                <li class="list-group-item">
+                    <form action="/myevent/{{ $event_id }}/poll/{{ $question->id }}" method="post">
+                        @csrf
+                        <div class="row">
+                            <div class="col-8 ps-2">
+                                <select name="answer" class="form-select w-100" id="exampleSelect1">
+                                    @foreach ($poll_list as $list)
+                                        @if ($list->question == $question->question)
+                                            <option>{{ $list->answer }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-4">
+                                <button type="submit" class="btn btn-primary btn-block mb-4 w-100">
+                                    Confirm
+                                </button>
+                            </div>
                         </div>
-                        <div class="col-4">
-                            <button type="submit" class="btn btn-primary btn-block mb-4 w-100">
-                                Confirm
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </li>
+                    </form>
+                </li>
+            @endif
+
             @foreach ($poll_answer as $answer)
                 @if ($answer->poll_id == $question->id)
                     <li class="list-group-item">
@@ -84,8 +87,8 @@
                     <form action="" method="post">
                         @csrf
                         <div class="form-floating mb-3 has-danger">
-                            <input type="text" name="question" class="form-control @error('question')is-invalid @enderror"
-                                placeholder="Announcement">
+                            <input type="text" name="question"
+                                class="form-control @error('question')is-invalid @enderror" placeholder="Announcement">
                             <label>Your Question</label>
                             @error('question')
                                 <div class="invalid-feedback text-start">{{ $message }}</div>
@@ -93,8 +96,8 @@
                         </div>
 
                         <div class="form-floating mb-3 has-danger">
-                            <input type="text" name="answer_1" class="form-control @error('answer_1')is-invalid @enderror"
-                                placeholder="Announcement">
+                            <input type="text" name="answer_1"
+                                class="form-control @error('answer_1')is-invalid @enderror" placeholder="Announcement">
                             <label>Answer 1</label>
                             @error('answer_1')
                                 <div class="invalid-feedback text-start">{{ $message }}</div>
@@ -102,8 +105,8 @@
                         </div>
 
                         <div class="form-floating mb-3 has-danger">
-                            <input type="text" name="answer_2" class="form-control @error('answer_2')is-invalid @enderror"
-                                placeholder="Announcement">
+                            <input type="text" name="answer_2"
+                                class="form-control @error('answer_2')is-invalid @enderror" placeholder="Announcement">
                             <label>Answer 2</label>
                             @error('answer_2')
                                 <div class="invalid-feedback text-start">{{ $message }}</div>
@@ -111,8 +114,8 @@
                         </div>
 
                         <div class="form-floating mb-3 has-danger">
-                            <input type="text" name="answer_3" class="form-control @error('answer_3')is-invalid @enderror"
-                                placeholder="Announcement">
+                            <input type="text" name="answer_3"
+                                class="form-control @error('answer_3')is-invalid @enderror" placeholder="Announcement">
                             <label>Answer 3</label>
                             @error('answer_3')
                                 <div class="invalid-feedback text-start">{{ $message }}</div>
@@ -120,8 +123,8 @@
                         </div>
 
                         <div class="form-floating mb-3 has-danger">
-                            <input type="text" name="answer_4" class="form-control @error('answer_4')is-invalid @enderror"
-                                placeholder="Announcement">
+                            <input type="text" name="answer_4"
+                                class="form-control @error('answer_4')is-invalid @enderror" placeholder="Announcement">
                             <label>Answer 4</label>
                             @error('answer_4')
                                 <div class="invalid-feedback text-start">{{ $message }}</div>
@@ -133,10 +136,97 @@
                             Create
                         </button>
                     </form>
+
+                    <div class="mx-2">
+                        <div class="row">
+                            <div class="col-xl-12 mb-3 mb-lg-5">
+                                <div class="card">
+                                    <div class="d-flex card-header justify-content-between">
+                                        <h5 class="me-3 mb-0">Poll List</h5>
+                                    </div>
+                                    <div class="card-body">
+
+                                        @foreach ($poll_question as $question)
+                                            <div class="row mb-2">
+                                                <div class="col-6">
+                                                    <h6 class="mb-0">{{ $question->question }}</h6>
+                                                    <div class="position-relative">
+                                                        <a class="badge bg-info text-dark" data-bs-toggle="collapse"
+                                                            href="#collapseExample{{ $question->id }}" role="button"
+                                                            aria-expanded="false"
+                                                            aria-controls="collapseExample{{ $question->id }}">
+                                                            show answer ↴
+                                                        </a>
+                                                    </div>
+
+                                                </div>
+                                                <div class="col-6 d-flex justify-content-end">
+                                                    <span>
+                                                        <div class="btn-group" role="group"
+                                                            aria-label="Button group with nested dropdown">
+                                                            <button type="button" class="btn btn-primary">Manage</button>
+                                                            <div class="btn-group" role="group">
+                                                                <button id="btnGroupDrop1" type="button"
+                                                                    class="btn btn-primary dropdown-toggle"
+                                                                    data-bs-toggle="dropdown" aria-haspopup="true"
+                                                                    aria-expanded="false"></button>
+                                                                <div class="dropdown-menu"
+                                                                    aria-labelledby="btnGroupDrop1">
+
+                                                                    @if ($question->is_close == 0)
+                                                                        <form
+                                                                            action="/myevent/{{ $event_id }}/poll/{{ $question->id }}"
+                                                                            method="post">
+                                                                            {{ method_field('PUT') }}
+                                                                            @csrf
+                                                                            <button type="submit"
+                                                                                class="dropdown-item">Close</button>
+                                                                        </form>
+                                                                    @endif
+
+
+                                                                    <form action="/myevent/{{ $event_id }}/poll/{{ $question->id }}" method="POST">
+                                                                        {{ method_field('DELETE') }}
+                                                                        @csrf
+                                                                        <button type="submit"
+                                                                            class="dropdown-item">Delete</button>
+                                                                    </form>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </span>
+                                                </div>
+                                                <div class="col-12">
+                                                    <div class="collapse mt-3" id="collapseExample{{ $question->id }}">
+                                                        <div class="card card-body">
+                                                            @foreach ($poll_manage as $manage)
+                                                                @if ($manage->question == $question->question)
+                                                                    <p class="mb-0">
+                                                                        {{ $manage->answer }}: <span
+                                                                            class="text-muted">{{ $manage->answer_total }}</span>
+                                                                    </p>
+                                                                @endif
+                                                            @endforeach
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr />
+                                        @endforeach
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
+
+
+
             </div>
         </div>
     </div>
