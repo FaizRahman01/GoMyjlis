@@ -32,80 +32,100 @@ class TicketController extends Controller
     {
         $event_id = $id;
         $user_list = DB::table('users')
-        ->join('tickets', 'tickets.user_id', '=', 'users.id')
-        ->where('event_id', $event_id)
-        ->where('is_organizer', 0)
-        ->get();
+            ->join('tickets', 'tickets.user_id', '=', 'users.id')
+            ->where('event_id', $event_id)
+            ->where('is_organizer', 0)
+            ->get();
 
 
         return view('pages.my_event_pages.attendee', ['event_id' => $event_id, 'user_list' => $user_list]);
     }
 
-    public function acceptEventAttendee(Request $request, $id){
+    public function acceptEventAttendee(Request $request, $id)
+    {
         $accept_request = [
             'is_approve' => 1,
             'updated_at' => Carbon::now()
         ];
 
         DB::table('tickets')
-        ->where('user_id', $request['user_id'])
-        ->where('event_id', $id)
-        ->where('is_approve', 0)
-        ->update($accept_request);
+            ->where('user_id', $request['user_id'])
+            ->where('event_id', $id)
+            ->where('is_approve', 0)
+            ->update($accept_request);
 
-        return redirect('/myevent/'.$id.'/attendee');
+        return redirect('/myevent/' . $id . '/attendee');
     }
 
-    public function declineEventAttendee(Request $request, $id){
+    public function declineEventAttendee(Request $request, $id)
+    {
 
         DB::table('tickets')
-        ->where('user_id', $request['user_id'])
-        ->where('event_id', $id)
-        ->where('is_approve', 0)
-        ->delete();
+            ->where('user_id', $request['user_id'])
+            ->where('event_id', $id)
+            ->where('is_approve', 0)
+            ->delete();
 
-        return redirect('/myevent/'.$id.'/attendee');
+        return redirect('/myevent/' . $id . '/attendee');
     }
 
-    public function hireEventAssitant(Request $request, $id){
+    public function hireEventAssitant(Request $request, $id)
+    {
 
         $hire_assistant = [
             'is_assistant' => 1
         ];
 
         DB::table('tickets')
-        ->where('user_id', $request['user_id'])
-        ->where('event_id', $id)
-        ->where('is_approve', 1)
-        ->update($hire_assistant);
+            ->where('user_id', $request['user_id'])
+            ->where('event_id', $id)
+            ->where('is_approve', 1)
+            ->update($hire_assistant);
 
-        return redirect('/myevent/'.$id.'/attendee');
+        return redirect('/myevent/' . $id . '/attendee');
     }
 
-    public function demoteEventAttendee(Request $request, $id){
+    public function demoteEventAttendee(Request $request, $id)
+    {
 
         $demote_attendee = [
             'is_assistant' => 0
         ];
 
         DB::table('tickets')
-        ->where('user_id', $request['user_id'])
-        ->where('event_id', $id)
-        ->where('is_approve', 1)
-        ->update($demote_attendee);
+            ->where('user_id', $request['user_id'])
+            ->where('event_id', $id)
+            ->where('is_approve', 1)
+            ->update($demote_attendee);
 
-        return redirect('/myevent/'.$id.'/attendee');
+        return redirect('/myevent/' . $id . '/attendee');
     }
 
-    public function kickEventAttendee(Request $request, $id){
+    public function kickEventAttendee(Request $request, $id)
+    {
 
         DB::table('tickets')
-        ->where('user_id', $request['user_id'])
-        ->where('event_id', $id)
-        ->where('is_approve', 1)
-        ->where('is_organizer', 0)
-        ->delete();
+            ->where('user_id', $request['user_id'])
+            ->where('event_id', $id)
+            ->where('is_approve', 1)
+            ->where('is_organizer', 0)
+            ->delete();
 
-        return redirect('/myevent/'.$id.'/attendee');
+        return redirect('/myevent/' . $id . '/attendee');
+    }
+
+    public function checkInEventAttendee(Request $request, $id)
+    {
+        $checkin_attendee = [
+            'is_attend' => 1
+        ];
+
+        DB::table('tickets')
+            ->where('user_id', $request['user_id'])
+            ->where('event_id', $id)
+            ->where('is_approve', 1)
+            ->update($checkin_attendee);
+
+        return redirect('/myevent/' . $id . '/attendee');
     }
 }

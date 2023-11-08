@@ -28,9 +28,6 @@
     <div class="row mb-4">
         <h4 class="fw-light col-md-6 col-8 d-flex align-items-center">Manage Attendee</h4>
         <div class="col-md-6 col-4 d-flex justify-content-end">
-            <a href="" class="btn btn-outline-dark link-underline">
-                Invite +
-            </a>
         </div>
     </div>
 
@@ -104,7 +101,12 @@
                             @endif
                             <div class="row mb-2 mx-2">
                                 <div class="col-6">
-                                    <h6 class="mb-0">{{ Str::ucfirst($list->username) }}</h6>
+                                    <h6 class="mb-0">
+                                        {{ Str::ucfirst($list->username) }}
+                                        @if ($list->is_attend == 1)
+                                        <span class="badge bg-success bg-opacity-75 text-white">Check In ✔️</span>
+                                        @endif
+                                    </h6>
                                     <p class="mb-0 text-muted">
                                         @if ($list->is_organizer == 0 && $list->is_assistant == 1)
                                             Assistant
@@ -114,7 +116,7 @@
                                     </p>
                                 </div>
                                 <div class="col-6 d-flex justify-content-end">
-                                    <span>
+                                    <div class="row">
                                         <div class="btn-group" role="group"
                                             aria-label="Button group with nested dropdown">
                                             <button type="button" class="btn btn-primary">Manage</button>
@@ -143,6 +145,16 @@
                                                                 assistant</button>
                                                         </form>
                                                     @endif
+                                                    @if ($list->is_attend == 0)
+                                                        <form action="/myevent/{{ $list->event_id }}/checkin"
+                                                            method="post">
+                                                            {{ method_field('PUT') }}
+                                                            @csrf
+                                                            <input type="hidden" name="user_id"
+                                                                value="{{ $list->user_id }}" autocomplete="off">
+                                                            <button type="submit" class="dropdown-item">Check In</button>
+                                                        </form>
+                                                    @endif
                                                     <form action="/myevent/{{ $list->event_id }}/kick" method="POST">
                                                         {{ method_field('DELETE') }}
                                                         @csrf
@@ -154,7 +166,9 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </span>
+                                    </div>
+                                        
+
                                 </div>
                             </div>
                             <hr />

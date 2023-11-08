@@ -70,6 +70,7 @@ Route::delete('/myevent/{id}/decline', [TicketController::class, 'declineEventAt
 Route::delete('/myevent/{id}/kick', [TicketController::class, 'kickEventAttendee'])->middleware('authUser');
 Route::put('/myevent/{id}/hire', [TicketController::class, 'hireEventAssitant'])->middleware('authUser');
 Route::put('/myevent/{id}/demote', [TicketController::class, 'demoteEventAttendee'])->middleware('authUser');
+Route::put('/myevent/{id}/checkin', [TicketController::class, 'checkInEventAttendee'])->middleware('authUser');
 
 
 Route::get('/myevent/{id}/poll', [FeedbackController::class, 'showEventPoll'])->middleware('authUser');
