@@ -13,9 +13,8 @@ return new class extends Migration
     {
         Schema::create('polls', function (Blueprint $table) {
             $table->id();
-            $table->string('description');
-            $table->json('option');
-            $table->boolean('is_close');
+            $table->string('question');
+            $table->boolean('is_close')->default(0);
             $table->foreignId('event_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
