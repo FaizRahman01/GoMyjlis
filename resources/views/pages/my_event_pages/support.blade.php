@@ -86,12 +86,12 @@
                     <form action="/myevent/{{ $event_id }}/support" method="post">
                         @csrf
                         <div class="form-floating mb-3 has-danger">
-                            <input type="text" name="issue_title" class="form-control is-invalid"
+                            <input type="text" name="issue_title" class="form-control @error('issue_title')is-invalid @enderror"
                                 placeholder="Announcement">
                             <label>Your Question</label>
-
-                            <div class="invalid-feedback text-start">asdasd</div>
-
+                            @error('issue_title')
+                                <div class="invalid-feedback text-start">{{$message}}</div>
+                            @enderror
                         </div>
 
                         <button type="submit" class="btn btn-primary btn-block mb-4 w-100">

@@ -25,7 +25,7 @@
                     {{ method_field('DELETE') }}
                     @csrf
                     <button type="submit" class="btn btn-outline-danger">
-                        Remove Event
+                        Remove User
                     </button>
                 </form>
             </div>

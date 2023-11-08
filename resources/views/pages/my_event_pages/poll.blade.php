@@ -84,48 +84,48 @@
                     <form action="" method="post">
                         @csrf
                         <div class="form-floating mb-3 has-danger">
-                            <input type="text" name="question" class="form-control is-invalid"
+                            <input type="text" name="question" class="form-control @error('question')is-invalid @enderror"
                                 placeholder="Announcement">
                             <label>Your Question</label>
-
-                            <div class="invalid-feedback text-start">asdasd</div>
-
+                            @error('question')
+                                <div class="invalid-feedback text-start">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="form-floating mb-3 has-danger">
-                            <input type="text" name="answer_1" class="form-control is-invalid"
+                            <input type="text" name="answer_1" class="form-control @error('answer_1')is-invalid @enderror"
                                 placeholder="Announcement">
                             <label>Answer 1</label>
-
-                            <div class="invalid-feedback text-start">asdasd</div>
-
+                            @error('answer_1')
+                                <div class="invalid-feedback text-start">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="form-floating mb-3 has-danger">
-                            <input type="text" name="answer_2" class="form-control is-invalid"
+                            <input type="text" name="answer_2" class="form-control @error('answer_2')is-invalid @enderror"
                                 placeholder="Announcement">
                             <label>Answer 2</label>
-
-                            <div class="invalid-feedback text-start">asdasd</div>
-
+                            @error('answer_2')
+                                <div class="invalid-feedback text-start">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="form-floating mb-3 has-danger">
-                            <input type="text" name="answer_3" class="form-control is-invalid"
+                            <input type="text" name="answer_3" class="form-control @error('answer_3')is-invalid @enderror"
                                 placeholder="Announcement">
                             <label>Answer 3</label>
-
-                            <div class="invalid-feedback text-start">asdasd</div>
-
+                            @error('answer_3')
+                                <div class="invalid-feedback text-start">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="form-floating mb-3 has-danger">
-                            <input type="text" name="answer_4" class="form-control is-invalid"
+                            <input type="text" name="answer_4" class="form-control @error('answer_4')is-invalid @enderror"
                                 placeholder="Announcement">
                             <label>Answer 4</label>
-
-                            <div class="invalid-feedback text-start">asdasd</div>
-
+                            @error('answer_4')
+                                <div class="invalid-feedback text-start">{{ $message }}</div>
+                            @enderror
                         </div>
 
 

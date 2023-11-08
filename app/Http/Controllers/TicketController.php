@@ -35,6 +35,7 @@ class TicketController extends Controller
             ->join('tickets', 'tickets.user_id', '=', 'users.id')
             ->where('event_id', $event_id)
             ->where('is_organizer', 0)
+            ->where('is_assistant', 0)
             ->get();
 
 

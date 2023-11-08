@@ -13,7 +13,6 @@ class AdminController extends Controller
         $user_list = DB::table('users')
             ->join('tickets', 'tickets.user_id', '=', 'users.id')
             ->select('username', 'users.created_at', DB::raw('count(tickets.is_organizer) as organize_count'))
-            ->where('is_organizer', 1)
             ->groupBy('users.username', 'users.created_at')
             ->get();
 
