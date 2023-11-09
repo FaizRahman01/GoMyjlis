@@ -67,6 +67,10 @@
                             </div>
                         </form>
                     </li>
+                @elseif ($question->is_close == 1)
+                    <li class="list-group-item bg-danger bg-opacity-75 text-white">
+                        <p class="text-center">The poll submission was closed</p>
+                    </li>
                 @endif
 
                 @foreach ($poll_answer as $answer)
