@@ -167,7 +167,24 @@ class FeedbackController extends Controller
     {
         $event_id = $id;
 
-        try {
+        $event = DB::table('events')
+            ->join('tickets', 'tickets.event_id', '=', 'events.id')
+            ->join('users', 'users.id', '=', 'tickets.user_id')
+            ->where('events.id', '=', $event_id)
+            ->where('user_id', auth()->id())
+            ->where('is_approve', 1)
+            ->where('is_organizer', 0)
+            ->where('is_assistant', 0)
+            ->select('events.*', 'tickets.*', 'users.username')
+            ->get()->first();
+
+
+
+
+
+        if ($event == null) {
+            return redirect('/myevent');
+        } else {
             $ticket_id = DB::table('tickets')
                 ->select('id')
                 ->where('event_id', $event_id)
@@ -182,18 +199,7 @@ class FeedbackController extends Controller
                 ->where('ratings.event_id', $event_id)
                 ->get();
 
-            $event = DB::table('events')
-                ->join('tickets', 'tickets.event_id', '=', 'events.id')
-                ->join('users', 'users.id', '=', 'tickets.user_id')
-                ->where('events.id', '=', $event_id)
-                ->where('user_id', auth()->id())
-                ->where('is_approve', 1)
-                ->select('events.*', 'tickets.*', 'users.username')
-                ->get()->first();
-
             return view('pages.my_event_pages.rating', ['event_id' => $event_id, 'rating_result' => $rating_result, 'event' => $event]);
-        } catch (Exception $e) {
-            return redirect('/myevent');
         }
     }
 
