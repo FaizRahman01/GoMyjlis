@@ -19,42 +19,6 @@
         <div class="container">
 
 
-            <div class="justify-content-center row">
-                <div class="col-lg-12">
-                    <form action="#">
-                        <div class="row d-flex justify-content-lg-center bg-primary-subtle bg-gradient p-3 mx-2 rounded">
-                            <div class="col-lg-3">
-                                <label for="exampleSelect1" class="form-label">State</label>
-                                <select class="form-select" id="exampleSelect1">
-                                    <option>All Place</option>
-                                    <option>Kuala Lumpur</option>
-                                    <option>Selangor</option>
-                                    <option>Johor</option>
-                                </select>
-                            </div>
-                            <div class="col-lg-3">
-                                <label for="exampleSelect1" class="form-label">Category</label>
-                                <select class="form-select" id="exampleSelect1">
-                                    <option>All Type</option>
-                                    <option>Online</option>
-                                    <option>In Person</option>
-                                </select>
-                            </div>
-                            <div class="col-lg-3 d-flex align-items-end pt-3">
-                                <a class="btn btn-primary w-100" href="#">Filter</a>
-                            </div>
-                            <div class="col-lg-3 d-flex align-items-end pt-3">
-                                <a class="btn btn-secondary w-100" href="{{ URL::to('/create-event') }}">Create New Event
-                                    +</a>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-
-
-
             <div class="row">
                 <div class="col-lg-12">
                     <div>
@@ -106,9 +70,7 @@
                 </div>
             </div>
 
-            <div class="col-lg-12 justify-content-center text-center mt-5 mb-2">
-                <a href="#" class="btn">More Event +</a>
-            </div>
+
 
         </div>
     </section>

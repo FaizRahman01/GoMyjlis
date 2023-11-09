@@ -15,37 +15,6 @@
 
 @section('content')
 
-    <div class="container mt-4">
-        <div class="justify-content-center row">
-            <div class="col-lg-12">
-                <form action="#" class="">
-                    <div class="row d-flex justify-content-lg-center bg-primary-subtle bg-gradient p-3 mx-2 rounded">
-                        <div class="col-lg-4">
-                            <label for="exampleSelect1" class="form-label">State</label>
-                            <select class="form-select" id="exampleSelect1">
-                                <option>All Place</option>
-                                <option>Kuala Lumpur</option>
-                                <option>Selangor</option>
-                                <option>Johor</option>
-                            </select>
-                        </div>
-                        <div class="col-lg-4">
-                            <label for="exampleSelect1" class="form-label">Category</label>
-                            <select class="form-select" id="exampleSelect1">
-                                <option>All Type</option>
-                                <option>Online</option>
-                                <option>In Person</option>
-                            </select>
-                        </div>
-                        <div class="col-lg-4 d-flex align-items-end pt-3">
-                            <a class="btn btn-primary w-100" href="#">Filter</a>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
 
     <div class="container">
         <div class="row">
@@ -70,7 +39,8 @@
                                     <div class="d-flex align-items-center">
                                         <form action="{{ URL::to('/events/join') }}" method="POST">
                                             @csrf
-                                            <input type="hidden" name="event_id" value="{{ $events->id }}" autocomplete="off">
+                                            <input type="hidden" name="event_id" value="{{ $events->id }}"
+                                                autocomplete="off">
                                             <button type="submit"
                                                 class="btn btn-outline-dark link-underline link-underline-opacity-0 d-flex align-items-center">
                                                 Count Me In</button>
@@ -90,32 +60,6 @@
 
 
 
-            </div>
-
-            <div class="d-flex justify-content-center my-3">
-                <ul class="pagination">
-                    <li class="page-item disabled">
-                        <a class="page-link" href="">&laquo;</a>
-                    </li>
-                    <li class="page-item active">
-                        <a class="page-link" href="">1</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="">2</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="">3</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="">4</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="">5</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="">&raquo;</a>
-                    </li>
-                </ul>
             </div>
 
         </div>
