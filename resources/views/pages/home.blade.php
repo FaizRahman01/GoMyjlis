@@ -12,7 +12,7 @@
 @section('link-account'){{ URL::to('/account') }}@endsection
 @section('link-myevent'){{ URL::to('/myevent') }}@endsection
 @section('link-manageuser'){{ URL::to('/admin/manage-user') }}@endsection
-@section('link-notification'){{ URL::to('/notification') }}@endsection
+
 
     <section class="py-5 mb-md-5 mt-2 mx-3 bg-primary bg-gradient bg-opacity-75">
         <div class="container">

@@ -25,7 +25,6 @@
                                     <a class="dropdown-item @yield('manageuser-active')" href="@yield('link-manageuser')">Manage User</a>
                                 @else
                                     <a class="dropdown-item @yield('myevent-active')" href="@yield('link-myevent')">My Event</a>
-                                    <a class="dropdown-item @yield('notification-active')" href="@yield('link-notification')">Notification</a>
                                 @endif
                                 <form action="/logout" method="POST">
                                     @csrf

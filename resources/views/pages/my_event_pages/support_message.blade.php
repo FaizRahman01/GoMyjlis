@@ -9,7 +9,7 @@
 @section('link-login'){{ URL::to('/signin') }}@endsection
 @section('link-account'){{ URL::to('/account') }}@endsection
 @section('link-myevent'){{ URL::to('/myevent') }}@endsection
-@section('link-notification'){{ URL::to('/notification') }}@endsection
+
 
 
 @section('link-info'){{ URL::to('/myevent/1/info') }}@endsection

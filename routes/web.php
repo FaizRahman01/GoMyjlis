@@ -24,10 +24,6 @@ Route::get('/', function () {
     return view('pages.home');
 });
 
-Route::get('/notification', function () {
-    return view('pages.user_pages.notification');
-});
-
 
 Route::get('/account', [UserController::class, 'showUserDetail'])->middleware('auth');
 Route::get('/signin', [UserController::class, 'showLoginForm'])->middleware('guest');
