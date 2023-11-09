@@ -40,21 +40,7 @@
                 </div>
             </div>
             <div class="row g-5">
-                <div class="col-xl-3 col-lg-4 col-sm-6 text-center">
-                    <div class="text-muted">
-                        <svg class="bi bi-aspect-ratio" fill="currentColor" height="48" viewbox="0 0 16 16"
-                            width="48" xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M0 3.5A1.5 1.5 0 0 1 1.5 2h13A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 12.5v-9zM1.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-13z">
-                            </path>
-                            <path
-                                d="M2 4.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1H3v2.5a.5.5 0 0 1-1 0v-3zm12 7a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1 0-1H13V8.5a.5.5 0 0 1 1 0v3z">
-                            </path>
-                        </svg>
-                    </div>
-                    <h5 class="mt-3">Responsive Design</h5>
-                </div>
-                <div class="col-xl-3 col-lg-4 col-sm-6 text-center">
+                <div class="col-lg-4 col-sm-6 text-center">
                     <div class="text-muted">
                         <svg class="bi bi-emoji-wink" fill="currentColor" height="48" viewbox="0 0 16 16" width="48"
                             xmlns="http://www.w3.org/2000/svg">
@@ -66,7 +52,7 @@
                     </div>
                     <h5 class="mt-3">Easy-To-Use</h5>
                 </div>
-                <div class="col-xl-3 col-lg-4 col-sm-6 text-center">
+                <div class="col-lg-4 col-sm-6 text-center">
                     <div class="text-muted">
                         <svg class="bi bi-pencil-square" fill="currentColor" height="48" viewbox="0 0 16 16"
                             width="48" xmlns="http://www.w3.org/2000/svg">
@@ -80,7 +66,7 @@
                     </div>
                     <h5 class="mt-3">100% Customizable</h5>
                 </div>
-                <div class="col-xl-3 col-lg-4 col-sm-6 text-center">
+                <div class="col-lg-4 col-sm-6 text-center">
                     <div class="text-muted">
                         <svg class="bi bi-phone-vibrate" fill="currentColor" height="48" viewbox="0 0 16 16"
                             width="48" xmlns="http://www.w3.org/2000/svg">

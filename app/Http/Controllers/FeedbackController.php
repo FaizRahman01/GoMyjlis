@@ -14,49 +14,62 @@ class FeedbackController extends Controller
     {
         $event_id = $id;
 
-        $poll_list = DB::table('polls')
-            ->join('poll_answers', 'poll_answers.poll_id', '=', 'polls.id')
-            ->where('event_id', $event_id)
-            ->get();
-
-        $poll_question = DB::table('polls')
-            ->where('event_id', $event_id)
-            ->get();
-
-        $ticket_id = DB::table('tickets')
-            ->select('id')
-            ->where('event_id', $event_id)
+        $event = DB::table('events')
+            ->join('tickets', 'tickets.event_id', '=', 'events.id')
+            ->join('users', 'users.id', '=', 'tickets.user_id')
+            ->where('events.id', '=', $event_id)
             ->where('user_id', auth()->id())
+            ->where('is_approve', 1)
+            ->select('events.*', 'tickets.*', 'users.username')
             ->get()->first();
 
-        $ticket_num = json_decode($ticket_id->id, true);
+        if ($event == null) {
+            return redirect('/myevent');
+        } else {
+            $poll_list = DB::table('polls')
+                ->join('poll_answers', 'poll_answers.poll_id', '=', 'polls.id')
+                ->where('event_id', $event_id)
+                ->get();
 
-        $poll_answer = DB::table('poll_results')
-            ->where('ticket_id', $ticket_num)
-            ->get();
+            $poll_question = DB::table('polls')
+                ->where('event_id', $event_id)
+                ->get();
 
-        $poll_manage = DB::table('polls')
-            ->join('poll_answers', 'poll_answers.poll_id', '=', 'polls.id')
-            ->join('poll_results', 'poll_results.poll_id', '=', 'polls.id')
-            ->select(
-                'polls.id',
-                'question',
-                'answer',
-                DB::raw('count(case when answer = result then 1 else null end) as answer_total'),
-            )
-            ->where('polls.event_id', $event_id)
-            ->groupBy('polls.id', 'question', 'answer')
-            ->get();
+            $ticket_id = DB::table('tickets')
+                ->select('id')
+                ->where('event_id', $event_id)
+                ->where('user_id', auth()->id())
+                ->get()->first();
 
-        $view_data = [
-            'event_id' => $event_id,
-            'poll_list' => $poll_list,
-            'poll_question' => $poll_question,
-            'poll_answer' => $poll_answer,
-            'poll_manage' => $poll_manage
-        ];
+            $ticket_num = json_decode($ticket_id->id, true);
 
-        return view('pages.my_event_pages.poll', $view_data);
+            $poll_answer = DB::table('poll_results')
+                ->where('ticket_id', $ticket_num)
+                ->get();
+
+            $poll_manage = DB::table('polls')
+                ->join('poll_answers', 'poll_answers.poll_id', '=', 'polls.id')
+                ->join('poll_results', 'poll_results.poll_id', '=', 'polls.id')
+                ->select(
+                    'polls.id',
+                    'question',
+                    'answer',
+                    DB::raw('count(case when answer = result then 1 else null end) as answer_total'),
+                )
+                ->where('polls.event_id', $event_id)
+                ->groupBy('polls.id', 'question', 'answer')
+                ->get();
+
+            $view_data = [
+                'event_id' => $event_id,
+                'poll_list' => $poll_list,
+                'poll_question' => $poll_question,
+                'poll_answer' => $poll_answer,
+                'poll_manage' => $poll_manage
+            ];
+
+            return view('pages.my_event_pages.poll', $view_data);
+        }
     }
 
     public function createEventPoll(Request $request, $id)

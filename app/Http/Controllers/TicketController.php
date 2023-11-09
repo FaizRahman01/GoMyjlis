@@ -39,7 +39,20 @@ class TicketController extends Controller
             ->get();
 
 
-        return view('pages.my_event_pages.attendee', ['event_id' => $event_id, 'user_list' => $user_list]);
+        $event = DB::table('events')
+            ->join('tickets', 'tickets.event_id', '=', 'events.id')
+            ->join('users', 'users.id', '=', 'tickets.user_id')
+            ->where('events.id', '=', $event_id)
+            ->where('user_id', auth()->id())
+            ->where('is_approve', 1)
+            ->select('events.*', 'tickets.*', 'users.username')
+            ->get()->first();
+
+        if ($event == null) {
+            return redirect('/myevent');
+        } else {
+            return view('pages.my_event_pages.attendee', ['event_id' => $event_id, 'user_list' => $user_list]);
+        }
     }
 
     public function acceptEventAttendee(Request $request, $id)

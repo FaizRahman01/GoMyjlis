@@ -104,10 +104,10 @@ class EventController extends Controller
         ];
 
         DB::table('events')
-        ->where('id', $request['event_id'])
-        ->update($event_input);
+            ->where('id', $request['event_id'])
+            ->update($event_input);
 
-        return redirect('/myevent/'.$request['event_id'].'/info');
+        return redirect('/myevent/' . $request['event_id'] . '/info');
     }
 
     public function deleteUserEvent(Request $request)
@@ -202,7 +202,6 @@ class EventController extends Controller
             DB::table('tickets')->insert($ticket_input);
 
             return redirect('/myevent');
-
         } catch (Exception $e) {
             return redirect('/events');
         }
@@ -212,13 +211,27 @@ class EventController extends Controller
     {
         $event_id = $id;
         $activity_list = DB::table('schedules')
-        ->where('event_id', $event_id)
-        ->get();
+            ->where('event_id', $event_id)
+            ->get();
 
-        return view('pages.my_event_pages.schedule', ['event_id' => $event_id, 'activity_list' => $activity_list]);
+        $event = DB::table('events')
+            ->join('tickets', 'tickets.event_id', '=', 'events.id')
+            ->join('users', 'users.id', '=', 'tickets.user_id')
+            ->where('events.id', '=', $event_id)
+            ->where('user_id', auth()->id())
+            ->where('is_approve', 1)
+            ->select('events.*', 'tickets.*', 'users.username')
+            ->get()->first();
+
+        if ($event == null) {
+            return redirect('/myevent');
+        } else {
+            return view('pages.my_event_pages.schedule', ['event_id' => $event_id, 'activity_list' => $activity_list]);
+        }
     }
 
-    public function addEventActivity(Request $request, $id){
+    public function addEventActivity(Request $request, $id)
+    {
 
         $event_id = $id;
         $user_input = $request->validate([
@@ -235,16 +248,17 @@ class EventController extends Controller
         ];
 
         DB::table('schedules')->insert($schedule_activity);
-        
-        return redirect('/myevent/'.$event_id.'/schedule');
+
+        return redirect('/myevent/' . $event_id . '/schedule');
     }
 
-    public function removeEventActivity(Request $request, $id){
+    public function removeEventActivity(Request $request, $id)
+    {
 
         DB::table('schedules')
-        ->where('id', $request['activity_id'])
-        ->delete();
+            ->where('id', $request['activity_id'])
+            ->delete();
 
-        return redirect('/myevent/'.$id.'/schedule');
+        return redirect('/myevent/' . $id . '/schedule');
     }
 }
