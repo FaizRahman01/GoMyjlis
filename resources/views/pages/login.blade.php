@@ -7,7 +7,7 @@
 @section('link-home'){{ URL::to('/') }}@endsection
 @section('link-event'){{ URL::to('/events') }}@endsection
 @section('link-login'){{ URL::current() }}@endsection
-@section('link-contact'){{ URL::to('/contact') }}@endsection
+
 
 @section('content')
 

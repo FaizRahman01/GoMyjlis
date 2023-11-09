@@ -9,7 +9,7 @@
 @section('link-account'){{ URL::to('/account') }}@endsection
 @section('link-myevent'){{ URL::to('/myevent') }}@endsection
 @section('link-notification'){{ URL::to('/notification') }}@endsection
-@section('link-contact'){{ URL::to('/contact') }}@endsection
+
 
 @section('link-info'){{ URL::current() }}@endsection
 @section('link-ticket'){{ URL::to('/myevent/' . $event_id . '/ticket') }}@endsection
@@ -33,12 +33,15 @@
             <div class="container">
                 <div class="row mb-4">
                     <h4 class="font-weight-bold col-md-6 col-8 d-flex align-items-center">{{ $event->title }}</h4>
-                    <div class="col-md-6 col-4 d-flex justify-content-end">
-                        <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal"
-                            data-bs-target="#exampleModal">
-                            Edit
-                        </button>
-                    </div>
+                    @if ($event->is_organizer == 1 && $event->is_assistant == 0 || $event->is_organizer == 0 && $event->is_assistant == 1)
+                        <div class="col-md-6 col-4 d-flex justify-content-end">
+                            <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal">
+                                Edit
+                            </button>
+                        </div>
+                    @endif
+
                 </div>
 
                 <div class="text-muted mb-4">
@@ -124,22 +127,29 @@
                             @csrf
                             <input type="hidden" name="event_id" value="{{ $event->event_id }}" autocomplete="off">
                             <div class="form-floating mb-3 has-danger">
-                                <input value="{{ $event->title }}" type="text" name="event_title" class="form-control @error('event_title') is-invalid @enderror" 
+                                <input value="{{ $event->title }}" type="text" name="event_title"
+                                    class="form-control @error('event_title') is-invalid @enderror"
                                     placeholder="Birthday Party">
                                 <label>Event Title</label>
-                                @error('event_title') <div class="invalid-feedback text-start">{{$message}}</div> @enderror
+                                @error('event_title')
+                                    <div class="invalid-feedback text-start">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="form-floating mb-3 has-danger">
-                                <input value="{{ $event->start_date }}" type="date" name="start_date" class="form-control @error('start_date') is-invalid @enderror"
-                                    placeholder="Start Date">
+                                <input value="{{ $event->start_date }}" type="date" name="start_date"
+                                    class="form-control @error('start_date') is-invalid @enderror" placeholder="Start Date">
                                 <label>Start Date</label>
-                                @error('start_date"') <div class="invalid-feedback text-start">{{$message}}</div> @enderror
+                                @error('start_date"')
+                                    <div class="invalid-feedback text-start">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="form-floating mb-3 has-danger">
-                                <input value="{{ $event->end_date }}" type="date" name="end_date" class="form-control @error('end_date') is-invalid @enderror"
-                                    placeholder="End Date">
+                                <input value="{{ $event->end_date }}" type="date" name="end_date"
+                                    class="form-control @error('end_date') is-invalid @enderror" placeholder="End Date">
                                 <label>End Date</label>
-                                @error('end_date') <div class="invalid-feedback text-start">{{$message}}</div> @enderror
+                                @error('end_date')
+                                    <div class="invalid-feedback text-start">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="form-floating mb-3">
                                 <input value="{{ $event->address }}" type="text" name="address" class="form-control"
@@ -165,12 +175,13 @@
                                 <span class="input-group-text py-3">State</span>
                                 <select name="state" class="form-select" id="exampleSelect1">
                                     @foreach ($state as $state_list)
-                                        <option>{{$state_list}}</option>
+                                        <option>{{ $state_list }}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="form-floating mb-3">
-                                <textarea value="{{ $event->description }}" name="event_description" class="form-control" placeholder="Event Description"></textarea>
+                                <textarea value="{{ $event->description }}" name="event_description" class="form-control"
+                                    placeholder="Event Description"></textarea>
                                 <label>Event Description</label>
                             </div>
 

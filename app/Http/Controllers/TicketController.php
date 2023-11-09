@@ -45,6 +45,12 @@ class TicketController extends Controller
             ->where('events.id', '=', $event_id)
             ->where('user_id', auth()->id())
             ->where('is_approve', 1)
+            ->where(function($query) {
+                $query->where('is_organizer', 1)->where('is_assistant', 0);
+            })
+            ->orWhere(function($query) {
+                $query->where('is_organizer', 0)->where('is_assistant', 1);
+            })
             ->select('events.*', 'tickets.*', 'users.username')
             ->get()->first();
 

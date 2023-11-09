@@ -9,7 +9,7 @@
 @section('link-account'){{ URL::to('/account') }}@endsection
 @section('link-myevent'){{ URL::to('/myevent') }}@endsection
 @section('link-notification'){{ URL::to('/notification') }}@endsection
-@section('link-contact'){{ URL::to('/contact') }}@endsection
+
 
 @section('link-info'){{ URL::to('/myevent/' . $event_id . '/info') }}@endsection
 @section('link-ticket'){{ URL::to('/myevent/' . $event_id . '/ticket') }}@endsection
@@ -27,11 +27,15 @@
 
     <div class="row mb-4">
         <h4 class="fw-light col-md-6 col-8 d-flex align-items-center">Multiple Choice Poll</h4>
-        <div class="col-md-6 col-4 d-flex justify-content-end">
-            <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Create
-            </button>
-        </div>
+        @if (
+            ($event->is_organizer == 1 && $event->is_assistant == 0) ||
+                ($event->is_organizer == 0 && $event->is_assistant == 1))
+            <div class="col-md-6 col-4 d-flex justify-content-end">
+                <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Create
+                </button>
+            </div>
+        @endif
     </div>
 
     @foreach ($poll_question as $question)
@@ -40,38 +44,39 @@
                 {{ $question->question }}
             </li>
 
-            @if ($question->is_close == 0)
-                <li class="list-group-item">
-                    <form action="/myevent/{{ $event_id }}/poll/{{ $question->id }}" method="post">
-                        @csrf
-                        <div class="row">
-                            <div class="col-8 ps-2">
-                                <select name="answer" class="form-select w-100" id="exampleSelect1">
-                                    @foreach ($poll_list as $list)
-                                        @if ($list->question == $question->question)
-                                            <option>{{ $list->answer }}</option>
-                                        @endif
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-4">
-                                <button type="submit" class="btn btn-primary btn-block mb-4 w-100">
-                                    Confirm
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </li>
-            @endif
-
-            @foreach ($poll_answer as $answer)
-                @if ($answer->poll_id == $question->id)
+            @if ($event->is_organizer == 0 && $event->is_assistant == 0)
+                @if ($question->is_close == 0)
                     <li class="list-group-item">
-                        <p class="text-center">You choose: {{ $answer->result }}</p>
+                        <form action="/myevent/{{ $event_id }}/poll/{{ $question->id }}" method="post">
+                            @csrf
+                            <div class="row">
+                                <div class="col-8 ps-2">
+                                    <select name="answer" class="form-select w-100" id="exampleSelect1">
+                                        @foreach ($poll_list as $list)
+                                            @if ($list->question == $question->question)
+                                                <option>{{ $list->answer }}</option>
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-4">
+                                    <button type="submit" class="btn btn-primary btn-block mb-4 w-100">
+                                        Confirm
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
                     </li>
                 @endif
-            @endforeach
 
+                @foreach ($poll_answer as $answer)
+                    @if ($answer->poll_id == $question->id)
+                        <li class="list-group-item">
+                            <p class="text-center">You choose: {{ $answer->result }}</p>
+                        </li>
+                    @endif
+                @endforeach
+            @endif
         </ul>
     @endforeach
 
@@ -185,7 +190,9 @@
                                                                     @endif
 
 
-                                                                    <form action="/myevent/{{ $event_id }}/poll/{{ $question->id }}" method="POST">
+                                                                    <form
+                                                                        action="/myevent/{{ $event_id }}/poll/{{ $question->id }}"
+                                                                        method="POST">
                                                                         {{ method_field('DELETE') }}
                                                                         @csrf
                                                                         <button type="submit"

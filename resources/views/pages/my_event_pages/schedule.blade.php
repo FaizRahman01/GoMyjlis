@@ -9,7 +9,7 @@
 @section('link-account'){{ URL::to('/account') }}@endsection
 @section('link-myevent'){{ URL::to('/myevent') }}@endsection
 @section('link-notification'){{ URL::to('/notification') }}@endsection
-@section('link-contact'){{ URL::to('/contact') }}@endsection
+
 
 @section('link-info'){{ URL::to('/myevent/' . $event_id . '/info') }}@endsection
 @section('link-ticket'){{ URL::to('/myevent/' . $event_id . '/ticket') }}@endsection
@@ -30,11 +30,13 @@
 
             <div class="row mb-4">
                 <h4 class="fw-light col-md-6 col-8 d-flex align-items-center">Schedule and Agenda</h4>
+                @if ($event->is_organizer == 1 && $event->is_assistant == 0 || $event->is_organizer == 0 && $event->is_assistant == 1)
                 <div class="col-md-6 col-4 d-flex justify-content-end">
                     <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
                         Edit
                     </button>
                 </div>
+                @endif
             </div>
 
             <ul class="pt-4 list-unstyled mb-0">

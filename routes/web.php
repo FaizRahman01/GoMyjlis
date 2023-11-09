@@ -28,10 +28,6 @@ Route::get('/notification', function () {
     return view('pages.user_pages.notification');
 });
 
-Route::get('/contact', function () {
-    return view('pages.contact');
-});
-
 
 Route::get('/account', [UserController::class, 'showUserDetail'])->middleware('auth');
 Route::get('/signin', [UserController::class, 'showLoginForm'])->middleware('guest');

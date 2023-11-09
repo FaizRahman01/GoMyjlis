@@ -10,7 +10,7 @@
 @section('link-account'){{ URL::to('/account') }}@endsection
 @section('link-myevent'){{ URL::to('/myevent') }}@endsection
 @section('link-notification'){{ URL::to('/notification') }}@endsection
-@section('link-contact'){{ URL::to('/contact') }}@endsection
+
 
 @section('link-info'){{ URL::to('/myevent/1/info') }}@endsection
 @section('link-ticket'){{ URL::to('/myevent/1/ticket') }}@endsection
@@ -29,22 +29,26 @@
     <div class="row mb-4">
         <h4 class="fw-light col-md-6 col-8 d-flex align-items-center">Support Ticket</h4>
         @if ($support_status->is_close == 0)
-            <div class="col-md-6 col-4 d-flex justify-content-end">
-                <form action="/myevent/{{ $event_id }}/support/{{ $support_id }}" method="post">
-                    {{ method_field('PUT') }}
-                    @csrf
-                    <button type="submit" class="btn btn-outline-danger">
-                        Close Ticket
-                    </button>
-                </form>
-            </div>
+            @if (
+                ($event->is_organizer == 1 && $event->is_assistant == 0) ||
+                    ($event->is_organizer == 0 && $event->is_assistant == 1))
+                <div class="col-md-6 col-4 d-flex justify-content-end">
+                    <form action="/myevent/{{ $event_id }}/support/{{ $support_id }}" method="post">
+                        {{ method_field('PUT') }}
+                        @csrf
+                        <button type="submit" class="btn btn-outline-danger">
+                            Close Ticket
+                        </button>
+                    </form>
+                </div>
+            @endif
         @endif
 
     </div>
 
     <div class="mx-2">
 
-        <h2>{{$support_status->title}}</h2>
+        <h2>{{ $support_status->title }}</h2>
 
         <hr>
         <div class="overflow-auto mx-4" style="max-height: 40vh;">
@@ -71,18 +75,18 @@
         </div>
 
         @if ($support_status->is_close == 0)
-        <div class="mb-5">
-            <form action="/myevent/{{ $event_id }}/support/{{ $support_id }}" method="post">
-                @csrf
-                <div class="input-group">
-                    <input type="text" name="user-message" placeholder="Press Enter" class="form-control primary">
-                    <span class="input-group-btn">
-                        <button class="btn btn-secondary" type="submit">Send</button>
-                    </span>
-                </div>
-            </form>
+            <div class="mb-5">
+                <form action="/myevent/{{ $event_id }}/support/{{ $support_id }}" method="post">
+                    @csrf
+                    <div class="input-group">
+                        <input type="text" name="user-message" placeholder="Press Enter" class="form-control primary">
+                        <span class="input-group-btn">
+                            <button class="btn btn-secondary" type="submit">Send</button>
+                        </span>
+                    </div>
+                </form>
 
-        </div>
+            </div>
         @endif
 
     </div>

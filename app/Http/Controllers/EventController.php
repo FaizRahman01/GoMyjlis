@@ -226,7 +226,7 @@ class EventController extends Controller
         if ($event == null) {
             return redirect('/myevent');
         } else {
-            return view('pages.my_event_pages.schedule', ['event_id' => $event_id, 'activity_list' => $activity_list]);
+            return view('pages.my_event_pages.schedule', ['event_id' => $event_id, 'activity_list' => $activity_list, 'event' => $event]);
         }
     }
 

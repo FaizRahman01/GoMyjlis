@@ -11,7 +11,7 @@
 @section('link-myevent'){{ URL::to('/myevent') }}@endsection
 @section('link-manageuser'){{ URL::to('/admin/manage-user') }}@endsection
 @section('link-notification'){{ URL::to('/notification') }}@endsection
-@section('link-contact'){{ URL::to('/contact') }}@endsection
+
 
 @section('content')
 

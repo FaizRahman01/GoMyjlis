@@ -32,7 +32,7 @@ class OrganizerController extends Controller
         if ($event == null) {
             return redirect('/myevent');
         } else {
-            return view('pages.my_event_pages.support', ['event_id' => $event_id, 'issue_list' =>  $issue_list]);
+            return view('pages.my_event_pages.support', ['event_id' => $event_id, 'issue_list' =>  $issue_list, 'event' => $event]);
         }
     }
 
@@ -91,7 +91,7 @@ class OrganizerController extends Controller
         if ($event == null) {
             return redirect('/myevent');
         } else {
-            return view('pages.my_event_pages.support_message', ['event_id' => $event_id, 'support_id' => $support_id, 'message_list' => $message_list, 'support_status' => $support_status]);
+            return view('pages.my_event_pages.support_message', ['event_id' => $event_id, 'support_id' => $support_id, 'message_list' => $message_list, 'support_status' => $support_status, 'event' => $event]);
         }
     }
 
@@ -151,6 +151,12 @@ class OrganizerController extends Controller
             ->where('events.id', '=', $event_id)
             ->where('user_id', auth()->id())
             ->where('is_approve', 1)
+            ->where(function($query) {
+                $query->where('is_organizer', 1)->where('is_assistant', 0);
+            })
+            ->orWhere(function($query) {
+                $query->where('is_organizer', 0)->where('is_assistant', 1);
+            })
             ->select('events.*', 'tickets.*', 'users.username')
             ->get()->first();
 
@@ -243,6 +249,12 @@ class OrganizerController extends Controller
             ->where('events.id', '=', $event_id)
             ->where('user_id', auth()->id())
             ->where('is_approve', 1)
+            ->where(function($query) {
+                $query->where('is_organizer', 1)->where('is_assistant', 0);
+            })
+            ->orWhere(function($query) {
+                $query->where('is_organizer', 0)->where('is_assistant', 1);
+            })
             ->select('events.*', 'tickets.*', 'users.username')
             ->get()->first();
 
@@ -300,6 +312,12 @@ class OrganizerController extends Controller
             ->where('events.id', '=', $event_id)
             ->where('user_id', auth()->id())
             ->where('is_approve', 1)
+            ->where(function($query) {
+                $query->where('is_organizer', 1)->where('is_assistant', 0);
+            })
+            ->orWhere(function($query) {
+                $query->where('is_organizer', 0)->where('is_assistant', 1);
+            })
             ->select('events.*', 'tickets.*', 'users.username')
             ->get()->first();
 

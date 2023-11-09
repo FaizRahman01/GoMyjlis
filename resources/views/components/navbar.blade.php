@@ -13,9 +13,6 @@
                     <li class="nav-item">
                         <a class="nav-link @yield('event-active')" href="@yield('link-event')">Event</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link @yield('contact-active')" href="@yield('link-contact')">Contact</a>
-                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
                             aria-haspopup="true" aria-expanded="false"></a>

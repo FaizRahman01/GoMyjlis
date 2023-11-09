@@ -9,7 +9,7 @@
 @section('link-account'){{ URL::to('/account') }}@endsection
 @section('link-myevent'){{ URL::to('/myevent') }}@endsection
 @section('link-notification'){{ URL::to('/notification') }}@endsection
-@section('link-contact'){{ URL::to('/contact') }}@endsection
+
 
 @section('link-info'){{ URL::to('/myevent/' . $event_id . '/info') }}@endsection
 @section('link-ticket'){{ URL::to('/myevent/' . $event_id . '/ticket') }}@endsection
@@ -27,11 +27,13 @@
 
     <div class="row mb-4">
         <h4 class="fw-light col-md-6 col-8 d-flex align-items-center">Support Ticket</h4>
-        <div class="col-md-6 col-4 d-flex justify-content-end">
-            <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                New Issue
-            </button>
-        </div>
+        @if ($event->is_organizer == 0 && $event->is_assistant == 0)
+            <div class="col-md-6 col-4 d-flex justify-content-end">
+                <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    New Issue
+                </button>
+            </div>
+        @endif
     </div>
 
     <div class="mx-2">
@@ -48,17 +50,19 @@
                     @foreach ($issue_list as $list)
                         <li class="list-group-item">
                             <strong>
-                                <a href="/myevent/{{ $event_id }}/support/{{ $list->id }}">{{ $list->title }}</a>
+                                <a
+                                    href="/myevent/{{ $event_id }}/support/{{ $list->id }}">{{ $list->title }}</a>
                             </strong>
                             <span class="">#{{ $list->id }}</span>
                             <span class="btn @if ($list->is_close == 0) btn-success @else btn-danger @endif ms-3">
                                 @if ($list->is_close == 0)
                                     OPEN
-                                    @else
+                                @else
                                     CLOSE
                                 @endif
                             </span>
-                            <p class="info">Opened by {{ $list->username }} | &nbsp;&nbsp;&nbsp;<span class="text-muted">{{ $list->created_at }}</span></a>
+                            <p class="info">Opened by {{ $list->username }} | &nbsp;&nbsp;&nbsp;<span
+                                    class="text-muted">{{ $list->created_at }}</span></a>
                             </p>
                         </li>
                     @endforeach
@@ -86,11 +90,11 @@
                     <form action="/myevent/{{ $event_id }}/support" method="post">
                         @csrf
                         <div class="form-floating mb-3 has-danger">
-                            <input type="text" name="issue_title" class="form-control @error('issue_title')is-invalid @enderror"
-                                placeholder="Announcement">
+                            <input type="text" name="issue_title"
+                                class="form-control @error('issue_title')is-invalid @enderror" placeholder="Announcement">
                             <label>Your Question</label>
                             @error('issue_title')
-                                <div class="invalid-feedback text-start">{{$message}}</div>
+                                <div class="invalid-feedback text-start">{{ $message }}</div>
                             @enderror
                         </div>
 

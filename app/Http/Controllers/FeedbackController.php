@@ -65,7 +65,8 @@ class FeedbackController extends Controller
                 'poll_list' => $poll_list,
                 'poll_question' => $poll_question,
                 'poll_answer' => $poll_answer,
-                'poll_manage' => $poll_manage
+                'poll_manage' => $poll_manage,
+                'event' => $event
             ];
 
             return view('pages.my_event_pages.poll', $view_data);
@@ -181,7 +182,16 @@ class FeedbackController extends Controller
                 ->where('ratings.event_id', $event_id)
                 ->get();
 
-            return view('pages.my_event_pages.rating', ['event_id' => $event_id, 'rating_result' => $rating_result]);
+            $event = DB::table('events')
+                ->join('tickets', 'tickets.event_id', '=', 'events.id')
+                ->join('users', 'users.id', '=', 'tickets.user_id')
+                ->where('events.id', '=', $event_id)
+                ->where('user_id', auth()->id())
+                ->where('is_approve', 1)
+                ->select('events.*', 'tickets.*', 'users.username')
+                ->get()->first();
+
+            return view('pages.my_event_pages.rating', ['event_id' => $event_id, 'rating_result' => $rating_result, 'event' => $event]);
         } catch (Exception $e) {
             return redirect('/myevent');
         }
