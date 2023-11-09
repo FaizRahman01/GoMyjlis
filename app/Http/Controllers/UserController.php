@@ -4,19 +4,57 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function showLoginForm(){
+    public function showLoginForm()
+    {
         return view('pages.login');
     }
 
-    public function showRegisterForm(){
+    public function showRegisterForm()
+    {
         return view('pages.register');
     }
 
-    public function showUserDetail(){
+    public function showUserDetail()
+    {
         return view('pages.user_pages.account');
+    }
+
+    public function updateUserProfile(Request $request)
+    {
+        $request->validate([
+            'username' => 'required|min:4|max:20|alpha_dash|unique:users,username,'.auth()->id(),
+            'email' => 'required|email|unique:users,email,'.auth()->id()
+        ]);
+
+        auth()->user()->update([
+            'username' => $request->username,
+            'email' => $request->email
+        ]);
+
+        return redirect('/account');
+
+    }
+
+    public function updateUserPassword(Request $request)
+    {
+        $request->validate([
+            'old_password' => 'required|min:8',
+            'new_password' => 'required|min:8',
+            'password_confirmation' => 'required|min:8|same:new_password'
+        ]);
+
+        if(Hash::check($request->old_password, auth()->user()->password)) {
+            auth()->user()->update(['password' => Hash::make($request->new_password)]);
+
+            return redirect('/account');
+        }
+        else{
+            return redirect('/account')->with('error', 'You old password is incorrect');
+        }
     }
     //
     public function registerNewAccount(Request $request)
@@ -46,7 +84,7 @@ class UserController extends Controller
             $request->session()->regenerate();
             return redirect('/events');
         } else {
-            return redirect('/signin');
+            return redirect('/signin')->with('error', 'Your username or password is incorrect');
         }
     }
 

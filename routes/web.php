@@ -26,6 +26,8 @@ Route::get('/', function () {
 
 
 Route::get('/account', [UserController::class, 'showUserDetail'])->middleware('auth');
+Route::put('/account/profile', [UserController::class, 'updateUserProfile'])->middleware('auth');
+Route::put('/account/password', [UserController::class, 'updateUserPassword'])->middleware('auth');
 Route::get('/signin', [UserController::class, 'showLoginForm'])->middleware('guest');
 Route::get('/signup', [UserController::class, 'showRegisterForm'])->middleware('guest');
 Route::post('/signup', [UserController::class, 'registerNewAccount'])->middleware('guest');
