@@ -14,14 +14,22 @@
 @section('link-info'){{ URL::to('/myevent/' . $event_id . '/info') }}@endsection
 @section('link-ticket'){{ URL::to('/myevent/' . $event_id . '/ticket') }}@endsection
 
-@section('link-schedule'){{ URL::to('/myevent/' . $event_id . '/schedule') }}@endsection
-@section('link-poll'){{ URL::to('/myevent/' . $event_id . '/poll') }}@endsection
-@section('link-rating'){{ URL::to('/myevent/' . $event_id . '/rating') }}@endsection
-@section('link-support'){{ URL::to('/myevent/' . $event_id . '/support') }}@endsection
-@section('link-task'){{ URL::current() }}@endsection
-@section('link-attendee'){{ URL::to('/myevent/' . $event_id . '/attendee') }}@endsection
-@section('link-vendor'){{ URL::to('/myevent/' . $event_id . '/vendor') }}@endsection
-@section('link-analytic'){{ URL::to('/myevent/' . $event_id . '/analytic') }}@endsection
+@section('dd-item')
+    <a class="dropdown-item text-dark" href="{{ URL::to('/myevent/' . $event_id . '/schedule') }}">Schedule</a>
+    <a class="dropdown-item text-dark" href="{{ URL::to('/myevent/' . $event_id . '/poll') }}">Poll</a>
+    @if ($event->is_organizer == 0 && $event->is_assistant == 0)
+        <a class="dropdown-item text-dark" href="{{ URL::to('/myevent/' . $event_id . '/rating') }}">Give Rating</a>
+    @endif
+    <a class="dropdown-item text-dark" href="{{ URL::to('/myevent/' . $event_id . '/support') }}">Support Ticket</a>
+    @if (
+        ($event->is_organizer == 1 && $event->is_assistant == 0) ||
+            ($event->is_organizer == 0 && $event->is_assistant == 1))
+        <a class="dropdown-item text-dark" href="{{ URL::current() }}">Management Task</a>
+        <a class="dropdown-item text-dark" href="{{ URL::to('/myevent/' . $event_id . '/attendee') }}">Attendee List</a>
+        <a class="dropdown-item text-dark" href="{{ URL::to('/myevent/' . $event_id . '/vendor') }}">Vendor</a>
+        <a class="dropdown-item text-dark" href="{{ URL::to('/myevent/' . $event_id . '/analytic') }}">Analytics</a>
+    @endif
+@endsection
 
 @section('content')
 
@@ -177,34 +185,45 @@
                                                                     class="btn btn-primary dropdown-toggle"
                                                                     data-bs-toggle="dropdown" aria-haspopup="true"
                                                                     aria-expanded="false"></button>
-                                                                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                                <div class="dropdown-menu"
+                                                                    aria-labelledby="btnGroupDrop1">
                                                                     @if ($list->is_start == 0 && $list->is_complete == 0)
-                                                                        <form action="/myevent/{{$event_id}}/inprogress-task" method="post">
-                                                                        {{ method_field('PUT') }}
-                                                                        @csrf
-                                                                        <input type="hidden" name="task_id"
-                                                                            value="{{ $list->id }}" autocomplete="off">
-                                                                        <button type="submit" class="dropdown-item">In
-                                                                            Progress</button>
+                                                                        <form
+                                                                            action="/myevent/{{ $event_id }}/inprogress-task"
+                                                                            method="post">
+                                                                            {{ method_field('PUT') }}
+                                                                            @csrf
+                                                                            <input type="hidden" name="task_id"
+                                                                                value="{{ $list->id }}"
+                                                                                autocomplete="off">
+                                                                            <button type="submit"
+                                                                                class="dropdown-item">In
+                                                                                Progress</button>
                                                                         </form>
                                                                     @endif
-                                                                    
+
                                                                     @if ($list->is_start == 1 && $list->is_complete == 0)
-                                                                    <form action="/myevent/{{$event_id}}/completed-task" method="post">
-                                                                        {{ method_field('PUT') }}
-                                                                        @csrf
-                                                                        <input type="hidden" name="task_id"
-                                                                            value="{{ $list->id }}" autocomplete="off">
-                                                                        <button type="submit"
-                                                                            class="dropdown-item">Completed</button>
-                                                                    </form>
+                                                                        <form
+                                                                            action="/myevent/{{ $event_id }}/completed-task"
+                                                                            method="post">
+                                                                            {{ method_field('PUT') }}
+                                                                            @csrf
+                                                                            <input type="hidden" name="task_id"
+                                                                                value="{{ $list->id }}"
+                                                                                autocomplete="off">
+                                                                            <button type="submit"
+                                                                                class="dropdown-item">Completed</button>
+                                                                        </form>
                                                                     @endif
 
-                                                                    <form action="/myevent/{{$event_id}}/remove-task" method="POST">
+                                                                    <form
+                                                                        action="/myevent/{{ $event_id }}/remove-task"
+                                                                        method="POST">
                                                                         {{ method_field('DELETE') }}
                                                                         @csrf
                                                                         <input type="hidden" name="task_id"
-                                                                            value="{{ $list->id }}" autocomplete="off">
+                                                                            value="{{ $list->id }}"
+                                                                            autocomplete="off">
                                                                         <button type="submit"
                                                                             class="dropdown-item">Delete</button>
                                                                     </form>

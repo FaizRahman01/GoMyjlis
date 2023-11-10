@@ -203,7 +203,7 @@ class EventController extends Controller
 
             return redirect('/myevent');
         } catch (Exception $e) {
-            return redirect('/events');
+            return redirect('/signin');
         }
     }
 

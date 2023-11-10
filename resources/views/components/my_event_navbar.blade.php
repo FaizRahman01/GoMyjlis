@@ -9,14 +9,7 @@
                     class="btn btn-primary dropdown-toggle border-left-1 border-light" data-bs-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false"></button>
                 <div class="dropdown-menu" aria-labelledby="btnGroupDrop4">
-                    <a class="dropdown-item text-dark" href="@yield('link-schedule')">Schedule</a>
-                    <a class="dropdown-item text-dark" href="@yield('link-poll')">Poll</a>
-                    <a class="dropdown-item text-dark" href="@yield('link-rating')">Give Rating</a>
-                    <a class="dropdown-item text-dark" href="@yield('link-support')">Support Ticket</a>
-                    <a class="dropdown-item text-dark" href="@yield('link-task')">Management Task</a>
-                    <a class="dropdown-item text-dark" href="@yield('link-attendee')">Attendee List</a>
-                    <a class="dropdown-item text-dark" href="@yield('link-vendor')">Vendor</a>
-                    <a class="dropdown-item text-dark" href="@yield('link-analytic')">Analytics</a>
+                    @yield('dd-item')
                 </div>
             </div>
         </div>
@@ -31,14 +24,7 @@
                     class="btn btn-primary dropdown-toggle border-left-1 border-light" data-bs-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false"></button>
                 <div class="dropdown-menu" aria-labelledby="btnGroupDrop4">
-                    <a class="dropdown-item text-dark" href="@yield('link-schedule')">Schedule</a>
-                    <a class="dropdown-item text-dark" href="@yield('link-poll')">Poll</a>
-                    <a class="dropdown-item text-dark" href="@yield('link-rating')">Give Rating</a>
-                    <a class="dropdown-item text-dark" href="@yield('link-support')">Support Ticket</a>
-                    <a class="dropdown-item text-dark" href="@yield('link-task')">Management Task</a>
-                    <a class="dropdown-item text-dark" href="@yield('link-attendee')">Attendee List</a>
-                    <a class="dropdown-item text-dark" href="@yield('link-vendor')">Vendor</a>
-                    <a class="dropdown-item text-dark" href="@yield('link-analytic')">Analytics</a>
+                    @yield('dd-item')
                 </div>
             </div>
         </div>

@@ -103,6 +103,15 @@ class AnalyticControllerr extends Controller
             ->where('event_id', $event_id)
             ->get();
 
+        $event = DB::table('events')
+            ->join('tickets', 'tickets.event_id', '=', 'events.id')
+            ->join('users', 'users.id', '=', 'tickets.user_id')
+            ->where('events.id', '=', $event_id)
+            ->where('user_id', auth()->id())
+            ->where('is_approve', 1)
+            ->select('events.*', 'tickets.*', 'users.username')
+            ->get()->first();
+
         $view_data = [
             'event_id' => $event_id,
             'checkin' => $checkin,
@@ -111,30 +120,29 @@ class AnalyticControllerr extends Controller
             'entertain_rating' => $entertain_rating,
             'engagement_rating' => $engagement_rating,
             'food_rating' => $food_rating,
-            'overall_rating' => $overall_rating 
+            'overall_rating' => $overall_rating,
+            'event' => $event
         ];
 
-        $event = DB::table('events')
+        $event_team = DB::table('events')
             ->join('tickets', 'tickets.event_id', '=', 'events.id')
             ->join('users', 'users.id', '=', 'tickets.user_id')
             ->where('events.id', '=', $event_id)
             ->where('user_id', auth()->id())
             ->where('is_approve', 1)
-            ->where(function($query) {
+            ->where(function ($query) {
                 $query->where('is_organizer', 1)->where('is_assistant', 0);
             })
-            ->orWhere(function($query) {
+            ->orWhere(function ($query) {
                 $query->where('is_organizer', 0)->where('is_assistant', 1);
             })
             ->select('events.*', 'tickets.*', 'users.username')
             ->get()->first();
 
-        if ($event == null) {
+        if ($event_team == null) {
             return redirect('/myevent');
         } else {
             return view('pages.my_event_pages.analytic', $view_data);
         }
-
-        
     }
 }

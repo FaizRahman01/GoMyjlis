@@ -14,14 +14,22 @@
 @section('link-info'){{ URL::to('/myevent/' . $event_id . '/info') }}@endsection
 @section('link-ticket'){{ URL::to('/myevent/' . $event_id . '/ticket') }}@endsection
 
-@section('link-schedule'){{ URL::current() }}@endsection
-@section('link-poll'){{ URL::to('/myevent/' . $event_id . '/poll') }}@endsection
-@section('link-rating'){{ URL::to('/myevent/' . $event_id . '/rating') }}@endsection
-@section('link-support'){{ URL::to('/myevent/' . $event_id . '/support') }}@endsection
-@section('link-task'){{ URL::to('/myevent/' . $event_id . '/task') }}@endsection
-@section('link-attendee'){{ URL::to('/myevent/' . $event_id . '/attendee') }}@endsection
-@section('link-vendor'){{ URL::to('/myevent/' . $event_id . '/vendor') }}@endsection
-@section('link-analytic'){{ URL::to('/myevent/' . $event_id . '/analytic') }}@endsection
+@section('dd-item')
+    <a class="dropdown-item text-dark" href="{{ URL::current() }}">Schedule</a>
+    <a class="dropdown-item text-dark" href="{{ URL::to('/myevent/' . $event_id . '/poll') }}">Poll</a>
+    @if ($event->is_organizer == 0 && $event->is_assistant == 0)
+        <a class="dropdown-item text-dark" href="{{ URL::to('/myevent/' . $event_id . '/rating') }}">Give Rating</a>
+    @endif
+    <a class="dropdown-item text-dark" href="{{ URL::to('/myevent/' . $event_id . '/support') }}">Support Ticket</a>
+    @if (
+        ($event->is_organizer == 1 && $event->is_assistant == 0) ||
+            ($event->is_organizer == 0 && $event->is_assistant == 1))
+        <a class="dropdown-item text-dark" href="{{ URL::to('/myevent/' . $event_id . '/task') }}">Management Task</a>
+        <a class="dropdown-item text-dark" href="{{ URL::to('/myevent/' . $event_id . '/attendee') }}">Attendee List</a>
+        <a class="dropdown-item text-dark" href="{{ URL::to('/myevent/' . $event_id . '/vendor') }}">Vendor</a>
+        <a class="dropdown-item text-dark" href="{{ URL::to('/myevent/' . $event_id . '/analytic') }}">Analytics</a>
+    @endif
+@endsection
 
 @section('content')
 
@@ -30,12 +38,15 @@
 
             <div class="row mb-4">
                 <h4 class="fw-light col-md-6 col-8 d-flex align-items-center">Schedule and Agenda</h4>
-                @if ($event->is_organizer == 1 && $event->is_assistant == 0 || $event->is_organizer == 0 && $event->is_assistant == 1)
-                <div class="col-md-6 col-4 d-flex justify-content-end">
-                    <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        Edit
-                    </button>
-                </div>
+                @if (
+                    ($event->is_organizer == 1 && $event->is_assistant == 0) ||
+                        ($event->is_organizer == 0 && $event->is_assistant == 1))
+                    <div class="col-md-6 col-4 d-flex justify-content-end">
+                        <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal">
+                            Edit
+                        </button>
+                    </div>
                 @endif
             </div>
 
@@ -76,19 +87,20 @@
                     <form action="/myevent/{{ $event_id }}/activity" method="post">
                         @csrf
                         <div class="form-floating mb-3 has-danger">
-                            <input type="text" name="event_activity" class="form-control @error('event_activity')is-invalid @enderror"
+                            <input type="text" name="event_activity"
+                                class="form-control @error('event_activity')is-invalid @enderror"
                                 placeholder="Announcement">
                             <label>Activity</label>
                             @error('event_activity')
-                            <div class="invalid-feedback text-start">{{$message}}</div>
+                                <div class="invalid-feedback text-start">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="form-floating mb-3 has-danger">
-                            <input type="datetime-local" name="time_date_start" class="form-control @error('time_date_start')is-invalid @enderror"
-                                placeholder="Start Date">
+                            <input type="datetime-local" name="time_date_start"
+                                class="form-control @error('time_date_start')is-invalid @enderror" placeholder="Start Date">
                             <label>Time and Date</label>
                             @error('time_date_start')
-                            <div class="invalid-feedback text-start">{{$message}}</div>
+                                <div class="invalid-feedback text-start">{{ $message }}</div>
                             @enderror
                         </div>
                         <button type="submit" class="btn btn-primary btn-block mb-4 w-100">
@@ -110,14 +122,16 @@
                                             <div class="row mb-2">
                                                 <div class="col-6">
                                                     <h6 class="mb-0">{{ $list->activity }}</h6>
-                                                    <p class="mb-0 text-muted">{{ date('d-m-Y', strtotime($list->timeline)) }}</p>
+                                                    <p class="mb-0 text-muted">
+                                                        {{ date('d-m-Y', strtotime($list->timeline)) }}</p>
                                                 </div>
                                                 <div class="col-6 d-flex justify-content-end">
-                                                    <form action="/myevent/{{$event_id}}/remove-activity" method="post">
+                                                    <form action="/myevent/{{ $event_id }}/remove-activity"
+                                                        method="post">
                                                         {{ method_field('DELETE') }}
                                                         @csrf
-                                                        <input type="hidden" name="activity_id" value="{{$list->id}}"
-                                                            autocomplete="off">
+                                                        <input type="hidden" name="activity_id"
+                                                            value="{{ $list->id }}" autocomplete="off">
                                                         <button type="submit"
                                                             class="mx-1 btn btn-outline-danger link-underline link-underline-opacity-0">
                                                             Delete

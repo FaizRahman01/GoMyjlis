@@ -14,14 +14,22 @@
 @section('link-info'){{ URL::to('/myevent/' . $event_id . '/info') }}@endsection
 @section('link-ticket'){{ URL::to('/myevent/' . $event_id . '/ticket') }}@endsection
 
-@section('link-schedule'){{ URL::to('/myevent/' . $event_id . '/schedule') }}@endsection
-@section('link-poll'){{ URL::to('/myevent/' . $event_id . '/poll') }}@endsection
-@section('link-rating'){{ URL::to('/myevent/' . $event_id . '/rating') }}@endsection
-@section('link-support'){{ URL::to('/myevent/' . $event_id . '/support') }}@endsection
-@section('link-task'){{ URL::to('/myevent/' . $event_id . '/task') }}@endsection
-@section('link-attendee'){{ URL::to('/myevent/' . $event_id . '/attendee') }}@endsection
-@section('link-vendor'){{ URL::to('/myevent/' . $event_id . '/vendor') }}@endsection
-@section('link-analytic'){{ URL::current() }}@endsection
+@section('dd-item')
+    <a class="dropdown-item text-dark" href="{{ URL::to('/myevent/' . $event_id . '/schedule') }}">Schedule</a>
+    <a class="dropdown-item text-dark" href="{{ URL::to('/myevent/' . $event_id . '/poll') }}">Poll</a>
+    @if ($event->is_organizer == 0 && $event->is_assistant == 0)
+        <a class="dropdown-item text-dark" href="{{ URL::to('/myevent/' . $event_id . '/rating') }}">Give Rating</a>
+    @endif
+    <a class="dropdown-item text-dark" href="{{ URL::to('/myevent/' . $event_id . '/support') }}">Support Ticket</a>
+    @if (
+        ($event->is_organizer == 1 && $event->is_assistant == 0) ||
+            ($event->is_organizer == 0 && $event->is_assistant == 1))
+        <a class="dropdown-item text-dark" href="{{ URL::to('/myevent/' . $event_id . '/task') }}">Management Task</a>
+        <a class="dropdown-item text-dark" href="{{ URL::to('/myevent/' . $event_id . '/attendee') }}">Attendee List</a>
+        <a class="dropdown-item text-dark" href="{{ URL::to('/myevent/' . $event_id . '/vendor') }}">Vendor</a>
+        <a class="dropdown-item text-dark" href="{{ URL::current() }}">Analytics</a>
+    @endif
+@endsection
 
 
 @section('content')
@@ -48,7 +56,7 @@
             </div>
         </div>
 
-        
+
         <div class="col-md-6">
             <div style="width: 300px; height: 300px" class="mb-5">
                 <canvas id="engagementChart"></canvas>
@@ -96,7 +104,7 @@
                         align: 'start',
                         font: {
                             weight: 'normal',
-                            size:20
+                            size: 20
                         }
                     }
                 },
@@ -107,16 +115,16 @@
 
 
         const ctx2 = document.getElementById('contentChart');
-        let satisfied_content = {{$content_rating->satisfied ?? 0}};
-        let reasonable_content = {{$content_rating->reasonable ?? 0}};
-        let dissapointed_content = {{$content_rating->dissapointed ?? 0}};
+        let satisfied_content = {{ $content_rating->satisfied ?? 0 }};
+        let reasonable_content = {{ $content_rating->reasonable ?? 0 }};
+        let dissapointed_content = {{ $content_rating->dissapointed ?? 0 }};
         new Chart(ctx2, {
             type: 'doughnut',
             data: {
                 labels: ['Dissapointed', 'Reasonable', 'Satisfied'],
                 datasets: [{
                     label: 'Attendee Feedback',
-                    data: [ dissapointed_content, reasonable_content, satisfied_content],
+                    data: [dissapointed_content, reasonable_content, satisfied_content],
                     borderWidth: 1
                 }]
             },
@@ -128,7 +136,7 @@
                         align: 'start',
                         font: {
                             weight: 'normal',
-                            size:20
+                            size: 20
                         }
                     }
                 },
@@ -138,16 +146,16 @@
         });
 
         const ctx3 = document.getElementById('entertainChart');
-        let satisfied_entertain = {{$entertain_rating->satisfied ?? 0}};
-        let reasonable_entertain = {{$entertain_rating->reasonable ?? 0}};
-        let dissapointed_entertain = {{$entertain_rating->dissapointed ?? 0}};
+        let satisfied_entertain = {{ $entertain_rating->satisfied ?? 0 }};
+        let reasonable_entertain = {{ $entertain_rating->reasonable ?? 0 }};
+        let dissapointed_entertain = {{ $entertain_rating->dissapointed ?? 0 }};
         new Chart(ctx3, {
             type: 'doughnut',
             data: {
                 labels: ['Dissapointed', 'Reasonable', 'Satisfied'],
                 datasets: [{
                     label: 'Attendee Feedback',
-                    data: [ dissapointed_entertain, reasonable_entertain, satisfied_entertain],
+                    data: [dissapointed_entertain, reasonable_entertain, satisfied_entertain],
                     borderWidth: 1
                 }]
             },
@@ -159,7 +167,7 @@
                         align: 'start',
                         font: {
                             weight: 'normal',
-                            size:20
+                            size: 20
                         }
                     }
                 },
@@ -169,16 +177,16 @@
         });
 
         const ctx4 = document.getElementById('engagementChart');
-        let satisfied_engagement = {{$engagement_rating->satisfied ?? 0}};
-        let reasonable_engagement = {{$engagement_rating->reasonable ?? 0}};
-        let dissapointed_engagement = {{$engagement_rating->dissapointed ?? 0}};
+        let satisfied_engagement = {{ $engagement_rating->satisfied ?? 0 }};
+        let reasonable_engagement = {{ $engagement_rating->reasonable ?? 0 }};
+        let dissapointed_engagement = {{ $engagement_rating->dissapointed ?? 0 }};
         new Chart(ctx4, {
             type: 'doughnut',
             data: {
                 labels: ['Dissapointed', 'Reasonable', 'Satisfied'],
                 datasets: [{
                     label: 'Attendee Feedback',
-                    data: [ dissapointed_engagement, reasonable_engagement, satisfied_engagement],
+                    data: [dissapointed_engagement, reasonable_engagement, satisfied_engagement],
                     borderWidth: 1
                 }]
             },
@@ -190,7 +198,7 @@
                         align: 'start',
                         font: {
                             weight: 'normal',
-                            size:20
+                            size: 20
                         }
                     }
                 },
@@ -200,16 +208,16 @@
         });
 
         const ctx5 = document.getElementById('foodChart');
-        let satisfied_food = {{$food_rating->satisfied ?? 0}};
-        let reasonable_food = {{$food_rating->reasonable ?? 0}};
-        let dissapointed_food = {{$food_rating->dissapointed ?? 0}};
+        let satisfied_food = {{ $food_rating->satisfied ?? 0 }};
+        let reasonable_food = {{ $food_rating->reasonable ?? 0 }};
+        let dissapointed_food = {{ $food_rating->dissapointed ?? 0 }};
         new Chart(ctx5, {
             type: 'doughnut',
             data: {
                 labels: ['Dissapointed', 'Reasonable', 'Satisfied'],
                 datasets: [{
                     label: 'Attendee Feedback',
-                    data: [ dissapointed_food, reasonable_food, satisfied_food],
+                    data: [dissapointed_food, reasonable_food, satisfied_food],
                     borderWidth: 1
                 }]
             },
@@ -221,7 +229,7 @@
                         align: 'start',
                         font: {
                             weight: 'normal',
-                            size:20
+                            size: 20
                         }
                     }
                 },
@@ -231,16 +239,16 @@
         });
 
         const ctx6 = document.getElementById('overallChart');
-        let satisfied_overall = {{$overall_rating->satisfied ?? 0}};
-        let reasonable_overall = {{$overall_rating->reasonable ?? 0}};
-        let dissapointed_overall = {{$overall_rating->dissapointed ?? 0}};
+        let satisfied_overall = {{ $overall_rating->satisfied ?? 0 }};
+        let reasonable_overall = {{ $overall_rating->reasonable ?? 0 }};
+        let dissapointed_overall = {{ $overall_rating->dissapointed ?? 0 }};
         new Chart(ctx6, {
             type: 'doughnut',
             data: {
                 labels: ['Dissapointed', 'Reasonable', 'Satisfied'],
                 datasets: [{
                     label: 'Attendee Feedback',
-                    data: [ dissapointed_overall, reasonable_overall, satisfied_overall],
+                    data: [dissapointed_overall, reasonable_overall, satisfied_overall],
                     borderWidth: 1
                 }]
             },
@@ -252,7 +260,7 @@
                         align: 'start',
                         font: {
                             weight: 'normal',
-                            size:20
+                            size: 20
                         }
                     }
                 },

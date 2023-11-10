@@ -14,14 +14,22 @@
 @section('link-info'){{ URL::to('/myevent/' . $event_id . '/info') }}@endsection
 @section('link-ticket'){{ URL::to('/myevent/' . $event_id . '/ticket') }}@endsection
 
-@section('link-schedule'){{ URL::to('/myevent/' . $event_id . '/schedule') }}@endsection
-@section('link-poll'){{ URL::to('/myevent/' . $event_id . '/poll') }}@endsection
-@section('link-rating'){{ URL::to('/myevent/' . $event_id . '/rating') }}@endsection
-@section('link-support'){{ URL::current() }}@endsection
-@section('link-task'){{ URL::to('/myevent/' . $event_id . '/task') }}@endsection
-@section('link-attendee'){{ URL::to('/myevent/' . $event_id . '/attendee') }}@endsection
-@section('link-vendor'){{ URL::to('/myevent/' . $event_id . '/vendor') }}@endsection
-@section('link-analytic'){{ URL::to('/myevent/' . $event_id . '/analytic') }}@endsection
+@section('dd-item')
+    <a class="dropdown-item text-dark" href="{{ URL::to('/myevent/' . $event_id . '/schedule') }}">Schedule</a>
+    <a class="dropdown-item text-dark" href="{{ URL::to('/myevent/' . $event_id . '/poll') }}">Poll</a>
+    @if ($event->is_organizer == 0 && $event->is_assistant == 0)
+        <a class="dropdown-item text-dark" href="{{ URL::to('/myevent/' . $event_id . '/rating') }}">Give Rating</a>
+    @endif
+    <a class="dropdown-item text-dark" href="{{ URL::current() }}">Support Ticket</a>
+    @if (
+        ($event->is_organizer == 1 && $event->is_assistant == 0) ||
+            ($event->is_organizer == 0 && $event->is_assistant == 1))
+        <a class="dropdown-item text-dark" href="{{ URL::to('/myevent/' . $event_id . '/task') }}">Management Task</a>
+        <a class="dropdown-item text-dark" href="{{ URL::to('/myevent/' . $event_id . '/attendee') }}">Attendee List</a>
+        <a class="dropdown-item text-dark" href="{{ URL::to('/myevent/' . $event_id . '/vendor') }}">Vendor</a>
+        <a class="dropdown-item text-dark" href="{{ URL::to('/myevent/' . $event_id . '/analytic') }}">Analytics</a>
+    @endif
+@endsection
 
 @section('content')
 

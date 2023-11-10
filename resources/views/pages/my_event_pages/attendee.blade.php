@@ -14,14 +14,22 @@
 @section('link-info'){{ URL::to('/myevent/' . $event_id . '/info') }}@endsection
 @section('link-ticket'){{ URL::to('/myevent/' . $event_id . '/ticket') }}@endsection
 
-@section('link-schedule'){{ URL::to('/myevent/' . $event_id . '/schedule') }}@endsection
-@section('link-poll'){{ URL::to('/myevent/' . $event_id . '/poll') }}@endsection
-@section('link-rating'){{ URL::to('/myevent/' . $event_id . '/rating') }}@endsection
-@section('link-support'){{ URL::to('/myevent/' . $event_id . '/support') }}@endsection
-@section('link-task'){{ URL::to('/myevent/' . $event_id . '/task') }}@endsection
-@section('link-attendee'){{ URL::current() }}@endsection
-@section('link-vendor'){{ URL::to('/myevent/' . $event_id . '/vendor') }}@endsection
-@section('link-analytic'){{ URL::to('/myevent/' . $event_id . '/analytic') }}@endsection
+@section('dd-item')
+    <a class="dropdown-item text-dark" href="{{ URL::to('/myevent/' . $event_id . '/schedule') }}">Schedule</a>
+    <a class="dropdown-item text-dark" href="{{ URL::to('/myevent/' . $event_id . '/poll') }}">Poll</a>
+    @if ($event->is_organizer == 0 && $event->is_assistant == 0)
+        <a class="dropdown-item text-dark" href="{{ URL::to('/myevent/' . $event_id . '/rating') }}">Give Rating</a>
+    @endif
+    <a class="dropdown-item text-dark" href="{{ URL::to('/myevent/' . $event_id . '/support') }}">Support Ticket</a>
+    @if (
+        ($event->is_organizer == 1 && $event->is_assistant == 0) ||
+            ($event->is_organizer == 0 && $event->is_assistant == 1))
+        <a class="dropdown-item text-dark" href="{{ URL::to('/myevent/' . $event_id . '/task') }}">Management Task</a>
+        <a class="dropdown-item text-dark" href="{{ URL::current() }}">Attendee List</a>
+        <a class="dropdown-item text-dark" href="{{ URL::to('/myevent/' . $event_id . '/vendor') }}">Vendor</a>
+        <a class="dropdown-item text-dark" href="{{ URL::to('/myevent/' . $event_id . '/analytic') }}">Analytics</a>
+    @endif
+@endsection
 
 @section('content')
 
@@ -104,7 +112,7 @@
                                     <h6 class="mb-0">
                                         {{ Str::ucfirst($list->username) }}
                                         @if ($list->is_attend == 1)
-                                        <span class="badge bg-success bg-opacity-75 text-white">Check In ✔️</span>
+                                            <span class="badge bg-success bg-opacity-75 text-white">Check In ✔️</span>
                                         @endif
                                     </h6>
                                     <p class="mb-0 text-muted">
@@ -152,14 +160,15 @@
                                                             @csrf
                                                             <input type="hidden" name="user_id"
                                                                 value="{{ $list->user_id }}" autocomplete="off">
-                                                            <button type="submit" class="dropdown-item">Check In</button>
+                                                            <button type="submit" class="dropdown-item">Check
+                                                                In</button>
                                                         </form>
                                                     @endif
                                                     <form action="/myevent/{{ $list->event_id }}/kick" method="POST">
                                                         {{ method_field('DELETE') }}
                                                         @csrf
-                                                        <input type="hidden" name="user_id" value="{{ $list->user_id }}"
-                                                            autocomplete="off">
+                                                        <input type="hidden" name="user_id"
+                                                            value="{{ $list->user_id }}" autocomplete="off">
                                                         <button type="submit" class="dropdown-item">Kick</button>
                                                     </form>
 
@@ -167,7 +176,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                        
+
 
                                 </div>
                             </div>

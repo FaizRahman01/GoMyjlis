@@ -145,25 +145,34 @@ class OrganizerController extends Controller
         $event_id = $id;
         $task_list = DB::table('tasks')->where('event_id', $event_id)->get();
 
+        $event_team = DB::table('events')
+            ->join('tickets', 'tickets.event_id', '=', 'events.id')
+            ->join('users', 'users.id', '=', 'tickets.user_id')
+            ->where('events.id', '=', $event_id)
+            ->where('user_id', auth()->id())
+            ->where('is_approve', 1)
+            ->where(function ($query) {
+                $query->where('is_organizer', 1)->where('is_assistant', 0);
+            })
+            ->orWhere(function ($query) {
+                $query->where('is_organizer', 0)->where('is_assistant', 1);
+            })
+            ->select('events.*', 'tickets.*', 'users.username')
+            ->get()->first();
+
         $event = DB::table('events')
             ->join('tickets', 'tickets.event_id', '=', 'events.id')
             ->join('users', 'users.id', '=', 'tickets.user_id')
             ->where('events.id', '=', $event_id)
             ->where('user_id', auth()->id())
             ->where('is_approve', 1)
-            ->where(function($query) {
-                $query->where('is_organizer', 1)->where('is_assistant', 0);
-            })
-            ->orWhere(function($query) {
-                $query->where('is_organizer', 0)->where('is_assistant', 1);
-            })
             ->select('events.*', 'tickets.*', 'users.username')
             ->get()->first();
 
-        if ($event == null) {
+        if ($event_team == null) {
             return redirect('/myevent');
         } else {
-            return view('pages.my_event_pages.task', ['event_id' => $event_id, 'task_list' => $task_list]);
+            return view('pages.my_event_pages.task', ['event_id' => $event_id, 'task_list' => $task_list, 'event' => $event]);
         }
     }
 
@@ -243,25 +252,34 @@ class OrganizerController extends Controller
             ->where('event_id', $event_id)
             ->get();
 
+        $event_team = DB::table('events')
+            ->join('tickets', 'tickets.event_id', '=', 'events.id')
+            ->join('users', 'users.id', '=', 'tickets.user_id')
+            ->where('events.id', '=', $event_id)
+            ->where('user_id', auth()->id())
+            ->where('is_approve', 1)
+            ->where(function ($query) {
+                $query->where('is_organizer', 1)->where('is_assistant', 0);
+            })
+            ->orWhere(function ($query) {
+                $query->where('is_organizer', 0)->where('is_assistant', 1);
+            })
+            ->select('events.*', 'tickets.*', 'users.username')
+            ->get()->first();
+
         $event = DB::table('events')
             ->join('tickets', 'tickets.event_id', '=', 'events.id')
             ->join('users', 'users.id', '=', 'tickets.user_id')
             ->where('events.id', '=', $event_id)
             ->where('user_id', auth()->id())
             ->where('is_approve', 1)
-            ->where(function($query) {
-                $query->where('is_organizer', 1)->where('is_assistant', 0);
-            })
-            ->orWhere(function($query) {
-                $query->where('is_organizer', 0)->where('is_assistant', 1);
-            })
             ->select('events.*', 'tickets.*', 'users.username')
             ->get()->first();
 
-        if ($event == null) {
+        if ($event_team == null) {
             return redirect('/myevent');
         } else {
-            return view('pages.my_event_pages.vendor', ['event_id' => $event_id, 'vendor_list' => $vendor_list]);
+            return view('pages.my_event_pages.vendor', ['event_id' => $event_id, 'vendor_list' => $vendor_list, 'event' => $event]);
         }
     }
 
@@ -306,25 +324,42 @@ class OrganizerController extends Controller
             ->where('vendor_updates.vendor_id', $vendor_id)
             ->get();
 
+        $event_team = DB::table('events')
+            ->join('tickets', 'tickets.event_id', '=', 'events.id')
+            ->join('users', 'users.id', '=', 'tickets.user_id')
+            ->where('events.id', '=', $event_id)
+            ->where('user_id', auth()->id())
+            ->where('is_approve', 1)
+            ->where(function ($query) {
+                $query->where('is_organizer', 1)->where('is_assistant', 0);
+            })
+            ->orWhere(function ($query) {
+                $query->where('is_organizer', 0)->where('is_assistant', 1);
+            })
+            ->select('events.*', 'tickets.*', 'users.username')
+            ->get()->first();
+
         $event = DB::table('events')
             ->join('tickets', 'tickets.event_id', '=', 'events.id')
             ->join('users', 'users.id', '=', 'tickets.user_id')
             ->where('events.id', '=', $event_id)
             ->where('user_id', auth()->id())
             ->where('is_approve', 1)
-            ->where(function($query) {
-                $query->where('is_organizer', 1)->where('is_assistant', 0);
-            })
-            ->orWhere(function($query) {
-                $query->where('is_organizer', 0)->where('is_assistant', 1);
-            })
             ->select('events.*', 'tickets.*', 'users.username')
             ->get()->first();
 
-        if ($event == null) {
+        $view_data = [
+            'event_id' => $event_id,
+            'vendor_id' => $vendor_id,
+            'message_list' => $message_list,
+            'vendor_detail' => $vendor_detail,
+            'event' => $event
+        ];
+
+        if ($event_team == null) {
             return redirect('/myevent');
         } else {
-            return view('pages.my_event_pages.vendor_status', ['event_id' => $event_id, 'vendor_id' => $vendor_id, 'message_list' => $message_list, 'vendor_detail' => $vendor_detail]);
+            return view('pages.my_event_pages.vendor_status', $view_data);
         }
     }
 
