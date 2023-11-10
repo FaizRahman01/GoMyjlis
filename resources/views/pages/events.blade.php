@@ -21,7 +21,7 @@
             <div class="col-lg-12 px-4">
 
                 @foreach ($all_events as $events)
-                    <div class="row mt-3 border border-light border-4 px-4 py-3 rounded-4 bg-primary-subtle">
+                    <div class="row mt-3 border border-light border-4 px-4 py-3 rounded-4 bg-secondary-subtle">
                         <div>
                             <div class="row">
                                 <div class="col-7 d-flex align-items-center">

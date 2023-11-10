@@ -55,25 +55,53 @@
             <div class="col-md-12 mb-4">
                 <ul class="list-group">
 
-                    @foreach ($issue_list as $list)
-                        <li class="list-group-item">
-                            <strong>
-                                <a
-                                    href="/myevent/{{ $event_id }}/support/{{ $list->id }}">{{ $list->title }}</a>
-                            </strong>
-                            <span class="">#{{ $list->id }}</span>
-                            <span class="btn @if ($list->is_close == 0) btn-success @else btn-danger @endif ms-3">
-                                @if ($list->is_close == 0)
-                                    OPEN
-                                @else
-                                    CLOSE
-                                @endif
-                            </span>
-                            <p class="info">Opened by {{ $list->username }} | &nbsp;&nbsp;&nbsp;<span
-                                    class="text-muted">{{ $list->created_at }}</span></a>
-                            </p>
-                        </li>
-                    @endforeach
+                    @if ($event->is_organizer == 0 && $event->is_assistant == 0)
+                        @foreach ($issue_list as $list)
+                            <li class="list-group-item">
+                                <strong>
+                                    <a
+                                        href="/myevent/{{ $event_id }}/support/{{ $list->id }}">{{ $list->title }}</a>
+                                </strong>
+                                <span class="">#{{ $list->id }}</span>
+                                <span
+                                    class="btn @if ($list->is_close == 0) btn-success @else btn-danger @endif ms-3">
+                                    @if ($list->is_close == 0)
+                                        OPEN
+                                    @else
+                                        CLOSE
+                                    @endif
+                                </span>
+                                <p class="info">Opened by {{ $list->username }} | &nbsp;&nbsp;&nbsp;<span
+                                        class="text-muted">{{ $list->created_at }}</span></a>
+                                </p>
+                            </li>
+                        @endforeach
+                    @endif
+
+                    @if (
+                        ($event->is_organizer == 1 && $event->is_assistant == 0) ||
+                            ($event->is_organizer == 0 && $event->is_assistant == 1))
+                        @foreach ($all_issue as $list)
+                            <li class="list-group-item">
+                                <strong>
+                                    <a
+                                        href="/myevent/{{ $event_id }}/support/{{ $list->id }}">{{ $list->title }}</a>
+                                </strong>
+                                <span class="">#{{ $list->id }}</span>
+                                <span
+                                    class="btn @if ($list->is_close == 0) btn-success @else btn-danger @endif ms-3">
+                                    @if ($list->is_close == 0)
+                                        OPEN
+                                    @else
+                                        CLOSE
+                                    @endif
+                                </span>
+                                <p class="info">Opened by {{ $list->username }} | &nbsp;&nbsp;&nbsp;<span
+                                        class="text-muted">{{ $list->created_at }}</span></a>
+                                </p>
+                            </li>
+                        @endforeach
+                    @endif
 
 
 

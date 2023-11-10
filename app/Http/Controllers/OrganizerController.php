@@ -18,6 +18,14 @@ class OrganizerController extends Controller
             ->join('users', 'users.id', '=', 'tickets.user_id')
             ->select('supports.*', 'users.username')
             ->where('supports.event_id', $event_id)
+            ->where('users.id', auth()->id())
+            ->get();
+
+        $all_issue = DB::table('supports')
+            ->crossJoin('tickets', 'tickets.id', '=', 'supports.ticket_id')
+            ->join('users', 'users.id', '=', 'tickets.user_id')
+            ->select('supports.*', 'users.username')
+            ->where('supports.event_id', $event_id)
             ->get();
 
         $event = DB::table('events')
@@ -32,7 +40,7 @@ class OrganizerController extends Controller
         if ($event == null) {
             return redirect('/myevent');
         } else {
-            return view('pages.my_event_pages.support', ['event_id' => $event_id, 'issue_list' =>  $issue_list, 'event' => $event]);
+            return view('pages.my_event_pages.support', ['event_id' => $event_id, 'issue_list' =>  $issue_list, 'event' => $event, 'all_issue' => $all_issue]);
         }
     }
 

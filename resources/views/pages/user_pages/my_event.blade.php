@@ -22,7 +22,19 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div>
-
+                        @if ($user_event->isEmpty())
+                            <div class="page-wrap d-flex flex-row align-items-center">
+                                <div class="container">
+                                    <div class="row justify-content-center">
+                                        <div class="col-md-12 text-center">
+                                            <span class="display-5 d-block">No Event Found</span>
+                                            <div class="mb-4 lead">You are not joining any event.</div>
+                                            <a href="{{URL::to('/events')}}" class="btn btn-outline-primary">Join Now</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
                         @foreach ($user_event as $mylist)
                             <div class="card mt-4">
                                 <div class="p-4 card-body">
@@ -31,7 +43,7 @@
                                             <div class="mt-3 mt-lg-0">
                                                 <h5 class="fs-19 mb-0">
                                                     <a class="primary-link"
-                                                        href="/myevent/{{$mylist->event_id}}/info">{{ $mylist->title }}</a>
+                                                        href="/myevent/{{ $mylist->event_id }}/info">{{ $mylist->title }}</a>
                                                 </h5>
                                                 <p class="text-muted my-1">
                                                     @if ($mylist->is_organizer == 1 && $mylist->is_assistant == 0)
@@ -49,14 +61,15 @@
                                             </div>
                                         </div>
                                         @if ($mylist->is_organizer == 1)
-                                        <div class="col-md-7 col-12 d-flex justify-content-md-end">
-                                            <form action="/myevent/delete" method="post">
-                                                {{ method_field('DELETE') }}
-                                                @csrf
-                                                <input type="hidden" name="event_id" value="{{ $mylist->event_id }}" autocomplete="off">
-                                                <button type="submit" class="btn btn-danger">Delete</button>
-                                            </form>
-                                        </div>
+                                            <div class="col-md-7 col-12 d-flex justify-content-md-end">
+                                                <form action="/myevent/delete" method="post">
+                                                    {{ method_field('DELETE') }}
+                                                    @csrf
+                                                    <input type="hidden" name="event_id" value="{{ $mylist->event_id }}"
+                                                        autocomplete="off">
+                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                </form>
+                                            </div>
                                         @endif
                                     </div>
                                 </div>
