@@ -102,7 +102,7 @@ class EventController extends Controller
     public function editUserEvent(Request $request)
     {
         $user_input = $request->validate([
-            'event_title' => 'required|unique:events,title|min:5|max:100',
+            'event_title' => 'required|min:5|max:100',
             'event_description' => 'nullable',
             'start_date' => 'required',
             'end_date' => 'required|after:start_date',
