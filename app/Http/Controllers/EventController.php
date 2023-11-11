@@ -210,6 +210,7 @@ class EventController extends Controller
             ->join('tickets', 'tickets.event_id', '=', 'events.id')
             ->join('users', 'users.id', '=', 'tickets.user_id')
             ->where('events.id', '=', $event_id)
+            ->where('is_organizer', 1)
             ->select('events.*', 'tickets.*', 'users.username')
             ->get()->first();
 
