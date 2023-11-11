@@ -18,6 +18,6 @@ class AuthenticateOnlyUser
         if (auth()->check() && auth()->user()->is_admin == 0) {
             return $next($request);
         }
-        return redirect('/');
+        return redirect('/signin');
     }
 }

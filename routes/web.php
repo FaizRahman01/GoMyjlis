@@ -45,11 +45,13 @@ Route::delete('/admin/manage-event/{event_id}/{ticket_id}', [AdminController::cl
 
 Route::get('/create-event', [EventController::class, 'showEventForm'])->middleware('authUser');
 Route::get('/myevent', [EventController::class, 'showUserEvent'])->middleware('authUser');
+Route::post('/myevent', [EventController::class, 'filterUserEvent'])->middleware('authUser');
 Route::delete('/myevent/delete', [EventController::class, 'deleteUserEvent'])->middleware('authUser');
 Route::put('/myevent/edit', [EventController::class, 'editUserEvent'])->middleware('authUser');
 Route::get('/myevent/{id}/info', [EventController::class, 'showEventInfo'])->middleware('authUser');
 Route::get('/myevent/{id}/schedule', [EventController::class, 'showEventSchedule'])->middleware('authUser');
 Route::get('/events', [EventController::class, 'showAllEvent']);
+Route::post('/events', [EventController::class, 'filterAllEvent']);
 Route::get('/events/{id}', [EventController::class, 'showSelectedEvent']);
 Route::post('/create-event', [EventController::class, 'createNewEvent'])->middleware('authUser');
 Route::post('/events/join', [EventController::class, 'joinSelectedEvent']);

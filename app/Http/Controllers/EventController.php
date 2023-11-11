@@ -74,7 +74,29 @@ class EventController extends Controller
             ->where('tickets.is_approve', 1)
             ->select('events.*', 'tickets.*')
             ->get();
-        return view('pages.user_pages.my_event', ['user_event' => $user_event]);
+
+        $state_list = [
+            'Johor', 'Kedah', 'Kelantan', 'Kuala Lumpur', 'Melaka',
+            'Negeri Sembilan', 'Pahang', 'Penang', 'Perak',
+            'Perlis', 'Putrajaya', 'Sabah', 'Sarawak', 'Selangor', 'Terengganu'
+        ];
+
+        $view_data = [
+            'user_event' => $user_event,
+            'state_list' => $state_list,
+            'state' => request('state'),
+            'mode' => request('mode')
+        ];
+
+        return view('pages.user_pages.my_event', $view_data);
+    }
+
+    public function filterUserEvent(Request $request)
+    {
+        if ($request['state'] == null && $request['mode'] == null) {
+            return redirect('/myevent');
+        }
+        return redirect('/myevent?state=' . $request['state'] . '&mode=' . $request['mode'] . '');
     }
 
     public function editUserEvent(Request $request)
@@ -164,7 +186,21 @@ class EventController extends Controller
             })
             ->get();
 
-        return view('pages.events', ['all_events' => $all_events]);
+        $state_list = [
+            'Johor', 'Kedah', 'Kelantan', 'Kuala Lumpur', 'Melaka',
+            'Negeri Sembilan', 'Pahang', 'Penang', 'Perak',
+            'Perlis', 'Putrajaya', 'Sabah', 'Sarawak', 'Selangor', 'Terengganu'
+        ];
+
+        return view('pages.events', ['all_events' => $all_events, 'state_list' => $state_list, 'state' => request('state'), 'mode' => request('mode')]);
+    }
+
+    public function filterAllEvent(Request $request)
+    {
+        if ($request['state'] == null && $request['mode'] == null) {
+            return redirect('/events');
+        }
+        return redirect('/events?state=' . $request['state'] . '&mode=' . $request['mode'] . '');
     }
 
     public function showSelectedEvent($id)
