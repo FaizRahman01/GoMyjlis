@@ -90,9 +90,11 @@
                                                 @csrf
                                                 <input type="hidden" name="event_id" value="{{ $events->id }}"
                                                     autocomplete="off">
-                                                <button type="submit"
-                                                    class="btn btn-outline-dark link-underline link-underline-opacity-0 d-flex align-items-center">
-                                                    Count Me In</button>
+                                                @if (optional(auth()->user())->is_admin != 1 || auth()->check() == false)
+                                                    <button type="submit"
+                                                        class="btn btn-outline-dark link-underline link-underline-opacity-0 d-flex align-items-center">
+                                                        Count Me In</button>
+                                                @endif
                                             </form>
                                         </div>
                                     </div>
@@ -126,9 +128,11 @@
                                                 @csrf
                                                 <input type="hidden" name="event_id" value="{{ $events->id }}"
                                                     autocomplete="off">
-                                                <button type="submit"
-                                                    class="btn btn-outline-dark link-underline link-underline-opacity-0 d-flex align-items-center">
-                                                    Count Me In</button>
+                                                @if (optional(auth()->user())->is_admin != 1 || auth()->check() == false)
+                                                    <button type="submit"
+                                                        class="btn btn-outline-dark link-underline link-underline-opacity-0 d-flex align-items-center">
+                                                        Count Me In</button>
+                                                @endif
                                             </form>
                                         </div>
                                     </div>
