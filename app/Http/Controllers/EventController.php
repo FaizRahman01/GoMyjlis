@@ -27,8 +27,8 @@ class EventController extends Controller
         $user_input = $request->validate([
             'event_title' => 'required|unique:events,title|min:5|max:100',
             'event_description' => 'nullable',
-            'start_date' => 'required',
-            'end_date' => 'required|after:start_date',
+            'start_date' => 'required|date|after:today',
+            'end_date' => 'required|date|after_or_equal:start_date',
             'address' => 'nullable',
             'state' => 'required',
             'event_mode' => 'required',
@@ -104,8 +104,8 @@ class EventController extends Controller
         $user_input = $request->validate([
             'event_title' => 'required|min:5|max:100',
             'event_description' => 'nullable',
-            'start_date' => 'required',
-            'end_date' => 'required|after:start_date',
+            'start_date' => 'required|date|after:today',
+            'end_date' => 'required|date|after_or_equal:start_date',
             'address' => 'nullable',
             'state' => 'required',
             'event_mode' => 'required',
