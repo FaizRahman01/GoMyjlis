@@ -38,7 +38,7 @@
     </div>
 
     <div class="mx-0 mx-sm-auto">
-        @if ($event->is_organizer == 0 && $event->is_assistant == 0)
+        @if ($event->is_organizer == 0 && $event->is_assistant == 0 && date('Y-m-d') >= $event->start_date && $event->is_attend == 1)
             <div class="card">
                 <div class="card-body d-flex justify-content-center">
 
@@ -155,7 +155,21 @@
                     </div>
                 @endif
             </div>
+        @else
+            <div class="card">
+                <div class="page-wrap d-flex flex-row align-items-center my-5">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-md-12 text-center">
+                                <span class="display-5 d-block">Wait for event to start.</span>
+                                <div class="mb-4 lead">You must also attend the event.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         @endif
+
     </div>
 
 @endsection

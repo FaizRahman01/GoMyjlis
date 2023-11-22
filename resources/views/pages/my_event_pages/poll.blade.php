@@ -46,51 +46,66 @@
         @endif
     </div>
 
-    @foreach ($poll_question as $question)
-        <ul class="list-group mb-4">
-            <li class="list-group-item active text-center bg-dark border-0" aria-current="true">
-                {{ $question->question }}
-            </li>
+    @if ($poll_question->isNotEmpty())
+        @foreach ($poll_question as $question)
+            <ul class="list-group mb-4">
+                <li class="list-group-item active text-center bg-dark border-0" aria-current="true">
+                    {{ $question->question }}
+                </li>
 
-            @if ($event->is_organizer == 0 && $event->is_assistant == 0)
-                @if ($question->is_close == 0)
-                    <li class="list-group-item">
-                        <form action="/myevent/{{ $event_id }}/poll/{{ $question->id }}" method="post">
-                            @csrf
-                            <div class="row">
-                                <div class="col-8 ps-2">
-                                    <select name="answer" class="form-select w-100" id="exampleSelect1">
-                                        @foreach ($poll_list as $list)
-                                            @if ($list->question == $question->question)
-                                                <option>{{ $list->answer }}</option>
-                                            @endif
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-4">
-                                    <button type="submit" class="btn btn-primary btn-block mb-4 w-100">
-                                        Confirm
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </li>
-                @elseif ($question->is_close == 1)
-                    <li class="list-group-item bg-danger bg-opacity-75 text-white">
-                        <p class="text-center">The poll submission was closed</p>
-                    </li>
-                @endif
-
-                @foreach ($poll_answer as $answer)
-                    @if ($answer->poll_id == $question->id)
+                @if ($event->is_organizer == 0 && $event->is_assistant == 0)
+                    @if ($question->is_close == 0)
                         <li class="list-group-item">
-                            <p class="text-center">You choose: {{ $answer->result }}</p>
+                            <form action="/myevent/{{ $event_id }}/poll/{{ $question->id }}" method="post">
+                                @csrf
+                                <div class="row">
+                                    <div class="col-8 ps-2">
+                                        <select name="answer" class="form-select w-100" id="exampleSelect1">
+                                            @foreach ($poll_list as $list)
+                                                @if ($list->question == $question->question)
+                                                    <option>{{ $list->answer }}</option>
+                                                @endif
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-4">
+                                        <button type="submit" class="btn btn-primary btn-block mb-4 w-100">
+                                            Confirm
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </li>
+                    @elseif ($question->is_close == 1)
+                        <li class="list-group-item bg-danger bg-opacity-75 text-white">
+                            <p class="text-center">The poll submission was closed</p>
                         </li>
                     @endif
-                @endforeach
-            @endif
-        </ul>
-    @endforeach
+
+                    @foreach ($poll_answer as $answer)
+                        @if ($answer->poll_id == $question->id)
+                            <li class="list-group-item">
+                                <p class="text-center">You choose: {{ $answer->result }}</p>
+                            </li>
+                        @endif
+                    @endforeach
+                @endif
+            </ul>
+        @endforeach
+    @else
+        <div class="card">
+            <div class="page-wrap d-flex flex-row align-items-center my-5">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-md-12 text-center">
+                            <span class="display-5 d-block">No Poll Created.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+
 
 
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

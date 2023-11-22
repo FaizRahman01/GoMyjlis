@@ -51,21 +51,35 @@
             </div>
 
             <ul class="pt-4 list-unstyled mb-0">
+                @if ($activity_list->isNotEmpty())
+                    @foreach ($activity_list as $list)
+                        <li class="d-flex flex-column flex-md-row py-4">
+                            <span class="flex-shrink-0 width-13x me-md-4 d-block mb-3 mb-md-0 small text-muted">
+                                {{ date('d-m-Y', strtotime($list->timeline)) }} |
+                                {{ date('H:i', strtotime($list->timeline)) }}
+                            </span>
+                            <div class="flex-grow-1 ps-4 border-start border-3">
 
-                @foreach ($activity_list as $list)
-                    <li class="d-flex flex-column flex-md-row py-4">
-                        <span class="flex-shrink-0 width-13x me-md-4 d-block mb-3 mb-md-0 small text-muted">
-                            {{ date('d-m-Y', strtotime($list->timeline)) }} |
-                            {{ date('H:i', strtotime($list->timeline)) }}
-                        </span>
-                        <div class="flex-grow-1 ps-4 border-start border-3">
-
-                            <p class="mb-0">
-                                {{ $list->activity }}
-                            </p>
+                                <p class="mb-0">
+                                    {{ $list->activity }}
+                                </p>
+                            </div>
+                        </li>
+                    @endforeach
+                @else
+                    <div class="card">
+                        <div class="page-wrap d-flex flex-row align-items-center my-5">
+                            <div class="container">
+                                <div class="row justify-content-center">
+                                    <div class="col-md-12 text-center">
+                                        <span class="display-5 d-block">Schedule have not set yet.</span>
+                                        <div class="mb-4 lead">Wait for the organizer to update.</div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </li>
-                @endforeach
+                    </div>
+                @endif
 
 
 
