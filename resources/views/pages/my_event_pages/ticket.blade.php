@@ -47,8 +47,7 @@
                 <div class="card-footer">
                     <div class="row mx-2 py-3">
                         <div class="col-lg-4 col-12  text-center">
-                            <img src="https://www.pngitem.com/pimgs/m/22-220721_circled-user-male-type-user-colorful-icon-png.png"
-                                alt="" width="200" height="200">
+                            <img src="{{ asset('assets/img/user.png') }}" alt="" width="200" height="200">
                         </div>
                         <div class="col-lg-8 col-12  profile-info">
                             <div class="header-fullname">{{ '@' }}{{ $ticket->username }}</div>
