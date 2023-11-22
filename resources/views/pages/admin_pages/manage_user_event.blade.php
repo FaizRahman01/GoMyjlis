@@ -37,8 +37,6 @@
                 <div class="col-12">
                     <div>
                         <h3>
-                            <img class="img-thumbnail" width="120" height="120"
-                                src="http://cdn.onlinewebfonts.com/svg/img_124200.png">
                             {{ $user->username }}
                         </h3>
                     </div>

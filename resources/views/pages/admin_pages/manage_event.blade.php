@@ -38,10 +38,7 @@
             <div class="col-xl-6 col-md-12">
                 <div class="card p-3">
                     <div class="row">
-                        <div class="col-lg-4 col-md-4 col-12 d-flex justify-content-center">
-                            <div class=""> <img src="https://bootdey.com/img/Content/avatar/avatar7.png"
-                                    height="150" width="150" alt=""> </div>
-                        </div>
+
                         <div class="col-lg-8 col-md-8 col-12 d-flex justify-content-center justify-content-md-start mt-3">
                             <div>
                                 <h4 class="">{{ Str::ucfirst($event_team[0]->username) }}</h4>
@@ -61,10 +58,7 @@
                 <div class="col-xl-6 col-md-12">
                     <div class="card p-3">
                         <div class="row">
-                            <div class="col-lg-4 col-md-4 col-12 d-flex justify-content-center">
-                                <div class=""> <img src="https://bootdey.com/img/Content/avatar/avatar2.png"
-                                        height="150" width="150" alt=""> </div>
-                            </div>
+
                             <div
                                 class="col-lg-8 col-md-8 col-12 d-flex justify-content-center justify-content-md-start mt-3">
                                 <div>
