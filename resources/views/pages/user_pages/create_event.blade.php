@@ -35,7 +35,7 @@
                                 <input value="{{ old('start_date') }}" type="date" name="start_date" class="form-control @error('start_date') is-invalid @enderror"
                                     placeholder="Start Date">
                                 <label>Start Date</label>
-                                @error('start_date"') <div class="invalid-feedback text-start">{{$message}}</div> @enderror
+                                @error('start_date') <div class="invalid-feedback text-start">{{$message}}</div> @enderror
                             </div>
                             <div class="form-floating mb-3 has-danger">
                                 <input value="{{ old('end_date') }}" type="date" name="end_date" class="form-control @error('end_date') is-invalid @enderror"

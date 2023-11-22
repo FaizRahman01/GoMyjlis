@@ -156,7 +156,7 @@
                                 <input value="{{ $event->start_date }}" type="date" name="start_date"
                                     class="form-control @error('start_date') is-invalid @enderror" placeholder="Start Date">
                                 <label>Start Date</label>
-                                @error('start_date"')
+                                @error('start_date')
                                     <div class="invalid-feedback text-start">{{ $message }}</div>
                                 @enderror
                             </div>
