@@ -105,7 +105,7 @@
                                             <div class="form-floating mb-3 has-danger">
                                                 <input type="password" name="password_confirmation" class="form-control @error('password_confirmation')is-invalid @enderror"
                                                     placeholder="Password">
-                                                <label>New Password</label>
+                                                <label>Confirm Password</label>
                                                 <div class="invalid-feedback text-start">@error('password_confirmation'){{$message}}@enderror</div>
                                             </div>
 
