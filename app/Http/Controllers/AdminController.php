@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 
 class AdminController extends Controller
 {
@@ -11,9 +13,8 @@ class AdminController extends Controller
     public function showAllUsers()
     {
         $user_list = DB::table('users')
-            ->join('tickets', 'tickets.user_id', '=', 'users.id')
-            ->select('username', 'users.created_at', DB::raw('count(tickets.is_organizer) as organize_count'))
-            ->groupBy('users.username', 'users.created_at')
+            ->select('username', 'users.created_at')
+            ->where('is_admin', 0)
             ->get();
 
         return view('pages.admin_pages.manage_user', ['user_list' => $user_list]);
@@ -21,26 +22,30 @@ class AdminController extends Controller
 
     public function showAllUserEvents($user)
     {
-        $user_detail = DB::table('users')
-            ->select('username', 'email', 'created_at')
-            ->where('username', $user)
-            ->get();
+        try {
+            $user_detail = DB::table('users')
+                ->select('username', 'email', 'created_at')
+                ->where('username', $user)
+                ->get();
 
-        $user_id = DB::table('users')
-            ->select('id')
-            ->where('username', $user)
-            ->get()->first();
+            $user_id = DB::table('users')
+                ->select('id')
+                ->where('username', $user)
+                ->get()->first();
 
-        $user_num = json_decode($user_id->id, true);
+            $user_num = json_decode($user_id->id, true);
 
-        $event_list = DB::table('events')
-            ->join('tickets', 'tickets.event_id', '=', 'events.id')
-            ->select('events.id', 'title', 'events.created_at')
-            ->where('tickets.user_id', $user_num)
-            ->where('is_organizer', 1)
-            ->get();
+            $event_list = DB::table('events')
+                ->join('tickets', 'tickets.event_id', '=', 'events.id')
+                ->select('events.id', 'title', 'events.created_at')
+                ->where('tickets.user_id', $user_num)
+                ->where('is_organizer', 1)
+                ->get();
 
-        return view('pages.admin_pages.manage_user_event', ['user_detail' => $user_detail, 'event_list' => $event_list, 'user' => $user]);
+            return view('pages.admin_pages.manage_user_event', ['user_detail' => $user_detail, 'event_list' => $event_list, 'user' => $user]);
+        } catch (Exception $e) {
+            return back();
+        }
     }
 
     public function showEventOverview($event_id)
@@ -79,8 +84,14 @@ class AdminController extends Controller
 
         $event_team = [$event_organizer, $event_assistant];
         $attendee_detail = [$attendee_count, $attendee_list];
-
-        return view('pages.admin_pages.manage_event', ['event_team' => $event_team, 'attendee_detail' => $attendee_detail, 'event_id' => $event_id]);
+        try {
+            if ($event_organizer == null || $event_assistant == null) {
+                return redirect('/admin/manage-user');
+            }
+            return view('pages.admin_pages.manage_event', ['event_team' => $event_team, 'attendee_detail' => $attendee_detail, 'event_id' => $event_id]);
+        } catch (Exception $e) {
+            return redirect('/admin/manage-user');
+        }
     }
 
     public function kickEventAttendee($event_id, $ticket_id)

@@ -104,7 +104,7 @@
 
             <div class="row mb-2">
                 <div class="col-md-3 text-muted">Invite Link:</div>
-                <a class="col-md-9" href="{{ URL::to('/events/'.$event->id.'') }}" target="_blank">
+                <a class="col-md-9" href="{{ URL::to('/events/'.$event->event_id.'') }}" target="_blank">
                     Click Here
                 </a>
             </div>

@@ -34,7 +34,7 @@
                                 <small>Since: <span class="text-muted">{{ $carbon::parse($list->created_at)->diffForHumans() }}</span></small>
                             </div>
                             <div>
-                                <small>Created Event: <span class="text-muted">{{$list->organize_count}}</span></small>
+                                
                             </div>
                         </div>
                     </div>

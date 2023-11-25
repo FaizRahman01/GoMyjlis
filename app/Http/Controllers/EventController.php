@@ -222,6 +222,10 @@ class EventController extends Controller
             ->select('tickets.*')
             ->get()->count();
 
+        if($event == null){
+            return redirect('/events');
+        }
+
         return view('pages.eventinfo', ['event' => $event, 'ticket_count' => $ticket_count]);
     }
 

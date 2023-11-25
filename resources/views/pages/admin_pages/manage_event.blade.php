@@ -41,9 +41,9 @@
 
                         <div class="col-lg-8 col-md-8 col-12 d-flex justify-content-center justify-content-md-start mt-3">
                             <div>
-                                <h4 class="">{{ Str::ucfirst($event_team[0]->username) }}</h4>
+                                <h4 class="">{{ Str::ucfirst($event_team[0]?->username) ?? ''}}</h4>
                                 <span class="text-muted">
-                                    @if ($event_team[0]->is_organizer == 1 && $event_team[0]->is_assistant == 0)
+                                    @if ($event_team[0]?->is_organizer == 1 && $event_team[0]?->is_assistant == 0)
                                         Organizer
                                     @endif
                                 </span>
