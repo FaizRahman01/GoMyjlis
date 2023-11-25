@@ -38,7 +38,11 @@
     </div>
 
     <div class="mx-0 mx-sm-auto">
-        @if ($event->is_organizer == 0 && $event->is_assistant == 0 && date('Y-m-d') >= $event->start_date && $event->is_attend == 1)
+        @if (
+            $event->is_organizer == 0 &&
+                $event->is_assistant == 0 &&
+                \Carbon\Carbon::parse($event->start_date)->gt(\Carbon\Carbon::now()->format('Y-m-d'))&&
+                $event->is_attend == 1)
             <div class="card">
                 <div class="card-body d-flex justify-content-center">
 
@@ -163,6 +167,7 @@
                             <div class="col-md-12 text-center">
                                 <span class="display-5 d-block">Wait for event to start.</span>
                                 <div class="mb-4 lead">You must also attend the event.</div>
+                                <div id="time" class="badge bg-dark text-white"></div>
                             </div>
                         </div>
                     </div>
@@ -172,4 +177,24 @@
 
     </div>
 
+@endsection
+
+@section('js')
+    <script type="text/javascript">
+        function showTime() {
+            var date = new Date(),
+                utc = new Date(Date.UTC(
+                    date.getFullYear(),
+                    date.getMonth(),
+                    date.getDate(),
+                    date.getHours(),
+                    date.getMinutes(),
+                    date.getSeconds()
+                ));
+
+            document.getElementById('time').innerHTML = utc.toLocaleString();
+        }
+
+        setInterval(showTime, 1000);
+    </script>
 @endsection
