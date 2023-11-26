@@ -14,7 +14,7 @@
 @section('link-manageuser'){{ URL::to('/admin/manage-user') }}@endsection
 
 
-    <section class="py-5 mb-md-5 mt-2 mx-3 bg-primary bg-gradient bg-opacity-75">
+    <section class="py-5 mb-md-5 mt-2 mx-3 bg-dark bg-gradient bg-opacity-50">
         <div class="container">
             <div class="row justify-content-center text-center text-white py-4">
                 <div class="col-lg-8">
