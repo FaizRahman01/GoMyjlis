@@ -30,7 +30,7 @@
             <div class="tab-pane fade show active" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
 
 
-                <section class="h-100 h-custom bg-info-subtle bg-gradient">
+                <section class="h-100 h-custom bg-dark-subtle bg-gradient">
                     <div class="container py-5 h-100">
                         <div class="row d-flex justify-content-center align-items-center h-100">
                             <div class="col-lg-8 col-xl-6">
@@ -74,7 +74,7 @@
             <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
 
 
-                <section class="h-100 h-custom bg-info-subtle bg-gradient">
+                <section class="h-100 h-custom bg-dark-subtle bg-gradient">
                     <div class="container py-5 h-100">
                         <div class="row d-flex justify-content-center align-items-center h-100">
                             <div class="col-lg-8 col-xl-6">

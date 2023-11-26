@@ -70,7 +70,7 @@
                         ($state == $events->state && $mode == $events->event_mode) ||
                             (empty($state) && $mode == $events->event_mode) ||
                             ($state == $events->state && empty($mode)))
-                        <div class="row mt-3 border border-light border-4 px-4 py-3 rounded-4 bg-secondary-subtle">
+                        <div class="row mt-3 border border-dark border-4 px-4 py-3 rounded-4 bg-secondary-subtle">
                             <div>
                                 <div class="row">
                                     <div class="col-7 d-flex align-items-center">
@@ -108,7 +108,7 @@
                             </div>
                         </div>
                     @elseif (empty($state) && empty($mode))
-                        <div class="row mt-3 border border-light border-4 px-4 py-3 rounded-4 bg-secondary-subtle">
+                        <div class="row mt-3 border border-dark border-4 px-4 py-3 rounded-4 bg-secondary-subtle">
                             <div>
                                 <div class="row">
                                     <div class="col-7 d-flex align-items-center">

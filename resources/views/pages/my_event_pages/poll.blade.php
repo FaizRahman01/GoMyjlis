@@ -85,7 +85,7 @@
                     @foreach ($poll_answer as $answer)
                         @if ($answer->poll_id == $question->id)
                             <li class="list-group-item">
-                                <p class="text-center">You choose: {{ $answer->result }}</p>
+                                <p class="text-center fw-bold">You choose: {{ $answer->result }}</p>
                             </li>
                         @endif
                     @endforeach
@@ -183,7 +183,7 @@
                                                 <div class="col-6">
                                                     <h6 class="mb-0">{{ $question->question }}</h6>
                                                     <div class="position-relative">
-                                                        <a class="badge bg-info text-dark" data-bs-toggle="collapse"
+                                                        <a class="badge bg-primary text-white" data-bs-toggle="collapse"
                                                             href="#collapseExample{{ $question->id }}" role="button"
                                                             aria-expanded="false"
                                                             aria-controls="collapseExample{{ $question->id }}">

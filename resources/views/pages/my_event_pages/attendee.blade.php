@@ -45,7 +45,6 @@
                 <div class="card">
                     <div class="d-flex card-header justify-content-between">
                         <h5 class="me-3 mb-0">Join Request</h5>
-                        <a href="#!.html">View All</a>
                     </div>
                     <div class="card-body">
 
@@ -99,7 +98,6 @@
                 <div class="card">
                     <div class="d-flex card-header justify-content-between">
                         <h5 class="me-3 mb-0">Event Attendee</h5>
-                        <a href="#!.html">View All</a>
                     </div>
                     <div class="card-body">
 

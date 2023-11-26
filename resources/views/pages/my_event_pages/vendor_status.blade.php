@@ -56,12 +56,12 @@
             @foreach ($message_list as $list)
                 <div class="mb-2">
                     <div class="d-flex justify-content-between">
-                        <p class="small mb-1 text-muted">{{ $list->username }}</p>
-                        <p class="small mb-1 text-muted">{{ $carbon::parse($list->created_at)->diffForHumans() }}</p>
+                        <p class="mb-1 fw-bold">{{ $list->username }}</p>
+                        <p class="mb-1 fw-bold">{{ $carbon::parse($list->created_at)->diffForHumans() }}</p>
                     </div>
                     <div class="d-flex flex-row justify-content-start">
                         <div>
-                            <p class="small p-2 ms-3 mb-3 rounded-3" style="background-color: #f5f6f7;">
+                            <p class="p-2 ms-3 mb-3 rounded-3" style="background-color: #f5f6f7;">
                                 {{ $list->message }}</p>
                         </div>
                     </div>
@@ -79,7 +79,7 @@
                 <div class="input-group">
                     <input type="text" name="user-message" placeholder="Press Enter" class="form-control primary">
                     <span class="input-group-btn">
-                        <button class="btn btn-secondary" type="submit">Send</button>
+                        <button class="btn btn-dark" type="submit">Send</button>
                     </span>
                 </div>
             </form>

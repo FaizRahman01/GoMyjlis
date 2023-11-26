@@ -54,13 +54,13 @@
                 @if ($activity_list->isNotEmpty())
                     @foreach ($activity_list as $list)
                         <li class="d-flex flex-column flex-md-row py-4">
-                            <span class="flex-shrink-0 width-13x me-md-4 d-block mb-3 mb-md-0 small text-muted">
+                            <span class="flex-shrink-0 width-13x me-md-4 d-block mb-3 mb-md-0 fw-bold">
                                 {{ date('d-m-Y', strtotime($list->timeline)) }} |
                                 {{ date('H:i', strtotime($list->timeline)) }}
                             </span>
                             <div class="flex-grow-1 ps-4 border-start border-3">
 
-                                <p class="mb-0">
+                                <p class="mb-0 fw-semibold">
                                     {{ $list->activity }}
                                 </p>
                             </div>

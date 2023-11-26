@@ -53,9 +53,9 @@
                             <div class="header-fullname">{{ '@' }}{{ $ticket->username }}</div>
                             <div class="header-information">
                                 <p><strong>{{ $ticket->title }}</strong></p>
-                                <p>Email: <span class="text-muted">{{ $ticket->email }}</span></p>
+                                <p>Email: <span class="fw-bold">{{ $ticket->email }}</span></p>
                                 <p>Role:
-                                    <span class="text-muted">
+                                    <span class="fw-bold">
                                         @if ($ticket->is_organizer == 1 && $ticket->is_assistant == 0)
                                             Organizer
                                         @elseif ($ticket->is_organizer == 0 && $ticket->is_assistant == 1)

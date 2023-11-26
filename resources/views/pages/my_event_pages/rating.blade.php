@@ -41,7 +41,6 @@
         @if (
             $event->is_organizer == 0 &&
                 $event->is_assistant == 0 &&
-                \Carbon\Carbon::parse($event->start_date)->gt(\Carbon\Carbon::now()->format('Y-m-d'))&&
                 $event->is_attend == 1)
             <div class="card">
                 <div class="card-body d-flex justify-content-center">
@@ -135,23 +134,23 @@
                         <div>
                             @foreach ($rating_result as $result)
                                 @if ($result->category == 'content')
-                                    <h5 class="fw-light">Content and Presentation : <span
+                                    <h5 class="">Content and Presentation : <span
                                             class="text-muted small">{{ $result->rate_value }}</span></h5>
                                 @endif
                                 @if ($result->category == 'entertain')
-                                    <h5 class="fw-light">Entertainment : <span
+                                    <h5 class="">Entertainment : <span
                                             class="text-muted small">{{ $result->rate_value }}</span></h5>
                                 @endif
                                 @if ($result->category == 'engagement')
-                                    <h5 class="fw-light">Engagement and Interaction : <span
+                                    <h5 class="">Engagement and Interaction : <span
                                             class="text-muted small">{{ $result->rate_value }}</span></h5>
                                 @endif
                                 @if ($result->category == 'food')
-                                    <h5 class="fw-light">Food and Beverages : <span
+                                    <h5 class="">Food and Beverages : <span
                                             class="text-muted small">{{ $result->rate_value }}</span></h5>
                                 @endif
                                 @if ($result->category == 'overall')
-                                    <h5 class="fw-light">Overall Experiences : <span
+                                    <h5 class="">Overall Experiences : <span
                                             class="text-muted small">{{ $result->rate_value }}</span></h5>
                                 @endif
                             @endforeach
@@ -165,9 +164,8 @@
                     <div class="container">
                         <div class="row justify-content-center">
                             <div class="col-md-12 text-center">
-                                <span class="display-5 d-block">Wait for event to start.</span>
-                                <div class="mb-4 lead">You must also attend the event.</div>
-                                <div id="time" class="badge bg-dark text-white"></div>
+                                <span class="display-5 d-block">You must attend the event first..</span>
+                                
                             </div>
                         </div>
                     </div>
@@ -179,22 +177,4 @@
 
 @endsection
 
-@section('js')
-    <script type="text/javascript">
-        function showTime() {
-            var date = new Date(),
-                utc = new Date(Date.UTC(
-                    date.getFullYear(),
-                    date.getMonth(),
-                    date.getDate(),
-                    date.getHours(),
-                    date.getMinutes(),
-                    date.getSeconds()
-                ));
 
-            document.getElementById('time').innerHTML = utc.toLocaleString();
-        }
-
-        setInterval(showTime, 1000);
-    </script>
-@endsection

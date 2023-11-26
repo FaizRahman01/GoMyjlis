@@ -40,7 +40,7 @@
             {{-- carousel here --}}
             <div class="container">
                 <div class="row mb-4">
-                    <h4 class="font-weight-bold col-md-6 col-8 d-flex align-items-center">{{ $event->title }}</h4>
+                    <h4 class="col-md-6 col-8 d-flex align-items-center">{{ $event->title }}</h4>
                     @if (
                         ($event->is_organizer == 1 && $event->is_assistant == 0) ||
                             ($event->is_organizer == 0 && $event->is_assistant == 1))
@@ -54,7 +54,7 @@
 
                 </div>
 
-                <div class="text-muted mb-4">
+                <div class="fw-bold mb-4">
                     {!! nl2br($event->description) !!}
                 </div>
             </div>
@@ -68,42 +68,42 @@
         <div class="card-body">
 
             <div class="row mb-2">
-                <div class="col-md-3 text-muted">Organiser:</div>
+                <div class="col-md-3 fw-bold">Organiser:</div>
                 <div class="col-md-9">
                     {{ $event->username }}
                 </div>
             </div>
 
             <div class="row mb-2">
-                <div class="col-md-3 text-muted">Date Start:</div>
+                <div class="col-md-3 fw-bold">Date Start:</div>
                 <div class="col-md-9">
                     <p>{{ $event->start_date }}</p>
                 </div>
             </div>
 
             <div class="row mb-2">
-                <div class="col-md-3 text-muted">Date End:</div>
+                <div class="col-md-3 fw-bold">Date End:</div>
                 <div class="col-md-9">
                     <p>{{ $event->end_date }}</p>
                 </div>
             </div>
 
             <div class="row mb-2">
-                <div class="col-md-3 text-muted">State:</div>
+                <div class="col-md-3 fw-bold">State:</div>
                 <div class="col-md-9">
                     <p>{{ $event->state }}</p>
                 </div>
             </div>
 
             <div class="row mb-2">
-                <div class="col-md-3 text-muted">Address:</div>
+                <div class="col-md-3 fw-bold">Address:</div>
                 <div class="col-md-9">
                     {{ $event->address }}
                 </div>
             </div>
 
             <div class="row mb-2">
-                <div class="col-md-3 text-muted">Invite Link:</div>
+                <div class="col-md-3 fw-bold">Invite Link:</div>
                 <a class="col-md-9" href="{{ URL::to('/events/'.$event->event_id.'') }}" target="_blank">
                     Click Here
                 </a>
@@ -113,16 +113,16 @@
         <div class="card-footer text-center p-0">
             <div class="row">
                 <div class="d-flex col flex-column py-3">
-                    <div class="font-weight-bold">Attendee</div>
-                    <div class="text-muted small">{{ $ticket_count }}</div>
+                    <div class="">Attendee</div>
+                    <div class="fw-bold small">{{ $ticket_count }}</div>
                 </div>
                 <div class="d-flex col flex-column py-3">
-                    <div class="font-weight-bold">Visibility</div>
-                    <div class="text-muted small">{{ $event->is_private == 0 ? 'Public' : 'Private' }}</div>
+                    <div class="">Visibility</div>
+                    <div class="fw-bold small">{{ $event->is_private == 0 ? 'Public' : 'Private' }}</div>
                 </div>
                 <div class="d-flex col flex-column py-3">
-                    <div class="font-weight-bold">Event Mode</div>
-                    <div class="text-muted small"> {{ $event->event_mode }}</div>
+                    <div class="">Event Mode</div>
+                    <div class="fw-bold small"> {{ $event->event_mode }}</div>
                 </div>
             </div>
         </div>
