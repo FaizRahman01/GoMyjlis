@@ -62,7 +62,7 @@
                                     <div class="col-8 ps-2">
                                         <select name="answer" class="form-select w-100" id="exampleSelect1">
                                             @foreach ($poll_list as $list)
-                                                @if ($list->question == $question->question)
+                                                @if ($list->question == $question->question && $list->poll_id == $question->id)
                                                     <option>{{ $list->answer }}</option>
                                                 @endif
                                             @endforeach
